@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dumbbell, Library, Calendar, ShoppingCart, Menu, X } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,6 +46,8 @@ const Navigation = () => {
               </Link>
             ))}
             
+            <ThemeToggle />
+            
             <Button variant="outline">
               Subscribe - $15/month
             </Button>
@@ -78,9 +81,12 @@ const Navigation = () => {
                 </Link>
               ))}
               
-              <Button variant="outline" className="w-full">
-                Subscribe - $15/month
-              </Button>
+              <div className="flex items-center justify-between">
+                <ThemeToggle />
+                <Button variant="outline" className="flex-1 ml-2">
+                  Subscribe - $15/month
+                </Button>
+              </div>
             </div>
           </div>
         )}
