@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          fitness_goals: string[] | null
+          full_name: string | null
+          id: string
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          fitness_goals?: string[] | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          fitness_goals?: string[] | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_interactions: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          created_at: string
+          difficulty_rating: number | null
+          exercises_completed: number | null
+          id: string
+          notes: string | null
+          total_duration: number | null
+          user_id: string
+          workout_date: string
+        }
+        Insert: {
+          created_at?: string
+          difficulty_rating?: number | null
+          exercises_completed?: number | null
+          id?: string
+          notes?: string | null
+          total_duration?: number | null
+          user_id: string
+          workout_date: string
+        }
+        Update: {
+          created_at?: string
+          difficulty_rating?: number | null
+          exercises_completed?: number | null
+          id?: string
+          notes?: string | null
+          total_duration?: number | null
+          user_id?: string
+          workout_date?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
