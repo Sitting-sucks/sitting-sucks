@@ -1,30 +1,38 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, FileText, Star } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Play, FileText, Star, Target, Clock, Info } from "lucide-react";
 
 interface ExerciseCardProps {
   name: string;
   description: string;
+  instructions?: string;
   equipment: string[];
   jointMovements: string[];
-  difficulty: 1 | 2 | 3 | 4 | 5;
-  intensity: 1 | 2 | 3 | 4 | 5;
+  difficulty: number;
+  intensity: number;
   hasVideo?: boolean;
   hasDocument?: boolean;
   duration?: string;
+  videoUrl?: string;
+  targetMuscles?: string[];
 }
 
 const ExerciseCard = ({ 
   name, 
-  description, 
+  description,
+  instructions,
   equipment, 
   jointMovements, 
   difficulty, 
   intensity,
   hasVideo = false,
   hasDocument = false,
-  duration
+  duration,
+  videoUrl,
+  targetMuscles = []
 }: ExerciseCardProps) => {
   const getDifficultyColor = (level: number) => {
     const colors = {
@@ -54,19 +62,22 @@ const ExerciseCard = ({
             <CardTitle className="text-lg">{name}</CardTitle>
             <CardDescription className="mt-2">{description}</CardDescription>
             {duration && (
-              <p className="text-sm text-muted-foreground mt-1">Duration: {duration}</p>
+              <div className="flex items-center mt-2 text-sm text-muted-foreground">
+                <Clock className="h-3 w-3 mr-1" />
+                {duration}
+              </div>
             )}
           </div>
           <div className="flex space-x-2">
             {hasVideo && (
-              <Button size="sm" variant="outline">
-                <Play className="h-4 w-4" />
-              </Button>
+              <div className="p-1 rounded bg-primary/10">
+                <Play className="h-3 w-3 text-primary" />
+              </div>
             )}
             {hasDocument && (
-              <Button size="sm" variant="outline">
-                <FileText className="h-4 w-4" />
-              </Button>
+              <div className="p-1 rounded bg-secondary/10">
+                <FileText className="h-3 w-3 text-secondary" />
+              </div>
             )}
           </div>
         </div>
@@ -84,6 +95,23 @@ const ExerciseCard = ({
               ))}
             </div>
           </div>
+
+          {/* Target Muscles */}
+          {targetMuscles.length > 0 && (
+            <div>
+              <p className="text-sm font-medium mb-2 flex items-center">
+                <Target className="h-3 w-3 mr-1" />
+                Target Muscles:
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {targetMuscles.map((muscle, index) => (
+                  <Badge key={index} variant="default" className="text-xs">
+                    {muscle}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Joint Movements */}
           <div>
@@ -112,6 +140,116 @@ const ExerciseCard = ({
               </div>
             </div>
           </div>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="w-full">
+                <Info className="h-4 w-4 mr-2" />
+                View Details
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-2xl">{name}</DialogTitle>
+                <DialogDescription className="text-base">
+                  {description}
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                {instructions && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Instructions</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {instructions}
+                    </p>
+                  </div>
+                )}
+
+                {hasVideo && videoUrl && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Video Tutorial</h3>
+                    <div className="aspect-video">
+                      <iframe
+                        src={videoUrl}
+                        title={`${name} exercise tutorial`}
+                        className="w-full h-full rounded-lg"
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Exercise Details</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Equipment:</span>
+                        <div className="flex flex-wrap gap-1">
+                          {equipment.map((item, index) => (
+                            <Badge key={index} variant="outline" className="text-xs">
+                              {item}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {duration && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Duration:</span>
+                          <span>{duration}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Difficulty:</span>
+                        <div className="flex items-center gap-1">
+                          {renderStars(difficulty)}
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Intensity:</span>
+                        <div className="flex items-center gap-1">
+                          {renderStars(intensity)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Movement & Muscles</h3>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-muted-foreground text-sm">Joint Movements:</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {jointMovements.map((movement, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {movement}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {targetMuscles.length > 0 && (
+                        <div>
+                          <span className="text-muted-foreground text-sm">Target Muscles:</span>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {targetMuscles.map((muscle, index) => (
+                              <Badge key={index} variant="default" className="text-xs">
+                                {muscle}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardContent>
     </Card>

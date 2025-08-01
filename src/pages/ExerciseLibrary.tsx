@@ -12,6 +12,7 @@ const ExerciseLibrary = () => {
   const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedJointMovement, setSelectedJointMovement] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [selectedIntensity, setSelectedIntensity] = useState("all");
 
   // Equipment categories based on your requirements
   const equipmentList = [
@@ -51,9 +52,98 @@ const ExerciseLibrary = () => {
     "Wrist Flexion", "Wrist Extension", "Wrist Radial Deviation", "Wrist Ulnar Deviation"
   ];
 
-  // Mock exercises data (you mentioned not to add actual exercises, just the structure)
+  // Enhanced exercises data with detailed information
   const exercises = [
-    // This is just for demonstration - remove actual exercises as requested
+    {
+      id: "1",
+      name: "Push-ups",
+      description: "Classic bodyweight exercise for chest, shoulders, and triceps",
+      instructions: "Start in plank position with hands slightly wider than shoulders. Lower your body until chest nearly touches floor, then push back up. Keep core tight throughout movement.",
+      equipment: ["None"],
+      jointMovements: ["Shoulder Flexion", "Elbow Extension"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "30 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/IODxDxX7oi4",
+      targetMuscles: ["Chest", "Shoulders", "Triceps", "Core"],
+    },
+    {
+      id: "2",
+      name: "Squats",
+      description: "Fundamental lower body exercise targeting quads, glutes, and hamstrings",
+      instructions: "Stand with feet shoulder-width apart. Lower your body by bending knees and pushing hips back as if sitting in chair. Keep chest up and knees behind toes. Return to starting position.",
+      equipment: ["None"],
+      jointMovements: ["Knee Flexion", "Hip Flexion"],
+      difficulty: 1,
+      intensity: 2,
+      duration: "45 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/aclHkVaku9U",
+      targetMuscles: ["Quadriceps", "Glutes", "Hamstrings", "Core"],
+    },
+    {
+      id: "3",
+      name: "Deadlifts",
+      description: "Compound movement working the entire posterior chain",
+      instructions: "Stand with feet hip-width apart, barbell over mid-foot. Bend at hips and knees to grip bar. Keep chest up, shoulders back. Drive through heels to lift bar, extending hips and knees simultaneously.",
+      equipment: ["Two 2.5 lbs Plates"],
+      jointMovements: ["Hip Extension", "Knee Extension"],
+      difficulty: 4,
+      intensity: 5,
+      duration: "60 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/ytGaGIn3SjE",
+      targetMuscles: ["Hamstrings", "Glutes", "Lower Back", "Traps", "Lats"],
+    },
+    {
+      id: "4",
+      name: "Pull-ups",
+      description: "Upper body pulling exercise for back and biceps",
+      instructions: "Hang from pull-up bar with arms fully extended, hands slightly wider than shoulders. Pull your body up until chin clears the bar. Lower with control to starting position.",
+      equipment: ["12-36\" Box/Chair"],
+      jointMovements: ["Shoulder Extension", "Elbow Flexion"],
+      difficulty: 4,
+      intensity: 4,
+      duration: "30 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/eGo4IYlbE5g",
+      targetMuscles: ["Lats", "Rhomboids", "Biceps", "Rear Delts"],
+    },
+    {
+      id: "5",
+      name: "Foam Rolling - IT Band",
+      description: "Self-myofascial release for IT band and lateral thigh",
+      instructions: "Lie on side with foam roller under IT band. Support upper body with forearm. Roll slowly from hip to just above knee, pausing on tender spots for 30 seconds.",
+      equipment: ["Foam Roller"],
+      jointMovements: ["Hip Abduction", "Hip Adduction"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "2 minutes",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
+      targetMuscles: ["IT Band", "Quadriceps", "Glutes"],
+    },
+    {
+      id: "6",
+      name: "Ankle Mobility with Wedges",
+      description: "Improve ankle dorsiflexion using heel wedges",
+      instructions: "Place heel wedges under heels. Perform calf stretches, wall ankle stretches, or deep squats. The wedges help achieve greater range of motion safely.",
+      equipment: ["Heel Wedges"],
+      jointMovements: ["Ankle Dorsiflexion"],
+      difficulty: 1,
+      intensity: 1,
+      duration: "3 minutes",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/ASdvN_XEl_c",
+      targetMuscles: ["Calves", "Achilles"],
+    },
   ];
 
   const filteredExercises = exercises.filter(exercise => {
@@ -65,8 +155,10 @@ const ExerciseLibrary = () => {
                                exercise.jointMovements.some(jm => jm === selectedJointMovement);
     const matchesDifficulty = selectedDifficulty === "all" ||
                             exercise.difficulty.toString() === selectedDifficulty;
+    const matchesIntensity = selectedIntensity === "all" ||
+                           exercise.intensity.toString() === selectedIntensity;
     
-    return matchesSearch && matchesEquipment && matchesJointMovement && matchesDifficulty;
+    return matchesSearch && matchesEquipment && matchesJointMovement && matchesDifficulty && matchesIntensity;
   });
 
   return (
@@ -149,6 +241,20 @@ const ExerciseLibrary = () => {
                   </SelectContent>
                 </Select>
 
+                <Select value={selectedIntensity} onValueChange={setSelectedIntensity}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Intensity" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Intensities</SelectItem>
+                    <SelectItem value="1">🔥 Very Low</SelectItem>
+                    <SelectItem value="2">🔥🔥 Low</SelectItem>
+                    <SelectItem value="3">🔥🔥🔥 Moderate</SelectItem>
+                    <SelectItem value="4">🔥🔥🔥🔥 High</SelectItem>
+                    <SelectItem value="5">🔥🔥🔥🔥🔥 Very High</SelectItem>
+                  </SelectContent>
+                </Select>
+
                 <Button 
                   variant="outline" 
                   onClick={() => {
@@ -156,6 +262,7 @@ const ExerciseLibrary = () => {
                     setSelectedEquipment("all");
                     setSelectedJointMovement("all");
                     setSelectedDifficulty("all");
+                    setSelectedIntensity("all");
                   }}
                 >
                   Clear Filters

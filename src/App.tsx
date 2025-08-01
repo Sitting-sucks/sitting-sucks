@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import ExerciseLibrary from "./pages/ExerciseLibrary";
 import DailyWorkout from "./pages/DailyWorkout";
 import EquipmentStore from "./pages/EquipmentStore";
+import HealthNews from "./pages/HealthNews";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/exercise-library" element={<ExerciseLibrary />} />
                       <Route path="/daily-workout" element={<DailyWorkout />} />
+                      <Route path="/health-news" element={<HealthNews />} />
                       <Route path="/store" element={<EquipmentStore />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
