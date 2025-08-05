@@ -9,6 +9,18 @@ import { Search, Plus, Filter, Lock, Crown } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import { SubscriptionGate } from "@/components/SubscriptionGate";
 
+// Equipment images
+import yellowBandImg from "@/assets/equipment/yellow-band.jpg";
+import purpleHandleImg from "@/assets/equipment/purple-handle.jpg";
+import heelWedgesImg from "@/assets/equipment/heel-wedges.jpg";
+import weightPlatesImg from "@/assets/equipment/weight-plates.jpg";
+import forearmSpinnerImg from "@/assets/equipment/forearm-spinner.jpg";
+import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
+import yogaBlocksImg from "@/assets/equipment/yoga-blocks.jpg";
+import lacrosseBallImg from "@/assets/equipment/lacrosse-ball.jpg";
+import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
+import exerciseBoxImg from "@/assets/equipment/exercise-box.jpg";
+
 const ExerciseLibrary = () => {
   const { subscribed } = useSubscription();
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,18 +29,18 @@ const ExerciseLibrary = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
 
-  // Equipment categories based on your requirements
+  // Equipment categories with images
   const equipmentList = [
-    "Yellow Perform Better Band",
-    "Purple Plastic Handle", 
-    "Heel Wedges",
-    "Two 2.5 lbs Plates",
-    "Forearm Spinner",
-    "Foam Roller",
-    "Yoga Blocks",
-    "Lacrosse Ball",
-    "3-4' PVC Pipe",
-    "12-36\" Box/Chair"
+    { name: "Yellow Perform Better Band", image: yellowBandImg },
+    { name: "Purple Plastic Handle", image: purpleHandleImg },
+    { name: "Heel Wedges", image: heelWedgesImg },
+    { name: "Two 2.5 lbs Plates", image: weightPlatesImg },
+    { name: "Forearm Spinner", image: forearmSpinnerImg },
+    { name: "Foam Roller", image: foamRollerImg },
+    { name: "Yoga Blocks", image: yogaBlocksImg },
+    { name: "Lacrosse Ball", image: lacrosseBallImg },
+    { name: "3-4' PVC Pipe", image: pvcPipeImg },
+    { name: "12-36\" Box/Chair", image: exerciseBoxImg }
   ];
 
   // Joint movements for all body segments
@@ -55,7 +67,7 @@ const ExerciseLibrary = () => {
     "Wrist Flexion", "Wrist Extension", "Wrist Radial Deviation", "Wrist Ulnar Deviation"
   ];
 
-  // Enhanced exercises data with detailed information
+  // Expanded free exercises library
   const freeExercises = [
     {
       id: "1",
@@ -89,70 +101,160 @@ const ExerciseLibrary = () => {
     },
     {
       id: "3",
-      name: "Deadlifts",
-      description: "Compound movement working the entire posterior chain",
-      instructions: "Stand with feet hip-width apart, barbell over mid-foot. Bend at hips and knees to grip bar. Keep chest up, shoulders back. Drive through heels to lift bar, extending hips and knees simultaneously.",
-      equipment: ["Two 2.5 lbs Plates"],
-      jointMovements: ["Hip Extension", "Knee Extension"],
-      difficulty: 4,
-      intensity: 5,
-      duration: "60 seconds",
+      name: "Planks",
+      description: "Core strengthening exercise for stability and endurance",
+      instructions: "Start in push-up position, then lower to forearms. Keep body in straight line from head to heels. Engage core and hold position without letting hips sag or pike up.",
+      equipment: ["None"],
+      jointMovements: ["Core Stabilization"],
+      difficulty: 1,
+      intensity: 2,
+      duration: "30-60 seconds",
       hasVideo: true,
       hasDocument: true,
-      videoUrl: "https://www.youtube.com/embed/ytGaGIn3SjE",
-      targetMuscles: ["Hamstrings", "Glutes", "Lower Back", "Traps", "Lats"],
+      videoUrl: "https://www.youtube.com/embed/ASdvN_XEl_c",
+      targetMuscles: ["Core", "Shoulders", "Glutes"],
     },
     {
       id: "4",
-      name: "Pull-ups",
-      description: "Upper body pulling exercise for back and biceps",
-      instructions: "Hang from pull-up bar with arms fully extended, hands slightly wider than shoulders. Pull your body up until chin clears the bar. Lower with control to starting position.",
-      equipment: ["12-36\" Box/Chair"],
-      jointMovements: ["Shoulder Extension", "Elbow Flexion"],
-      difficulty: 4,
+      name: "Lunges",
+      description: "Unilateral leg exercise for strength and balance",
+      instructions: "Step forward with one leg, lowering hips until both knees are bent at 90 degrees. Keep front knee over ankle and back knee pointing down. Push back to starting position.",
+      equipment: ["None"],
+      jointMovements: ["Hip Flexion", "Knee Flexion"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "45 seconds each leg",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
+      targetMuscles: ["Quadriceps", "Glutes", "Hamstrings", "Calves"],
+    },
+    {
+      id: "5",
+      name: "Mountain Climbers",
+      description: "Dynamic cardio exercise combining core and leg work",
+      instructions: "Start in plank position. Bring one knee to chest, then quickly switch legs in running motion. Keep hips level and core engaged throughout.",
+      equipment: ["None"],
+      jointMovements: ["Hip Flexion", "Shoulder Stabilization"],
+      difficulty: 3,
       intensity: 4,
       duration: "30 seconds",
       hasVideo: true,
       hasDocument: false,
       videoUrl: "https://www.youtube.com/embed/eGo4IYlbE5g",
-      targetMuscles: ["Lats", "Rhomboids", "Biceps", "Rear Delts"],
+      targetMuscles: ["Core", "Shoulders", "Legs", "Cardio"],
     },
     {
-      id: "5",
-      name: "Foam Rolling - IT Band",
-      description: "Self-myofascial release for IT band and lateral thigh",
-      instructions: "Lie on side with foam roller under IT band. Support upper body with forearm. Roll slowly from hip to just above knee, pausing on tender spots for 30 seconds.",
+      id: "6",
+      name: "Glute Bridges",
+      description: "Hip extension exercise targeting glutes and hamstrings",
+      instructions: "Lie on back with knees bent, feet flat on floor. Squeeze glutes and lift hips up creating straight line from knees to shoulders. Hold briefly then lower.",
+      equipment: ["None"],
+      jointMovements: ["Hip Extension"],
+      difficulty: 1,
+      intensity: 2,
+      duration: "45 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/aclHkVaku9U",
+      targetMuscles: ["Glutes", "Hamstrings", "Core"],
+    },
+    {
+      id: "7",
+      name: "Wall Sits",
+      description: "Isometric quad exercise for building endurance",
+      instructions: "Stand with back against wall, slide down until thighs are parallel to floor. Keep knees at 90 degrees and weight in heels. Hold position.",
+      equipment: ["None"],
+      jointMovements: ["Knee Flexion"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "30-60 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/IODxDxX7oi4",
+      targetMuscles: ["Quadriceps", "Glutes", "Calves"],
+    },
+    {
+      id: "8",
+      name: "Calf Raises",
+      description: "Lower leg exercise for calf strength and ankle stability",
+      instructions: "Stand with feet hip-width apart. Rise up onto toes by pushing through balls of feet. Hold briefly at top then lower slowly with control.",
+      equipment: ["None"],
+      jointMovements: ["Ankle Plantarflexion"],
+      difficulty: 1,
+      intensity: 2,
+      duration: "45 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
+      targetMuscles: ["Calves", "Ankles"],
+    },
+    {
+      id: "9",
+      name: "Jumping Jacks",
+      description: "Full-body cardio exercise for warming up and conditioning",
+      instructions: "Start with feet together, arms at sides. Jump feet apart while raising arms overhead. Jump back to starting position. Maintain steady rhythm.",
+      equipment: ["None"],
+      jointMovements: ["Shoulder Abduction", "Hip Abduction"],
+      difficulty: 1,
+      intensity: 3,
+      duration: "30 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/eGo4IYlbE5g",
+      targetMuscles: ["Full Body", "Cardio"],
+    },
+    {
+      id: "10",
+      name: "Heel Wedge Calf Stretch",
+      description: "Deep calf and Achilles stretch using heel wedges",
+      instructions: "Place heel wedges under heels. Lean forward against wall keeping legs straight. Feel stretch in calves and Achilles tendon.",
+      equipment: ["Heel Wedges"],
+      jointMovements: ["Ankle Dorsiflexion"],
+      difficulty: 1,
+      intensity: 1,
+      duration: "2 minutes each leg",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/ASdvN_XEl_c",
+      targetMuscles: ["Calves", "Achilles"],
+    },
+    {
+      id: "11",
+      name: "Foam Rolling - Quadriceps",
+      description: "Self-massage for quadriceps muscle recovery",
+      instructions: "Lie face down with foam roller under thighs. Support upper body on forearms. Roll from just above knees to hip crease, pausing on tender spots.",
       equipment: ["Foam Roller"],
-      jointMovements: ["Hip Abduction", "Hip Adduction"],
+      jointMovements: ["Hip Flexion"],
       difficulty: 2,
       intensity: 3,
       duration: "2 minutes",
       hasVideo: true,
       hasDocument: false,
       videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
-      targetMuscles: ["IT Band", "Quadriceps", "Glutes"],
+      targetMuscles: ["Quadriceps"],
     },
     {
-      id: "6",
-      name: "Ankle Mobility with Wedges",
-      description: "Improve ankle dorsiflexion using heel wedges",
-      instructions: "Place heel wedges under heels. Perform calf stretches, wall ankle stretches, or deep squats. The wedges help achieve greater range of motion safely.",
-      equipment: ["Heel Wedges"],
-      jointMovements: ["Ankle Dorsiflexion"],
+      id: "12",
+      name: "Lacrosse Ball - Foot Massage",
+      description: "Plantar fascia release using lacrosse ball",
+      instructions: "Stand and place lacrosse ball under foot. Apply pressure and roll ball from heel to toes. Focus on arch area and any tender spots.",
+      equipment: ["Lacrosse Ball"],
+      jointMovements: ["Ankle Mobility"],
       difficulty: 1,
-      intensity: 1,
-      duration: "3 minutes",
+      intensity: 2,
+      duration: "2 minutes each foot",
       hasVideo: true,
       hasDocument: true,
       videoUrl: "https://www.youtube.com/embed/ASdvN_XEl_c",
-      targetMuscles: ["Calves", "Achilles"],
+      targetMuscles: ["Plantar Fascia", "Foot"],
     },
   ];
 
-  // Premium exercises (locked for non-subscribers)
+  // Expanded premium exercises library
   const premiumExercises = [
     {
-      id: "7",
+      id: "13",
       name: "Bulgarian Split Squats",
       description: "Single-leg exercise for unilateral strength and stability",
       instructions: "Stand 2 feet in front of bench. Place rear foot on bench. Lower into lunge position, keeping front knee over ankle. Push through front heel to return.",
@@ -160,7 +262,7 @@ const ExerciseLibrary = () => {
       jointMovements: ["Hip Flexion", "Knee Flexion"],
       difficulty: 4,
       intensity: 4,
-      duration: "45 seconds",
+      duration: "45 seconds each leg",
       hasVideo: true,
       hasDocument: true,
       videoUrl: "https://www.youtube.com/embed/2C-uNgKwPLE",
@@ -168,7 +270,7 @@ const ExerciseLibrary = () => {
       isPremium: true,
     },
     {
-      id: "8",
+      id: "14",
       name: "Turkish Get-ups",
       description: "Complex movement pattern for full-body coordination",
       instructions: "Start lying on back with weight in right hand. Press weight overhead. Use left hand and elbow to prop up. Transition to standing while keeping weight overhead.",
@@ -176,7 +278,7 @@ const ExerciseLibrary = () => {
       jointMovements: ["Shoulder Flexion", "Hip Flexion", "Thoracic Extension"],
       difficulty: 5,
       intensity: 4,
-      duration: "2 minutes",
+      duration: "2 minutes each side",
       hasVideo: true,
       hasDocument: true,
       videoUrl: "https://www.youtube.com/embed/0bWRPC49noU",
@@ -184,51 +286,211 @@ const ExerciseLibrary = () => {
       isPremium: true,
     },
     {
-      id: "9",
-      name: "Advanced Band Pull-aparts",
-      description: "Posterior deltoid and rhomboid strengthening with bands",
-      instructions: "Hold band at chest level with arms extended. Pull band apart by squeezing shoulder blades together. Control return to start position.",
+      id: "15",
+      name: "Resistance Band Rows",
+      description: "Upper back strengthening with resistance bands",
+      instructions: "Anchor band at chest height. Hold handles with arms extended. Pull elbows back squeezing shoulder blades together. Control return.",
       equipment: ["Yellow Perform Better Band"],
-      jointMovements: ["Shoulder Horizontal Abduction"],
+      jointMovements: ["Shoulder Extension", "Elbow Flexion"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "60 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/tZkMJvhCZGU",
+      targetMuscles: ["Lats", "Rhomboids", "Middle Traps", "Biceps"],
+      isPremium: true,
+    },
+    {
+      id: "16",
+      name: "Deadlifts with Plates",
+      description: "Hip hinge movement with weight plates",
+      instructions: "Hold plates at thighs. Hinge at hips pushing butt back. Lower plates while keeping back straight. Drive hips forward to return.",
+      equipment: ["Two 2.5 lbs Plates"],
+      jointMovements: ["Hip Extension", "Knee Extension"],
       difficulty: 3,
+      intensity: 4,
+      duration: "60 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/ytGaGIn3SjE",
+      targetMuscles: ["Hamstrings", "Glutes", "Lower Back"],
+      isPremium: true,
+    },
+    {
+      id: "17",
+      name: "Forearm Spinner Training",
+      description: "Grip and forearm strengthening using specialized equipment",
+      instructions: "Hold forearm spinner with arm extended. Rotate device clockwise and counterclockwise. Control the motion with wrist and forearm muscles.",
+      equipment: ["Forearm Spinner"],
+      jointMovements: ["Forearm Pronation", "Forearm Supination"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "90 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/rt17lmnaLSM",
+      targetMuscles: ["Forearms", "Grip", "Wrists"],
+      isPremium: true,
+    },
+    {
+      id: "18",
+      name: "Box Step-ups",
+      description: "Unilateral leg strengthening with elevated platform",
+      instructions: "Place one foot on box. Step up by driving through heel of elevated leg. Control descent. Keep torso upright throughout.",
+      equipment: ["12-36\" Box/Chair"],
+      jointMovements: ["Hip Extension", "Knee Extension"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "45 seconds each leg",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/2C-uNgKwPLE",
+      targetMuscles: ["Quadriceps", "Glutes", "Calves"],
+      isPremium: true,
+    },
+    {
+      id: "19",
+      name: "Advanced Thoracic Extension",
+      description: "Thoracic spine mobility using PVC pipe for posture improvement",
+      instructions: "Sit with PVC pipe across upper back. Extend spine over pipe focusing on thoracic region. Hold and breathe deeply.",
+      equipment: ["3-4' PVC Pipe"],
+      jointMovements: ["Thoracic Extension"],
+      difficulty: 2,
+      intensity: 2,
+      duration: "3 minutes",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/vugBFBOe1II",
+      targetMuscles: ["Thoracic Spine", "Chest"],
+      isPremium: true,
+    },
+    {
+      id: "20",
+      name: "Yoga Block Supported Poses",
+      description: "Modified yoga poses using blocks for proper alignment",
+      instructions: "Use yoga blocks to support various stretching positions. Blocks help achieve proper alignment and deeper stretches safely.",
+      equipment: ["Yoga Blocks"],
+      jointMovements: ["Hip Flexion", "Thoracic Extension"],
+      difficulty: 1,
+      intensity: 1,
+      duration: "5 minutes",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/ASdvN_XEl_c",
+      targetMuscles: ["Hip Flexors", "Spine", "Hamstrings"],
+      isPremium: true,
+    },
+    {
+      id: "21",
+      name: "Lacrosse Ball Glute Release",
+      description: "Trigger point therapy for glute muscles",
+      instructions: "Sit on lacrosse ball with it under glute muscle. Lean into ball and move slowly to find trigger points. Apply pressure for 30 seconds.",
+      equipment: ["Lacrosse Ball"],
+      jointMovements: ["Hip Mobility"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "3 minutes each side",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
+      targetMuscles: ["Glutes", "Hip Flexors"],
+      isPremium: true,
+    },
+    {
+      id: "22",
+      name: "Resistance Band Bicep Curls",
+      description: "Isolated bicep strengthening with resistance bands",
+      instructions: "Step on band center, hold handles at sides. Curl handles up by flexing biceps, keeping elbows at sides. Control lowering phase.",
+      equipment: ["Yellow Perform Better Band"],
+      jointMovements: ["Elbow Flexion"],
+      difficulty: 2,
       intensity: 3,
       duration: "60 seconds",
       hasVideo: true,
       hasDocument: false,
       videoUrl: "https://www.youtube.com/embed/tZkMJvhCZGU",
-      targetMuscles: ["Rear Delts", "Rhomboids", "Middle Traps"],
+      targetMuscles: ["Biceps", "Forearms"],
       isPremium: true,
     },
     {
-      id: "10",
-      name: "Single-Arm Farmer's Walk",
-      description: "Unilateral loaded carry for core stability and grip strength",
-      instructions: "Hold weight in one hand at side. Walk forward maintaining upright posture. Keep shoulders level and core engaged throughout.",
+      id: "23",
+      name: "Single-Leg Deadlift with Plate",
+      description: "Unilateral balance and posterior chain exercise",
+      instructions: "Hold plate in both hands. Stand on one leg. Hinge at hip lowering plate toward ground while extending free leg back. Return to standing.",
       equipment: ["Two 2.5 lbs Plates"],
-      jointMovements: ["Shoulder Stabilization"],
-      difficulty: 3,
+      jointMovements: ["Hip Extension", "Ankle Stabilization"],
+      difficulty: 4,
       intensity: 4,
-      duration: "90 seconds",
+      duration: "45 seconds each leg",
       hasVideo: true,
       hasDocument: true,
-      videoUrl: "https://www.youtube.com/embed/rt17lmnaLSM",
-      targetMuscles: ["Core", "Shoulders", "Forearms"],
+      videoUrl: "https://www.youtube.com/embed/ytGaGIn3SjE",
+      targetMuscles: ["Hamstrings", "Glutes", "Core", "Balance"],
       isPremium: true,
     },
     {
-      id: "11",
-      name: "Advanced Thoracic Spine Mobility",
-      description: "Complex thoracic spine movement patterns with PVC pipe",
-      instructions: "Hold PVC pipe overhead. Rotate torso left and right while maintaining arm position. Add lateral bending for increased mobility.",
+      id: "24",
+      name: "Purple Handle Grip Training",
+      description: "Grip strength and hand dexterity training",
+      instructions: "Perform various grip exercises using purple handle. Squeeze, rotate, and manipulate handle to improve grip strength and coordination.",
+      equipment: ["Purple Plastic Handle"],
+      jointMovements: ["Wrist Flexion", "Wrist Extension"],
+      difficulty: 1,
+      intensity: 2,
+      duration: "2 minutes",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/rt17lmnaLSM",
+      targetMuscles: ["Grip", "Forearms", "Fingers"],
+      isPremium: true,
+    },
+    {
+      id: "25",
+      name: "Elevated Heel Squats",
+      description: "Deep squat mobility using heel wedges",
+      instructions: "Place heel wedges under heels. Perform deep squats with improved ankle mobility. Focus on sitting back and keeping chest up.",
+      equipment: ["Heel Wedges"],
+      jointMovements: ["Ankle Dorsiflexion", "Hip Flexion", "Knee Flexion"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "60 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/aclHkVaku9U",
+      targetMuscles: ["Quadriceps", "Glutes", "Ankles"],
+      isPremium: true,
+    },
+    {
+      id: "26",
+      name: "Foam Roller Lat Release",
+      description: "Latissimus dorsi muscle release and mobility",
+      instructions: "Lie on side with foam roller under armpit/lat area. Roll from armpit to mid-back, avoiding rolling directly on ribs. Pause on tender spots.",
+      equipment: ["Foam Roller"],
+      jointMovements: ["Shoulder Adduction"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "2 minutes each side",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
+      targetMuscles: ["Latissimus Dorsi", "Shoulders"],
+      isPremium: true,
+    },
+    {
+      id: "27",
+      name: "PVC Pipe Overhead Mobility",
+      description: "Shoulder and thoracic mobility using PVC pipe",
+      instructions: "Hold PVC pipe with wide grip overhead. Lower pipe behind head keeping arms straight. Lift back overhead. Focus on shoulder flexibility.",
       equipment: ["3-4' PVC Pipe"],
-      jointMovements: ["Thoracic Rotation", "Thoracic Lateral Flexion"],
+      jointMovements: ["Shoulder Flexion", "Thoracic Extension"],
       difficulty: 3,
       intensity: 2,
       duration: "3 minutes",
       hasVideo: true,
       hasDocument: true,
       videoUrl: "https://www.youtube.com/embed/vugBFBOe1II",
-      targetMuscles: ["Thoracic Spine", "Shoulders"],
+      targetMuscles: ["Shoulders", "Chest", "Thoracic Spine"],
       isPremium: true,
     },
   ];
@@ -301,8 +563,8 @@ const ExerciseLibrary = () => {
                   <SelectContent>
                     <SelectItem value="all">All Equipment</SelectItem>
                     {equipmentList.map((equipment) => (
-                      <SelectItem key={equipment} value={equipment}>
-                        {equipment}
+                      <SelectItem key={equipment.name} value={equipment.name}>
+                        {equipment.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -373,13 +635,19 @@ const ExerciseLibrary = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {equipmentList.map((equipment, index) => (
               <Card 
-                key={equipment} 
+                key={equipment.name} 
                 className="cursor-pointer hover:shadow-md transition-shadow"
-                onClick={() => setSelectedEquipment(equipment)}
+                onClick={() => setSelectedEquipment(equipment.name)}
               >
                 <CardContent className="p-4 text-center">
-                  <div className="text-2xl mb-2">🏋️</div>
-                  <p className="text-sm font-medium">{equipment}</p>
+                  <div className="mb-3">
+                    <img 
+                      src={equipment.image} 
+                      alt={equipment.name}
+                      className="w-16 h-16 object-cover rounded-lg mx-auto"
+                    />
+                  </div>
+                  <p className="text-sm font-medium">{equipment.name}</p>
                 </CardContent>
               </Card>
             ))}
