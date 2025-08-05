@@ -5,9 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import ExerciseCard from "@/components/ExerciseCard";
-import { Search, Plus, Filter } from "lucide-react";
+import { Search, Plus, Filter, Lock, Crown } from "lucide-react";
+import { useSubscription } from "@/hooks/useSubscription";
+import { SubscriptionGate } from "@/components/SubscriptionGate";
 
 const ExerciseLibrary = () => {
+  const { subscribed } = useSubscription();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedJointMovement, setSelectedJointMovement] = useState("all");
@@ -53,7 +56,7 @@ const ExerciseLibrary = () => {
   ];
 
   // Enhanced exercises data with detailed information
-  const exercises = [
+  const freeExercises = [
     {
       id: "1",
       name: "Push-ups",
@@ -146,6 +149,92 @@ const ExerciseLibrary = () => {
     },
   ];
 
+  // Premium exercises (locked for non-subscribers)
+  const premiumExercises = [
+    {
+      id: "7",
+      name: "Bulgarian Split Squats",
+      description: "Single-leg exercise for unilateral strength and stability",
+      instructions: "Stand 2 feet in front of bench. Place rear foot on bench. Lower into lunge position, keeping front knee over ankle. Push through front heel to return.",
+      equipment: ["12-36\" Box/Chair"],
+      jointMovements: ["Hip Flexion", "Knee Flexion"],
+      difficulty: 4,
+      intensity: 4,
+      duration: "45 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/2C-uNgKwPLE",
+      targetMuscles: ["Quadriceps", "Glutes", "Hamstrings", "Core"],
+      isPremium: true,
+    },
+    {
+      id: "8",
+      name: "Turkish Get-ups",
+      description: "Complex movement pattern for full-body coordination",
+      instructions: "Start lying on back with weight in right hand. Press weight overhead. Use left hand and elbow to prop up. Transition to standing while keeping weight overhead.",
+      equipment: ["Two 2.5 lbs Plates"],
+      jointMovements: ["Shoulder Flexion", "Hip Flexion", "Thoracic Extension"],
+      difficulty: 5,
+      intensity: 4,
+      duration: "2 minutes",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/0bWRPC49noU",
+      targetMuscles: ["Full Body", "Core", "Shoulders"],
+      isPremium: true,
+    },
+    {
+      id: "9",
+      name: "Advanced Band Pull-aparts",
+      description: "Posterior deltoid and rhomboid strengthening with bands",
+      instructions: "Hold band at chest level with arms extended. Pull band apart by squeezing shoulder blades together. Control return to start position.",
+      equipment: ["Yellow Perform Better Band"],
+      jointMovements: ["Shoulder Horizontal Abduction"],
+      difficulty: 3,
+      intensity: 3,
+      duration: "60 seconds",
+      hasVideo: true,
+      hasDocument: false,
+      videoUrl: "https://www.youtube.com/embed/tZkMJvhCZGU",
+      targetMuscles: ["Rear Delts", "Rhomboids", "Middle Traps"],
+      isPremium: true,
+    },
+    {
+      id: "10",
+      name: "Single-Arm Farmer's Walk",
+      description: "Unilateral loaded carry for core stability and grip strength",
+      instructions: "Hold weight in one hand at side. Walk forward maintaining upright posture. Keep shoulders level and core engaged throughout.",
+      equipment: ["Two 2.5 lbs Plates"],
+      jointMovements: ["Shoulder Stabilization"],
+      difficulty: 3,
+      intensity: 4,
+      duration: "90 seconds",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/rt17lmnaLSM",
+      targetMuscles: ["Core", "Shoulders", "Forearms"],
+      isPremium: true,
+    },
+    {
+      id: "11",
+      name: "Advanced Thoracic Spine Mobility",
+      description: "Complex thoracic spine movement patterns with PVC pipe",
+      instructions: "Hold PVC pipe overhead. Rotate torso left and right while maintaining arm position. Add lateral bending for increased mobility.",
+      equipment: ["3-4' PVC Pipe"],
+      jointMovements: ["Thoracic Rotation", "Thoracic Lateral Flexion"],
+      difficulty: 3,
+      intensity: 2,
+      duration: "3 minutes",
+      hasVideo: true,
+      hasDocument: true,
+      videoUrl: "https://www.youtube.com/embed/vugBFBOe1II",
+      targetMuscles: ["Thoracic Spine", "Shoulders"],
+      isPremium: true,
+    },
+  ];
+
+  const exercises = subscribed ? [...freeExercises, ...premiumExercises] : freeExercises;
+
   const filteredExercises = exercises.filter(exercise => {
     const matchesSearch = exercise.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exercise.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -168,9 +257,15 @@ const ExerciseLibrary = () => {
         <div className="mb-8">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Exercise Library</h1>
+              <h1 className="text-3xl font-bold text-foreground flex items-center gap-2">
+                Exercise Library
+                {subscribed && <Crown className="h-6 w-6 text-primary" />}
+              </h1>
               <p className="text-muted-foreground">
-                Comprehensive collection of anti-sitting exercises
+                {subscribed 
+                  ? "Full access to all exercises and premium features" 
+                  : "Free exercises available • Upgrade for full library access"
+                }
               </p>
             </div>
             <Button className="flex items-center space-x-2">
@@ -336,10 +431,43 @@ const ExerciseLibrary = () => {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredExercises.map((exercise, index) => (
-                <ExerciseCard key={index} {...exercise} />
-              ))}
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredExercises.map((exercise, index) => (
+                  <ExerciseCard key={index} {...exercise} />
+                ))}
+              </div>
+              
+              {/* Premium Section for Non-Subscribers */}
+              {!subscribed && (
+                <div className="mt-12">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                      <Lock className="h-5 w-5" />
+                      Premium Exercises ({premiumExercises.length})
+                    </h2>
+                    <Badge variant="secondary" className="bg-primary/10 text-primary">
+                      Premium Only
+                    </Badge>
+                  </div>
+                  
+                  <SubscriptionGate feature="advanced exercise library">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-50 pointer-events-none">
+                      {premiumExercises.slice(0, 6).map((exercise, index) => (
+                        <div key={index} className="relative">
+                          <ExerciseCard {...exercise} />
+                          <div className="absolute inset-0 bg-background/80 flex items-center justify-center rounded-lg">
+                            <div className="text-center">
+                              <Lock className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                              <p className="text-sm font-medium text-muted-foreground">Premium Exercise</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </SubscriptionGate>
+                </div>
+              )}
             </div>
           )}
         </div>

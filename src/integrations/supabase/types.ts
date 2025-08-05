@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      daily_workouts: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string | null
+          workout_data: Json
+          workout_date: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id?: string | null
+          workout_data: Json
+          workout_date?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string | null
+          workout_data?: Json
+          workout_date?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -44,6 +68,42 @@ export type Database = {
           id?: string
           updated_at?: string
           username?: string | null
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          stripe_customer_id: string | null
+          subscribed: boolean
+          subscription_end: string | null
+          subscription_tier: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
