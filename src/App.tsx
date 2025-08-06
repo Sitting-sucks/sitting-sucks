@@ -28,19 +28,37 @@ const App = () => (
             <div className="min-h-screen">
               <Routes>
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/*" element={
+                <Route path="/" element={
                   <ProtectedRoute>
                     <Navigation />
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/exercise-library" element={<ExerciseLibrary />} />
-                      <Route path="/daily-workout" element={<DailyWorkout />} />
-                      <Route path="/health-news" element={<HealthNews />} />
-                      <Route path="/store" element={<EquipmentStore />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
+                    <Dashboard />
                   </ProtectedRoute>
                 } />
+                <Route path="/exercise-library" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <ExerciseLibrary />
+                  </ProtectedRoute>
+                } />
+                <Route path="/daily-workout" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <DailyWorkout />
+                  </ProtectedRoute>
+                } />
+                <Route path="/health-news" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <HealthNews />
+                  </ProtectedRoute>
+                } />
+                <Route path="/store" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <EquipmentStore />
+                  </ProtectedRoute>
+                } />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
           </BrowserRouter>
