@@ -5,6 +5,18 @@ import { Badge } from "@/components/ui/badge";
 import EquipmentCard from "@/components/EquipmentCard";
 import { ShoppingCart, Package, Star, CheckCircle } from "lucide-react";
 
+// Import equipment images
+import yellowBandImg from "@/assets/equipment/yellow-band.jpg";
+import purpleHandleImg from "@/assets/equipment/purple-handle.jpg";
+import heelWedgesImg from "@/assets/equipment/heel-wedges.jpg";
+import weightPlatesImg from "@/assets/equipment/weight-plates.jpg";
+import forearmSpinnerImg from "@/assets/equipment/forearm-spinner.jpg";
+import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
+import yogaBlocksImg from "@/assets/equipment/yoga-blocks.jpg";
+import lacrosseBallImg from "@/assets/equipment/lacrosse-ball.jpg";
+import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
+import exerciseBoxImg from "@/assets/equipment/exercise-box.jpg";
+
 const EquipmentStore = () => {
   const [cartItems, setCartItems] = useState<string[]>([]);
 
@@ -15,7 +27,7 @@ const EquipmentStore = () => {
       description: "High-quality resistance band for strengthening and mobility work",
       price: 24.99,
       category: "Resistance",
-      image: "/src/assets/equipment/yellow-band.jpg",
+      image: yellowBandImg,
       inStock: true
     },
     {
@@ -23,7 +35,7 @@ const EquipmentStore = () => {
       description: "Ergonomic handle for resistance band exercises",
       price: 12.99,
       category: "Accessories",
-      image: "/src/assets/equipment/purple-handle.jpg",
+      image: purpleHandleImg,
       inStock: true
     },
     {
@@ -31,7 +43,7 @@ const EquipmentStore = () => {
       description: "Adjustable heel wedges for proper positioning and stretching",
       price: 19.99,
       category: "Positioning",
-      image: "/src/assets/equipment/heel-wedges.jpg",
+      image: heelWedgesImg,
       inStock: true
     },
     {
@@ -39,7 +51,7 @@ const EquipmentStore = () => {
       description: "Compact weight plates for added resistance",
       price: 29.99,
       category: "Weights",
-      image: "/src/assets/equipment/weight-plates.jpg",
+      image: weightPlatesImg,
       inStock: true
     },
     {
@@ -47,7 +59,7 @@ const EquipmentStore = () => {
       description: "Rotational device for forearm and wrist strengthening",
       price: 34.99,
       category: "Strength",
-      image: "/src/assets/equipment/forearm-spinner.jpg",
+      image: forearmSpinnerImg,
       inStock: true
     },
     {
@@ -55,7 +67,7 @@ const EquipmentStore = () => {
       description: "36-inch high-density foam roller for myofascial release",
       price: 39.99,
       category: "Recovery",
-      image: "/src/assets/equipment/foam-roller.jpg",
+      image: foamRollerImg,
       inStock: true
     },
     {
@@ -63,7 +75,7 @@ const EquipmentStore = () => {
       description: "EVA foam blocks for support and alignment",
       price: 22.99,
       category: "Support",
-      image: "/src/assets/equipment/yoga-blocks.jpg",
+      image: yogaBlocksImg,
       inStock: true
     },
     {
@@ -71,7 +83,7 @@ const EquipmentStore = () => {
       description: "Firm rubber ball for targeted trigger point release",
       price: 8.99,
       category: "Recovery",
-      image: "/src/assets/equipment/lacrosse-ball.jpg",
+      image: lacrosseBallImg,
       inStock: true
     },
     {
@@ -79,7 +91,7 @@ const EquipmentStore = () => {
       description: "Lightweight PVC pipe for mobility and stretching exercises",
       price: 15.99,
       category: "Mobility",
-      image: "/src/assets/equipment/pvc-pipe.jpg",
+      image: pvcPipeImg,
       inStock: true
     },
     {
@@ -87,7 +99,7 @@ const EquipmentStore = () => {
       description: "Height-adjustable platform for step-ups and positioning",
       price: 89.99,
       category: "Equipment",
-      image: "/src/assets/equipment/exercise-box.jpg",
+      image: exerciseBoxImg,
       inStock: true
     }
   ];
