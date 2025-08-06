@@ -19,7 +19,7 @@ import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
 import yogaBlocksImg from "@/assets/equipment/yoga-blocks.jpg";
 import lacrosseBallImg from "@/assets/equipment/lacrosse-ball.jpg";
 import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
-import exerciseBoxImg from "@/assets/equipment/exercise-box.jpg";
+import exerciseChairImg from "@/assets/equipment/exercise-chair.jpg";
 
 const ExerciseLibrary = () => {
   const { subscribed } = useSubscription();
@@ -40,7 +40,7 @@ const ExerciseLibrary = () => {
     { name: "Yoga Blocks", image: yogaBlocksImg },
     { name: "Lacrosse Ball", image: lacrosseBallImg },
     { name: "3-4' PVC Pipe", image: pvcPipeImg },
-    { name: "12-36\" Box/Chair", image: exerciseBoxImg }
+    { name: "12-36\" Box/Chair", image: exerciseChairImg }
   ];
 
   // Joint movements for all body segments

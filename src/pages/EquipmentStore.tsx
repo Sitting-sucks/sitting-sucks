@@ -12,6 +12,10 @@ import heelWedgesImg from "@/assets/equipment/heel-wedges.jpg";
 import weightPlatesImg from "@/assets/equipment/weight-plates.jpg";
 import forearmSpinnerImg from "@/assets/equipment/forearm-spinner.jpg";
 import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
+import lacrosseBallImg from "@/assets/equipment/lacrosse-ball.jpg";
+import exerciseChairImg from "@/assets/equipment/exercise-chair.jpg";
+import yogaBlocksImg from "@/assets/equipment/yoga-blocks.jpg";
+import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
 
 const EquipmentStore = () => {
   const [cartItems, setCartItems] = useState<string[]>([]);
@@ -64,6 +68,38 @@ const EquipmentStore = () => {
       price: 39.99,
       category: "Recovery",
       image: foamRollerImg,
+      inStock: true
+    },
+    {
+      name: "Lacrosse Ball",
+      description: "Firm rubber ball for targeted trigger point release",
+      price: 8.99,
+      category: "Recovery",
+      image: lacrosseBallImg,
+      inStock: true
+    },
+    {
+      name: "12-36\" Adjustable Chair",
+      description: "Wooden chair for step-ups and positioning exercises",
+      price: 89.99,
+      category: "Equipment",
+      image: exerciseChairImg,
+      inStock: true
+    },
+    {
+      name: "Yoga Blocks (Set of 2)",
+      description: "EVA foam blocks for support and alignment",
+      price: 22.99,
+      category: "Support",
+      image: yogaBlocksImg,
+      inStock: true
+    },
+    {
+      name: "3-4' PVC Pipe",
+      description: "Lightweight PVC pipe for mobility and stretching exercises",
+      price: 15.99,
+      category: "Mobility",
+      image: pvcPipeImg,
       inStock: true
     }
   ];
