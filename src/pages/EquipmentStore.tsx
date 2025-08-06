@@ -8,13 +8,14 @@ import { ShoppingCart, Package, Star, CheckCircle } from "lucide-react";
 const EquipmentStore = () => {
   const [cartItems, setCartItems] = useState<string[]>([]);
 
-  // Equipment data based on your specifications
+  // Equipment data with actual photos
   const equipmentItems = [
     {
       name: "Yellow Perform Better Band",
       description: "High-quality resistance band for strengthening and mobility work",
       price: 24.99,
       category: "Resistance",
+      image: "/src/assets/equipment/yellow-band.jpg",
       inStock: true
     },
     {
@@ -22,6 +23,7 @@ const EquipmentStore = () => {
       description: "Ergonomic handle for resistance band exercises",
       price: 12.99,
       category: "Accessories",
+      image: "/src/assets/equipment/purple-handle.jpg",
       inStock: true
     },
     {
@@ -29,6 +31,7 @@ const EquipmentStore = () => {
       description: "Adjustable heel wedges for proper positioning and stretching",
       price: 19.99,
       category: "Positioning",
+      image: "/src/assets/equipment/heel-wedges.jpg",
       inStock: true
     },
     {
@@ -36,6 +39,7 @@ const EquipmentStore = () => {
       description: "Compact weight plates for added resistance",
       price: 29.99,
       category: "Weights",
+      image: "/src/assets/equipment/weight-plates.jpg",
       inStock: true
     },
     {
@@ -43,6 +47,7 @@ const EquipmentStore = () => {
       description: "Rotational device for forearm and wrist strengthening",
       price: 34.99,
       category: "Strength",
+      image: "/src/assets/equipment/forearm-spinner.jpg",
       inStock: true
     },
     {
@@ -50,6 +55,7 @@ const EquipmentStore = () => {
       description: "36-inch high-density foam roller for myofascial release",
       price: 39.99,
       category: "Recovery",
+      image: "/src/assets/equipment/foam-roller.jpg",
       inStock: true
     },
     {
@@ -57,6 +63,7 @@ const EquipmentStore = () => {
       description: "EVA foam blocks for support and alignment",
       price: 22.99,
       category: "Support",
+      image: "/src/assets/equipment/yoga-blocks.jpg",
       inStock: true
     },
     {
@@ -64,6 +71,7 @@ const EquipmentStore = () => {
       description: "Firm rubber ball for targeted trigger point release",
       price: 8.99,
       category: "Recovery",
+      image: "/src/assets/equipment/lacrosse-ball.jpg",
       inStock: true
     },
     {
@@ -71,6 +79,7 @@ const EquipmentStore = () => {
       description: "Lightweight PVC pipe for mobility and stretching exercises",
       price: 15.99,
       category: "Mobility",
+      image: "/src/assets/equipment/pvc-pipe.jpg",
       inStock: true
     },
     {
@@ -78,6 +87,7 @@ const EquipmentStore = () => {
       description: "Height-adjustable platform for step-ups and positioning",
       price: 89.99,
       category: "Equipment",
+      image: "/src/assets/equipment/exercise-box.jpg",
       inStock: true
     }
   ];
@@ -168,6 +178,7 @@ const EquipmentStore = () => {
                 description={item.description}
                 price={item.price}
                 category={item.category}
+                image={item.image}
                 inStock={item.inStock}
               />
             ))}
