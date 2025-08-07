@@ -81,36 +81,6 @@ const exercisePool: Exercise[] = [
       "Keep front knee over ankle",
       "Push through front heel to return to start"
     ]
-  },
-  {
-    name: "Mountain Climbers",
-    description: "Dynamic cardio exercise that targets core and legs",
-    duration: 30,
-    equipment: ["None"],
-    targetMuscles: ["Core", "Shoulders", "Legs"],
-    difficulty: 3,
-    intensity: 4,
-    instructions: [
-      "Start in plank position",
-      "Rapidly alternate bringing knees to chest",
-      "Keep hips level and core engaged",
-      "Maintain steady rhythm"
-    ]
-  },
-  {
-    name: "Burpees",
-    description: "Full-body exercise combining squat, plank, and jump",
-    duration: 45,
-    equipment: ["None"],
-    targetMuscles: ["Full Body"],
-    difficulty: 4,
-    intensity: 5,
-    instructions: [
-      "Start standing, then squat down",
-      "Place hands on ground and jump feet back to plank",
-      "Do a push-up, then jump feet back to squat",
-      "Jump up with arms overhead"
-    ]
   }
 ];
 
