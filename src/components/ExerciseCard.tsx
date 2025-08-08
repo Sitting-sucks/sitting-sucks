@@ -18,6 +18,9 @@ interface ExerciseCardProps {
   duration?: string;
   videoUrl?: string;
   targetMuscles?: string[];
+  baseline?: string;
+  progression?: string;
+  regression?: string;
 }
 
 const ExerciseCard = ({ 
@@ -32,7 +35,10 @@ const ExerciseCard = ({
   hasDocument = false,
   duration,
   videoUrl,
-  targetMuscles = []
+  targetMuscles = [],
+  baseline,
+  progression,
+  regression
 }: ExerciseCardProps) => {
   const getDifficultyColor = (level: number) => {
     const colors = {
@@ -247,6 +253,35 @@ const ExerciseCard = ({
                     </div>
                   </div>
                 </div>
+
+                {/* Exercise Variations */}
+                {(baseline || progression || regression) && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Exercise Variations</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {regression && (
+                        <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-900/10">
+                          <h4 className="font-medium text-green-700 dark:text-green-400 mb-2">Regression (Easier)</h4>
+                          <p className="text-sm text-green-600 dark:text-green-300">{regression}</p>
+                        </div>
+                      )}
+                      
+                      {baseline && (
+                        <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-900/10">
+                          <h4 className="font-medium text-blue-700 dark:text-blue-400 mb-2">Baseline (Standard)</h4>
+                          <p className="text-sm text-blue-600 dark:text-blue-300">{baseline}</p>
+                        </div>
+                      )}
+                      
+                      {progression && (
+                        <div className="p-4 border rounded-lg bg-orange-50 dark:bg-orange-900/10">
+                          <h4 className="font-medium text-orange-700 dark:text-orange-400 mb-2">Progression (Harder)</h4>
+                          <p className="text-sm text-orange-600 dark:text-orange-300">{progression}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </DialogContent>
           </Dialog>
