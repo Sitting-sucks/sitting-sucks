@@ -57,9 +57,9 @@ const EquipmentStore = () => {
     {
       name: "Forearm Spinner",
       description: "Rotational device for forearm and wrist strengthening",
-      price: 34.99,
+      price: 15.00,
       category: "Strength",
-      image: forearmSpinnerImg,
+      image: "/lovable-uploads/72822b45-61da-48c3-881d-cf3badab9ca9.png",
       inStock: true
     },
     {
