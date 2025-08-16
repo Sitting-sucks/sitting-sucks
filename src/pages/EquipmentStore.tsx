@@ -35,7 +35,7 @@ const EquipmentStore = () => {
       description: "Ergonomic handle for resistance band exercises",
       price: 12.99,
       category: "Accessories",
-      image: purpleHandleImg,
+      image: "/lovable-uploads/bc8597f3-16a0-407c-a423-cfd0f339b083.png",
       inStock: true
     },
     {
