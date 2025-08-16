@@ -114,6 +114,15 @@ const EquipmentStore = () => {
       image: "/lovable-uploads/e47971dd-fbd4-4cb9-bb97-b1dc4a3ebafc.png",
       inStock: true,
       externalLink: "https://amzn.to/45DK2Cz"
+    },
+    {
+      name: "Hypervolt Massage Gun",
+      description: "Professional percussion massage device for muscle recovery and pain relief",
+      price: 220.00,
+      category: "Recovery",
+      image: "/lovable-uploads/640c8213-90dd-49d3-8120-4b328af9a99b.png",
+      inStock: true,
+      externalLink: "https://amzn.to/4oyO5Zr"
     }
   ];
 

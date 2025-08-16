@@ -26,11 +26,20 @@ const EquipmentCard = ({
     <Card className="hover:shadow-lg transition-shadow">
       {image && (
         <div className="aspect-video overflow-hidden rounded-t-lg">
-          <img 
-            src={image} 
-            alt={name}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          />
+          {externalLink ? (
+            <img 
+              src={image} 
+              alt={name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+              onClick={() => window.open(externalLink, '_blank')}
+            />
+          ) : (
+            <img 
+              src={image} 
+              alt={name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+          )}
         </div>
       )}
       <CardHeader>
