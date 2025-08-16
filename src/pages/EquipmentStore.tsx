@@ -25,15 +25,15 @@ const EquipmentStore = () => {
     {
       name: "Yellow Perform Better Band",
       description: "High-quality resistance band for strengthening and mobility work",
-      price: 24.99,
+      price: 9.99,
       category: "Resistance",
-      image: yellowBandImg,
+      image: "/lovable-uploads/341515b9-64c7-49bd-ac77-1129071bed02.png",
       inStock: true
     },
     {
       name: "Purple Plastic Handle", 
       description: "Ergonomic handle for resistance band exercises",
-      price: 12.99,
+      price: 14.99,
       category: "Accessories",
       image: "/lovable-uploads/bc8597f3-16a0-407c-a423-cfd0f339b083.png",
       inStock: true
