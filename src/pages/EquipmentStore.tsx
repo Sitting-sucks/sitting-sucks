@@ -81,9 +81,9 @@ const EquipmentStore = () => {
     {
       name: "Yoga Blocks (Set of 2)",
       description: "EVA foam blocks for support and alignment",
-      price: 22.99,
+      price: 24.99,
       category: "Support",
-      image: yogaBlocksImg,
+      image: "/lovable-uploads/265c2daf-70cc-4d76-8cbf-1cc0da212765.png",
       inStock: true
     },
     {

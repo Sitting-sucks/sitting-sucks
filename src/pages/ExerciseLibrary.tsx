@@ -37,7 +37,7 @@ const ExerciseLibrary = () => {
     { name: "Two 2.5 lbs Plates", image: weightPlatesImg },
     { name: "Forearm Spinner", image: "/lovable-uploads/72822b45-61da-48c3-881d-cf3badab9ca9.png" },
     { name: "Foam Roller", image: foamRollerImg },
-    { name: "Yoga Blocks", image: yogaBlocksImg },
+    { name: "Yoga Blocks", image: "/lovable-uploads/265c2daf-70cc-4d76-8cbf-1cc0da212765.png" },
     { name: "Lacrosse Ball", image: lacrosseBallImg },
     { name: "3-4' PVC Pipe", image: pvcPipeImg },
     { name: "Chair", image: exerciseChairImg }
