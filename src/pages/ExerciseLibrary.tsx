@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import ExerciseCard from "@/components/ExerciseCard";
-import { Search, Plus, Filter, Lock, Crown } from "lucide-react";
+import { Search, Plus, Filter, Lock, Crown, Eye } from "lucide-react";
 import { useSubscription } from "@/hooks/useSubscription";
 import { SubscriptionGate } from "@/components/SubscriptionGate";
 
@@ -28,6 +30,7 @@ const ExerciseLibrary = () => {
   const [selectedJointMovement, setSelectedJointMovement] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
+  const [previewVariations, setPreviewVariations] = useState(false);
 
   // Equipment categories with images
   const equipmentList = [
@@ -607,6 +610,24 @@ const ExerciseLibrary = () => {
                   Clear Filters
                 </Button>
               </div>
+              
+              {/* Preview Variations Toggle */}
+              {!subscribed && (
+                <div className="flex items-center space-x-2 mt-4 p-3 bg-muted/30 rounded-lg">
+                  <Eye className="h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="preview-variations" className="text-sm font-medium">
+                    Preview Exercise Variations
+                  </Label>
+                  <Switch
+                    id="preview-variations"
+                    checked={previewVariations}
+                    onCheckedChange={setPreviewVariations}
+                  />
+                  <Badge variant="outline" className="text-xs">
+                    Preview Mode
+                  </Badge>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -684,7 +705,7 @@ const ExerciseLibrary = () => {
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredExercises.map((exercise, index) => (
-                  <ExerciseCard key={index} {...exercise} />
+                  <ExerciseCard key={index} {...exercise} allowPreview={previewVariations} />
                 ))}
               </div>
               

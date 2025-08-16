@@ -22,6 +22,7 @@ interface ExerciseCardProps {
   baseline?: string;
   progression?: string;
   regression?: string;
+  allowPreview?: boolean;
 }
 
 const ExerciseCard = ({ 
@@ -39,7 +40,8 @@ const ExerciseCard = ({
   targetMuscles = [],
   baseline,
   progression,
-  regression
+  regression,
+  allowPreview = false
 }: ExerciseCardProps) => {
   const getDifficultyColor = (level: number) => {
     const colors = {
@@ -257,8 +259,15 @@ const ExerciseCard = ({
 
                 {/* Exercise Variations */}
                 {(baseline || progression || regression) && (
-                  <SubscriptionGate feature="exercise progressions and regressions">
-                    <div>
+                  <SubscriptionGate feature="exercise progressions and regressions" requiresPremium={!allowPreview}>
+                    <div className="relative">
+                      {allowPreview && (
+                        <div className="absolute -top-2 -right-2 z-10">
+                          <Badge variant="outline" className="text-xs bg-background/80 backdrop-blur-sm">
+                            Preview Mode
+                          </Badge>
+                        </div>
+                      )}
                       <h3 className="text-lg font-semibold mb-3">Exercise Variations</h3>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {regression && (
