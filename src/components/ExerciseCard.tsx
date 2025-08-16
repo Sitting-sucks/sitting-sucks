@@ -276,7 +276,7 @@ const ExerciseCard = ({
                             <p className="text-sm text-green-600 dark:text-green-300 mb-3">{regression}</p>
                             <div className="flex flex-wrap gap-1">
                               <Badge className="text-xs bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400 border-green-200 dark:border-green-700">
-                                Wall
+                                Knees
                               </Badge>
                             </div>
                           </div>
