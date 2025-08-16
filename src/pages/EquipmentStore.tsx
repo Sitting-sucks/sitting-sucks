@@ -79,14 +79,6 @@ const EquipmentStore = () => {
       inStock: true
     },
     {
-      name: "12-36\" Adjustable Chair",
-      description: "Wooden chair for step-ups and positioning exercises",
-      price: 89.99,
-      category: "Equipment",
-      image: exerciseChairImg,
-      inStock: true
-    },
-    {
       name: "Yoga Blocks (Set of 2)",
       description: "EVA foam blocks for support and alignment",
       price: 22.99,
@@ -162,7 +154,7 @@ const EquipmentStore = () => {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold mb-3">Includes all 10 essential items:</h3>
+                <h3 className="font-semibold mb-3">Includes all 9 essential items:</h3>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   {equipmentItems.map((item, index) => (
                     <div key={index} className="flex items-center space-x-2">

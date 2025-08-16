@@ -40,7 +40,7 @@ const ExerciseLibrary = () => {
     { name: "Yoga Blocks", image: yogaBlocksImg },
     { name: "Lacrosse Ball", image: lacrosseBallImg },
     { name: "3-4' PVC Pipe", image: pvcPipeImg },
-    { name: "12-36\" Box/Chair", image: exerciseChairImg }
+    { name: "Chair", image: exerciseChairImg }
   ];
 
   // Joint movements for all body segments
