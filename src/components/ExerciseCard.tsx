@@ -273,21 +273,36 @@ const ExerciseCard = ({
                         {regression && (
                           <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-900/10">
                             <h4 className="font-medium text-green-700 dark:text-green-400 mb-2">Regression (Easier)</h4>
-                            <p className="text-sm text-green-600 dark:text-green-300">{regression}</p>
+                            <p className="text-sm text-green-600 dark:text-green-300 mb-3">{regression}</p>
+                            <div className="flex flex-wrap gap-1">
+                              <Badge className="text-xs bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400 border-green-200 dark:border-green-700">
+                                Wall
+                              </Badge>
+                            </div>
                           </div>
                         )}
                         
                         {baseline && (
                           <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-900/10">
                             <h4 className="font-medium text-blue-700 dark:text-blue-400 mb-2">Baseline (Standard)</h4>
-                            <p className="text-sm text-blue-600 dark:text-blue-300">{baseline}</p>
+                            <p className="text-sm text-blue-600 dark:text-blue-300 mb-3">{baseline}</p>
+                            <div className="flex flex-wrap gap-1">
+                              <Badge className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-800/20 dark:text-blue-400 border-blue-200 dark:border-blue-700">
+                                Floor
+                              </Badge>
+                            </div>
                           </div>
                         )}
                         
                         {progression && (
                           <div className="p-4 border rounded-lg bg-orange-50 dark:bg-orange-900/10">
                             <h4 className="font-medium text-orange-700 dark:text-orange-400 mb-2">Progression (Harder)</h4>
-                            <p className="text-sm text-orange-600 dark:text-orange-300">{progression}</p>
+                            <p className="text-sm text-orange-600 dark:text-orange-300 mb-3">{progression}</p>
+                            <div className="flex flex-wrap gap-1">
+                              <Badge className="text-xs bg-orange-100 text-orange-800 dark:bg-orange-800/20 dark:text-orange-400 border-orange-200 dark:border-orange-700">
+                                Foam Roller
+                              </Badge>
+                            </div>
                           </div>
                         )}
                       </div>
