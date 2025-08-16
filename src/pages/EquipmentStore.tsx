@@ -43,7 +43,7 @@ const EquipmentStore = () => {
       description: "Adjustable heel wedges for proper positioning and stretching",
       price: 19.99,
       category: "Positioning",
-      image: heelWedgesImg,
+      image: "/lovable-uploads/5b31325f-a9c5-4b98-95a8-fcdcfc3bd59c.png",
       inStock: true
     },
     {
