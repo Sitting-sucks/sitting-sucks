@@ -31,7 +31,7 @@ const ExerciseLibrary = () => {
 
   // Equipment categories with images
   const equipmentList = [
-    { name: "Yellow Perform Better Band", image: yellowBandImg },
+    { name: "Yellow Perform Better Band", image: "/lovable-uploads/341515b9-64c7-49bd-ac77-1129071bed02.png" },
     { name: "Purple Plastic Handle", image: "/lovable-uploads/bc8597f3-16a0-407c-a423-cfd0f339b083.png" },
     { name: "Heel Wedges", image: heelWedgesImg },
     { name: "Two 2.5 lbs Plates", image: weightPlatesImg },
