@@ -81,7 +81,7 @@ const ExerciseLibrary = () => {
       jointMovements: ["Shoulder Flexion", "Elbow Extension", "Wrist Extension", "Shoulder Retraction"],
       difficulty: 3,
       intensity: 3,
-      duration: "30 seconds",
+      duration: "4-10 reps",
       hasVideo: true,
       hasDocument: false,
       videoUrl: "https://www.youtube.com/embed/IODxDxX7oi4",
