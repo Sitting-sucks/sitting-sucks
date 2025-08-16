@@ -204,6 +204,15 @@ const ExerciseCard = ({
                         </div>
                       </div>
                       
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Progression Equipment:</span>
+                        <div className="flex flex-wrap gap-1">
+                          <Badge className="text-xs bg-orange-100 text-orange-800 dark:bg-orange-800/20 dark:text-orange-400 border-orange-200 dark:border-orange-700">
+                            Foam Roller (Harder)
+                          </Badge>
+                        </div>
+                      </div>
+                      
                       {duration && (
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Duration:</span>
