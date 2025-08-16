@@ -104,6 +104,18 @@ const EquipmentStore = () => {
     }
   ];
 
+  // Premium add-on equipment (not in starter kit)
+  const premiumEquipment = [
+    {
+      name: "Gray Cook Band",
+      description: "Professional functional movement training system with handles and straps",
+      price: 65.00,
+      category: "Functional Training",
+      image: "/lovable-uploads/3c5ceafa-c961-4870-85db-42608268c79d.png",
+      inStock: true
+    }
+  ];
+
   // Calculate starter kit price (with discount)
   const starterKitPrice = equipmentItems.reduce((total, item) => total + item.price, 0);
   const starterKitDiscount = starterKitPrice * 0.15; // 15% discount
@@ -178,6 +190,25 @@ const EquipmentStore = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Premium Equipment */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-6">Premium Equipment</h2>
+          <p className="text-muted-foreground mb-6">Advanced training tools for enhanced functionality</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {premiumEquipment.map((item, index) => (
+              <EquipmentCard
+                key={index}
+                name={item.name}
+                description={item.description}
+                price={item.price}
+                category={item.category}
+                image={item.image}
+                inStock={item.inStock}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* Individual Equipment */}
         <div className="mb-8">
