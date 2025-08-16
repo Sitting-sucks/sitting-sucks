@@ -105,6 +105,15 @@ const EquipmentStore = () => {
       category: "Functional Training",
       image: "/lovable-uploads/3c5ceafa-c961-4870-85db-42608268c79d.png",
       inStock: true
+    },
+    {
+      name: "Roman Chair",
+      description: "Professional hyperextension bench for core and lower back strengthening",
+      price: 149.99,
+      category: "Strength Training",
+      image: "/lovable-uploads/e47971dd-fbd4-4cb9-bb97-b1dc4a3ebafc.png",
+      inStock: true,
+      externalLink: "https://amzn.to/45DK2Cz"
     }
   ];
 
@@ -197,6 +206,7 @@ const EquipmentStore = () => {
                 category={item.category}
                 image={item.image}
                 inStock={item.inStock}
+                externalLink={item.externalLink}
               />
             ))}
           </div>

@@ -10,6 +10,7 @@ interface EquipmentCardProps {
   category: string;
   image?: string;
   inStock?: boolean;
+  externalLink?: string;
 }
 
 const EquipmentCard = ({ 
@@ -18,7 +19,8 @@ const EquipmentCard = ({
   price, 
   category, 
   image, 
-  inStock = true 
+  inStock = true,
+  externalLink 
 }: EquipmentCardProps) => {
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -48,14 +50,26 @@ const EquipmentCard = ({
               {inStock ? "In Stock" : "Out of Stock"}
             </p>
           </div>
-          <Button 
-            variant={inStock ? "default" : "secondary"} 
-            disabled={!inStock}
-            className="flex items-center space-x-2"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            <span>Add to Cart</span>
-          </Button>
+          {externalLink ? (
+            <Button 
+              variant={inStock ? "default" : "secondary"} 
+              disabled={!inStock}
+              className="flex items-center space-x-2"
+              onClick={() => window.open(externalLink, '_blank')}
+            >
+              <ShoppingCart className="h-4 w-4" />
+              <span>Buy on Amazon</span>
+            </Button>
+          ) : (
+            <Button 
+              variant={inStock ? "default" : "secondary"} 
+              disabled={!inStock}
+              className="flex items-center space-x-2"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              <span>Add to Cart</span>
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
