@@ -227,6 +227,23 @@ const ExerciseLibrary = () => {
       progression: "Toe extension plank without chair support",
       regression: "Toe extension stretch while seated",
     },
+    {
+      id: "14",
+      name: "Wrist Flexion/Extension with Forearm Spinner",
+      description: "Tie 2.5 lb plate to string attached to the spinner. let the string be fully unwound and weight lying on the floor. Keeping elbows and spine straight, spin the spinner to raise the weight all the way to the top and control it back to the floor. Make sure to keep your posture and elbows straight, this one burns!",
+      instructions: "Tie 2.5 lb plate to string attached to the spinner. Let the string be fully unwound and weight lying on the floor. Keeping elbows and spine straight, spin the spinner to raise the weight all the way to the top and control it back to the floor. Make sure to keep your posture and elbows straight, this one burns!",
+      equipment: ["Forearm Spinner", "Two 2.5 lbs Plates"],
+      jointMovements: ["Wrist Flexion", "Wrist Extension"],
+      difficulty: 2,
+      intensity: 4,
+      duration: "1-3 full reps up and down",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["Flexor Carpi Radialis", "Flexor Carpi Ulnaris", "Extensor Carpi Radialis", "Extensor Carpi Ulnaris"],
+      baseline: "Wrist flexion/extension with forearm spinner and 2.5 lb plate",
+      progression: "Wrist flexion/extension with heavier weight",
+      regression: "Wrist flexion/extension without weight",
+    },
   ];
 
   // Premium exercises array - empty for now
