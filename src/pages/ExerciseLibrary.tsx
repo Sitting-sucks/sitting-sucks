@@ -261,6 +261,23 @@ const ExerciseLibrary = () => {
       progression: "Walk further away from sturdy structure",
       regression: "Reverse fly without band",
     },
+    {
+      id: "16",
+      name: "Standing Hip Abduction",
+      description: "Single-leg balance exercise targeting hip abductor muscles",
+      instructions: "Holding onto something sturdy align your shoulder hip and ankle on one side allowing the other foot to hover off the ground. While keeping both legs as straight as possible bring the hovering leg as far away from the standing leg.",
+      equipment: ["None"],
+      jointMovements: ["Hip Abduction"],
+      difficulty: 3,
+      intensity: 4,
+      duration: "8-20 reps",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["Gluteus Medius", "Gluteus Minimus", "Tensor Fasciae Latae"],
+      baseline: "Standing hip abduction with sturdy support",
+      progression: "Standing hip abduction with yellow perform better band",
+      regression: "Side-lying hip abduction",
+    },
   ];
 
   // Premium exercises array - empty for now
