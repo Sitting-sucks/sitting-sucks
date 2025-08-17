@@ -158,6 +158,9 @@ const ExerciseLibrary = () => {
       hasDocument: false,
       videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
       targetMuscles: ["Calves", "Ankles"],
+      baseline: "Double-leg calf raises on flat ground",
+      progression: "Single-leg calf raises or calf raises on heel wedges",
+      regression: "Calf raises with chair support",
     },
     {
       id: "10",
@@ -190,8 +193,8 @@ const ExerciseLibrary = () => {
       hasDocument: false,
       targetMuscles: ["Tibialis Posterior", "Flexor Digitorum Longus", "Flexor Hallucis Longus"],
       baseline: "Ankle inversion with yellow band resistance",
-      progression: null,
-      regression: null,
+      progression: "Ankle inversion with stronger resistance band",
+      regression: "Ankle inversion without resistance",
     },
     {
       id: "12",
@@ -207,8 +210,8 @@ const ExerciseLibrary = () => {
       hasDocument: false,
       targetMuscles: ["Peroneus Longus", "Peroneus Brevis", "Peroneus Tertius"],
       baseline: "Ankle eversion with yellow band resistance",
-      progression: null,
-      regression: null,
+      progression: "Ankle eversion with stronger resistance band",
+      regression: "Ankle eversion without resistance",
     },
     {
       id: "13",
