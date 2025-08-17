@@ -159,6 +159,23 @@ const ExerciseLibrary = () => {
       videoUrl: "https://www.youtube.com/embed/QE1GDSVObyE",
       targetMuscles: ["Calves", "Ankles"],
     },
+    {
+      id: "10",
+      name: "Heel Wedge Calf Stretch",
+      description: "Deep calf and plantar flexing muscles using heel wedges",
+      instructions: "Put your heel wedges so the longest part of the wedge is face up allowing toes to be higher than the heal putting the ankle into dorsiflexion, forcing the calf to stretch.",
+      equipment: ["Heel Wedges"],
+      jointMovements: ["Ankle Dorsiflexion"],
+      difficulty: 1,
+      intensity: 4,
+      duration: "30 s - 2 minutes",
+      hasVideo: false,
+      hasDocument: true,
+      targetMuscles: ["Calves", "Plantar Flexor Muscles"],
+      baseline: "Heel wedge calf stretch with yoga block for assistance",
+      progression: "Heel wedge calf stretch with added weight",
+      regression: "Heel wedge calf stretch using chair for assistance",
+    },
   ];
 
   // Premium exercises array - empty for now
