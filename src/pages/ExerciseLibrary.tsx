@@ -87,8 +87,8 @@ const ExerciseLibrary = () => {
       videoUrl: "https://www.youtube.com/embed/IODxDxX7oi4",
       targetMuscles: ["Pectoralis Major", "Anterior Deltoids", "Triceps Brachii", "Transverse Abdominis", "Pectoralis Minor", "Rhomboid", "Teres Major"],
       baseline: "Standard push-up from toes",
-      progression: "Plankle push-ups: foam roller placed under feet while maintaining plantarflexion",
-      regression: "Modified push-ups performed from the knees",
+      progression: "Decline push-ups with feet elevated on chair",
+      regression: "Incline push-ups with hands on chair",
     },
     {
       id: "2",
