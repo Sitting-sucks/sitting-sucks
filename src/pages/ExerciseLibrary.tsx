@@ -210,6 +210,23 @@ const ExerciseLibrary = () => {
       progression: null,
       regression: null,
     },
+    {
+      id: "13",
+      name: "Toe Extension Plank",
+      description: "Stand or kneel in front of chair ready to use it for assistance. Put all 5 toes on each foot into a deep extension stretch put your elbows or hands on the chair and hold yourself up forcing a big stretch in your toes, bottom of foot/ankle, and perhaps even the quads. Keep your spine neutral.",
+      instructions: "Stand or kneel in front of chair ready to use it for assistance. Put all 5 toes on each foot into a deep extension stretch put your elbows or hands on the chair and hold yourself up forcing a big stretch in your toes, bottom of foot/ankle, and perhaps even the quads. Keep your spine neutral.",
+      equipment: ["Chair"],
+      jointMovements: ["Toe Extension", "Ankle Dorsiflexion", "Lumbar Neutral"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "20-60 seconds",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["Toe Extensors", "Plantar Fascia", "Quadriceps", "Core Stabilizers"],
+      baseline: "Toe extension plank with chair support",
+      progression: "Toe extension plank without chair support",
+      regression: "Toe extension stretch while seated",
+    },
   ];
 
   // Premium exercises array - empty for now
