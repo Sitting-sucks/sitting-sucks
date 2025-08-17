@@ -213,7 +213,7 @@ const ExerciseLibrary = () => {
     {
       id: "13",
       name: "Toe Extension Plank",
-      description: "Stand or kneel in front of chair ready to use it for assistance. Put all 5 toes on each foot into a deep extension stretch put your elbows or hands on the chair and hold yourself up forcing a big stretch in your toes, bottom of foot/ankle, and perhaps even the quads. Keep your spine neutral.",
+      description: "Deep toe extension stretch that targets the plantar fascia and improves foot mobility",
       instructions: "Stand or kneel in front of chair ready to use it for assistance. Put all 5 toes on each foot into a deep extension stretch put your elbows or hands on the chair and hold yourself up forcing a big stretch in your toes, bottom of foot/ankle, and perhaps even the quads. Keep your spine neutral.",
       equipment: ["Chair"],
       jointMovements: ["Toe Extension", "Ankle Dorsiflexion", "Lumbar Neutral"],
@@ -230,7 +230,7 @@ const ExerciseLibrary = () => {
     {
       id: "14",
       name: "Wrist Flexion/Extension with Forearm Spinner",
-      description: "Tie 2.5 lb plate to string attached to the spinner. let the string be fully unwound and weight lying on the floor. Keeping elbows and spine straight, spin the spinner to raise the weight all the way to the top and control it back to the floor. Make sure to keep your posture and elbows straight, this one burns!",
+      description: "Intense forearm strengthening exercise using weighted resistance",
       instructions: "Tie 2.5 lb plate to string attached to the spinner. Let the string be fully unwound and weight lying on the floor. Keeping elbows and spine straight, spin the spinner to raise the weight all the way to the top and control it back to the floor. Make sure to keep your posture and elbows straight, this one burns!",
       equipment: ["Forearm Spinner", "Two 2.5 lbs Plates"],
       jointMovements: ["Wrist Flexion", "Wrist Extension"],
@@ -247,7 +247,7 @@ const ExerciseLibrary = () => {
     {
       id: "15",
       name: "Reverse Fly",
-      description: "Anchor the purple band to something sturdy with an equal amount of band left on each side. Stand facing the sturdy structure and grab the handles. Place your thumbs on the back side of the handles with the rest of your fingers. Start with light tension thinking you are trying to pull the sturdy object towards you with the band while pinching your shoulder blades together.",
+      description: "Posterior deltoid and rhomboid strengthening exercise using resistance band",
       instructions: "Anchor the purple band to something sturdy with an equal amount of band left on each side. Stand facing the sturdy structure and grab the handles. Place your thumbs on the back side of the handles with the rest of your fingers. Start with light tension thinking you are trying to pull the sturdy object towards you with the band while pinching your shoulder blades together.",
       equipment: ["Purple Plastic Handle"],
       jointMovements: ["Shoulder Horizontal Abduction", "Shoulder External Rotation"],
