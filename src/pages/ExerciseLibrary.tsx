@@ -244,6 +244,23 @@ const ExerciseLibrary = () => {
       progression: "Wrist flexion/extension with heavier weight",
       regression: "Wrist flexion/extension without weight",
     },
+    {
+      id: "15",
+      name: "Reverse Fly",
+      description: "Anchor the purple band to something sturdy with an equal amount of band left on each side. Stand facing the sturdy structure and grab the handles. Place your thumbs on the back side of the handles with the rest of your fingers. Start with light tension thinking you are trying to pull the sturdy object towards you with the band while pinching your shoulder blades together.",
+      instructions: "Anchor the purple band to something sturdy with an equal amount of band left on each side. Stand facing the sturdy structure and grab the handles. Place your thumbs on the back side of the handles with the rest of your fingers. Start with light tension thinking you are trying to pull the sturdy object towards you with the band while pinching your shoulder blades together.",
+      equipment: ["Purple Plastic Handle"],
+      jointMovements: ["Shoulder Horizontal Abduction", "Shoulder External Rotation"],
+      difficulty: 3,
+      intensity: 2,
+      duration: "6-15 reps",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["Posterior Deltoids", "Rhomboids", "Middle Trapezius"],
+      baseline: "Reverse fly with purple band",
+      progression: "Walk further away from sturdy structure",
+      regression: "Reverse fly without band",
+    },
   ];
 
   // Premium exercises array - empty for now
