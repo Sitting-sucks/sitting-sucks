@@ -281,6 +281,23 @@ const ExerciseLibrary = () => {
       progression: "Standing hip abduction with yellow perform better band",
       regression: "Side-lying hip abduction",
     },
+    {
+      id: "17",
+      name: "Side Plank",
+      description: "Lateral core stabilization exercise targeting obliques and deep stabilizers",
+      instructions: "Lie on your side with legs extended and stacked. Support your upper body on your forearm, keeping elbow directly under shoulder. Lift hips off ground, creating a straight line from head to feet. Keep shoulders, hips, and ankles aligned. Hold position while breathing normally.",
+      equipment: ["None"],
+      jointMovements: ["Cervical Neutral", "Thoracic Lateral Flexion", "Lumbar Lateral Flexion", "Hip Neutral", "Shoulder Stabilization"],
+      difficulty: 2,
+      intensity: 3,
+      duration: "15-45 seconds each side",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["External Obliques", "Internal Obliques", "Quadratus Lumborum", "Transverse Abdominis", "Gluteus Medius"],
+      baseline: "Forearm side plank with straight body alignment",
+      progression: "Side plank with leg lifts or arm reaches",
+      regression: "Modified side plank with knees on ground or against wall",
+    },
   ];
 
   // Premium exercises array - empty for now
