@@ -311,6 +311,24 @@ const ExerciseLibrary = () => {
       regression: "Modified side plank with knees on ground or against wall",
       categories: ["strength"],
     },
+    {
+      id: "18",
+      name: "Overhead Shoulder Flexion on Foam Roller (PVC Pipe)",
+      description: "A mobility drill to restore full shoulder flexion while reinforcing thoracic spine extension. This exercise teaches your shoulders to move overhead without compensation from the lower back.",
+      instructions: "Lie lengthwise on a foam roller so that your head and lumbar spine are supported. (Finding balance may be tricky at first — use your core to stabilize.) Grab the PVC pipe with both hands, thumbs wrapped in the same direction as your fingers to promote slight external rotation at the shoulders. Keep ribs down and lower back flat on the roller. Slowly raise the PVC pipe overhead as far as possible, focusing on motion coming from the shoulders and thoracic spine only. Avoid arching your low back — spine stays long and flat on the roller. Lower the bar back down under control.",
+      equipment: ["Foam Roller", "3-4' PVC Pipe"],
+      jointMovements: ["Shoulder Flexion", "Thoracic Extension", "Lumbar Neutral", "Shoulder External Rotation"],
+      difficulty: 2,
+      intensity: 2,
+      duration: "8-12 controlled reps or 30-60 seconds continuous motion",
+      hasVideo: false,
+      hasDocument: false,
+      targetMuscles: ["Anterior Deltoids", "Middle Deltoids", "Serratus Anterior", "Lower Trapezius", "Rectus Abdominis", "Obliques"],
+      baseline: "Overhead shoulder flexion with foam roller and PVC pipe",
+      progression: "Overhead shoulder flexion with longer hold times or single-arm variations",
+      regression: "Overhead shoulder flexion without foam roller or with shorter range of motion",
+      categories: ["mobility"],
+    },
   ];
 
   // Premium exercises array - empty for now
