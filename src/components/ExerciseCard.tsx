@@ -22,6 +22,7 @@ interface ExerciseCardProps {
   baseline?: string;
   progression?: string;
   regression?: string;
+  categories?: string[];
   allowPreview?: boolean;
 }
 
@@ -41,6 +42,7 @@ const ExerciseCard = ({
   baseline,
   progression,
   regression,
+  categories = [],
   allowPreview = false
 }: ExerciseCardProps) => {
   const getDifficultyColor = (level: number) => {
@@ -70,6 +72,19 @@ const ExerciseCard = ({
           <div className="flex-1">
             <CardTitle className="text-lg">{name}</CardTitle>
             <CardDescription className="mt-2">{description}</CardDescription>
+            {categories.length > 0 && (
+              <div className="flex gap-1 mt-2">
+                {categories.map((category, index) => (
+                  <Badge 
+                    key={index} 
+                    variant={category === "mobility" ? "default" : "secondary"}
+                    className={`text-xs ${category === "mobility" ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-blue-100 text-blue-800 hover:bg-blue-200"}`}
+                  >
+                    {category}
+                  </Badge>
+                ))}
+              </div>
+            )}
             {duration && (
               <div className="flex items-center mt-2 text-sm text-muted-foreground">
                 <Clock className="h-3 w-3 mr-1" />

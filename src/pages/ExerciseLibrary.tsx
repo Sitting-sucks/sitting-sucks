@@ -30,6 +30,7 @@ const ExerciseLibrary = () => {
   const [selectedJointMovement, setSelectedJointMovement] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [previewVariations, setPreviewVariations] = useState(false);
 
   // Equipment categories with images
@@ -89,6 +90,7 @@ const ExerciseLibrary = () => {
       baseline: "Standard push-up from toes",
       progression: "Decline push-ups with feet elevated on chair",
       regression: "Incline push-ups with hands on chair",
+      categories: ["strength"],
     },
     {
       id: "2",
@@ -106,6 +108,7 @@ const ExerciseLibrary = () => {
       baseline: "Bodyweight squat to 90 degrees",
       progression: "Squat with weight plates or single-leg pistol squat",
       regression: "Squat to chair or with heel wedges for ankle mobility assistance",
+      categories: ["mobility", "strength"],
     },
     {
       id: "3",
@@ -124,6 +127,7 @@ const ExerciseLibrary = () => {
       baseline: "Forearm plank with neutral spine",
       progression: "Single-arm plank or plank with leg lifts",
       regression: "Incline plank with hands on chair/box or knee plank",
+      categories: ["strength"],
     },
     {
       id: "4",
@@ -142,6 +146,7 @@ const ExerciseLibrary = () => {
       baseline: "Forward lunge with bodyweight",
       progression: "Walking lunges or lunges with weight plates",
       regression: "Stationary lunge with chair support or reverse lunge",
+      categories: ["mobility", "strength"],
     },
     {
       id: "8",
@@ -160,6 +165,7 @@ const ExerciseLibrary = () => {
       baseline: "Double-leg calf raises on flat ground",
       progression: "Single-leg calf raises or calf raises on heel wedges",
       regression: "Calf raises with chair support",
+      categories: ["strength"],
     },
     {
       id: "10",
@@ -177,6 +183,7 @@ const ExerciseLibrary = () => {
       baseline: "Heel wedge calf stretch with yoga block for assistance",
       progression: "Heel wedge calf stretch with added weight",
       regression: "Heel wedge calf stretch using chair for assistance",
+      categories: ["mobility"],
     },
     {
       id: "11",
@@ -194,6 +201,7 @@ const ExerciseLibrary = () => {
       baseline: "Ankle inversion with yellow band resistance",
       progression: "Ankle inversion with stronger resistance band",
       regression: "Ankle inversion without resistance",
+      categories: ["strength"],
     },
     {
       id: "12",
@@ -211,6 +219,7 @@ const ExerciseLibrary = () => {
       baseline: "Ankle eversion with yellow band resistance",
       progression: "Ankle eversion with stronger resistance band",
       regression: "Ankle eversion without resistance",
+      categories: ["strength"],
     },
     {
       id: "13",
@@ -228,6 +237,7 @@ const ExerciseLibrary = () => {
       baseline: "Toe extension plank with chair support",
       progression: "Toe extension plank without chair support",
       regression: "Toe extension stretch while seated",
+      categories: ["mobility"],
     },
     {
       id: "14",
@@ -245,6 +255,7 @@ const ExerciseLibrary = () => {
       baseline: "Wrist flexion/extension with forearm spinner and 2.5 lb plate",
       progression: "Wrist flexion/extension with heavier weight",
       regression: "Wrist flexion/extension without weight",
+      categories: ["strength"],
     },
     {
       id: "15",
@@ -262,6 +273,7 @@ const ExerciseLibrary = () => {
       baseline: "Reverse fly with purple band",
       progression: "Walk further away from sturdy structure",
       regression: "Reverse fly without band",
+      categories: ["strength"],
     },
     {
       id: "16",
@@ -279,6 +291,7 @@ const ExerciseLibrary = () => {
       baseline: "Standing hip abduction with sturdy support",
       progression: "Standing hip abduction with yellow perform better band",
       regression: "Side-lying hip abduction",
+      categories: ["strength"],
     },
     {
       id: "17",
@@ -296,6 +309,7 @@ const ExerciseLibrary = () => {
       baseline: "Forearm side plank with straight body alignment",
       progression: "Side plank with leg lifts or arm reaches",
       regression: "Modified side plank with knees on ground or against wall",
+      categories: ["strength"],
     },
   ];
 
@@ -315,8 +329,18 @@ const ExerciseLibrary = () => {
                             exercise.difficulty.toString() === selectedDifficulty;
     const matchesIntensity = selectedIntensity === "all" ||
                            exercise.intensity.toString() === selectedIntensity;
+    const matchesCategory = selectedCategory === "all" ||
+                           exercise.categories.includes(selectedCategory);
     
-    return matchesSearch && matchesEquipment && matchesJointMovement && matchesDifficulty && matchesIntensity;
+    return matchesSearch && matchesEquipment && matchesJointMovement && matchesDifficulty && matchesIntensity && matchesCategory;
+  }).sort((a, b) => {
+    // Sort by category: mobility first, then strength
+    const aHasMobility = a.categories.includes("mobility");
+    const bHasMobility = b.categories.includes("mobility");
+    
+    if (aHasMobility && !bHasMobility) return -1;
+    if (!aHasMobility && bHasMobility) return 1;
+    return 0;
   });
 
   return (
@@ -352,7 +376,7 @@ const ExerciseLibrary = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -362,6 +386,17 @@ const ExerciseLibrary = () => {
                     className="pl-10"
                   />
                 </div>
+
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="mobility">Mobility</SelectItem>
+                    <SelectItem value="strength">Strength</SelectItem>
+                  </SelectContent>
+                </Select>
 
                 <Select value={selectedEquipment} onValueChange={setSelectedEquipment}>
                   <SelectTrigger>
@@ -423,6 +458,7 @@ const ExerciseLibrary = () => {
                   variant="outline" 
                   onClick={() => {
                     setSearchTerm("");
+                    setSelectedCategory("all");
                     setSelectedEquipment("all");
                     setSelectedJointMovement("all");
                     setSelectedDifficulty("all");
