@@ -9,7 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Navigation from "./components/Navigation";
 import Dashboard from "./pages/Dashboard";
 import ExerciseLibrary from "./pages/ExerciseLibrary";
-import DailyWorkout from "./pages/DailyWorkout";
 import EquipmentStore from "./pages/EquipmentStore";
 
 import Auth from "./pages/Auth";
@@ -38,12 +37,6 @@ const App = () => (
                   <ProtectedRoute>
                     <Navigation />
                     <ExerciseLibrary />
-                  </ProtectedRoute>
-                } />
-                <Route path="/daily-workout" element={
-                  <ProtectedRoute>
-                    <Navigation />
-                    <DailyWorkout />
                   </ProtectedRoute>
                 } />
                 <Route path="/store" element={
