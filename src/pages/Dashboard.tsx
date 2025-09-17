@@ -3,24 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
-  Calendar, 
   Library, 
   ShoppingCart, 
   Target, 
   TrendingUp, 
   Clock,
   Zap,
-  Award
+  Award,
+  Heart,
+  ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  // Mock data for demonstration
-  const todaysWorkout = {
-    name: "Anti-Sitting Protocol",
-    duration: "25 minutes",
-    exercises: 8,
-    focusAreas: ["Hip Flexors", "Thoracic Spine", "Glutes"]
+  // Anti-Sitting Daily Protocol data
+  const antiSittingProtocol = {
+    name: "Anti-Sitting Daily Protocol",
+    description: "Essential mobility exercises to counteract sitting damage",
+    keyExercises: [
+      "Calf & Hamstring Stretch",
+      "Hip Flexor Release", 
+      "Thoracic Extension",
+      "Glute Activation"
+    ],
+    benefits: [
+      "Improves posture",
+      "Reduces back pain", 
+      "Increases energy",
+      "Better circulation"
+    ]
   };
 
   const weeklyProgress = {
@@ -40,16 +51,16 @@ const Dashboard = () => {
             <p className="text-xl mb-8">Ready to combat the effects of sitting? Let's get moving!</p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/daily-workout">
+              <Link to="/exercise-library">
                 <Button size="lg" variant="secondary" className="flex items-center space-x-2">
                   <Zap className="h-5 w-5" />
-                  <span>Start Today's Workout</span>
+                  <span>Start Exercises</span>
                 </Button>
               </Link>
-              <Link to="/exercise-library">
+              <Link to="/store">
                 <Button size="lg" variant="outline" className="flex items-center space-x-2 border-white text-white hover:bg-white hover:text-primary">
-                  <Library className="h-5 w-5" />
-                  <span>Browse Exercises</span>
+                  <ShoppingCart className="h-5 w-5" />
+                  <span>Get Equipment</span>
                 </Button>
               </Link>
             </div>
@@ -113,44 +124,52 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Today's Workout & Quick Actions */}
+        {/* Anti-Sitting Protocol & Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Today's Workout */}
-          <Card>
+          {/* Anti-Sitting Daily Protocol */}
+          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Calendar className="h-5 w-5" />
-                <span>Today's Workout</span>
+                <Heart className="h-5 w-5 text-primary" />
+                <span>Anti-Sitting Daily Protocol</span>
               </CardTitle>
-              <CardDescription>Your personalized anti-sitting protocol</CardDescription>
+              <CardDescription>Essential exercises to combat sitting damage</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-semibold text-lg">{todaysWorkout.name}</h3>
-                  <div className="flex items-center space-x-4 text-sm text-muted-foreground mt-2">
-                    <span className="flex items-center space-x-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{todaysWorkout.duration}</span>
-                    </span>
-                    <span>{todaysWorkout.exercises} exercises</span>
+                  <h3 className="font-semibold text-lg text-primary">{antiSittingProtocol.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {antiSittingProtocol.description}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-2">Key Exercises:</p>
+                  <div className="space-y-2">
+                    {antiSittingProtocol.keyExercises.map((exercise, index) => (
+                      <div key={index} className="flex items-center space-x-2 text-sm">
+                        <ArrowRight className="h-3 w-3 text-primary" />
+                        <span>{exercise}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium mb-2">Focus Areas:</p>
+                  <p className="text-sm font-medium mb-2">Benefits:</p>
                   <div className="flex flex-wrap gap-2">
-                    {todaysWorkout.focusAreas.map((area, index) => (
-                      <Badge key={index} variant="secondary">
-                        {area}
+                    {antiSittingProtocol.benefits.map((benefit, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        {benefit}
                       </Badge>
                     ))}
                   </div>
                 </div>
 
-                <Link to="/daily-workout">
+                <Link to="/exercise-library">
                   <Button className="w-full" size="lg">
-                    Start Workout
+                    Explore Exercises
                   </Button>
                 </Link>
               </div>
