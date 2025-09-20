@@ -42,7 +42,7 @@ const Pricing = () => {
               </CardDescription>
               <div className="text-center mt-4">
                 <span className="text-4xl font-bold">$30</span>
-                <span className="text-muted-foreground">/one-time</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
             </CardHeader>
             <CardContent className="relative space-y-6">
