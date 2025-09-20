@@ -14,7 +14,7 @@ export const SubscriptionGate = ({ children, feature, requiresPremium = true }: 
   const navigate = useNavigate();
 
   const handleSubscribe = () => {
-    navigate('/pricing');
+    navigate('/landing');
   };
 
   // For now, always show the subscription gate for premium features

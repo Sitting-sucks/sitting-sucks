@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import ExerciseLibrary from "./pages/ExerciseLibrary";
 import EquipmentStore from "./pages/EquipmentStore";
 import Pricing from "./pages/Pricing";
+import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -25,8 +26,9 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <div className="min-h-screen">
-              <Routes>
+            <Routes>
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/landing" element={<Landing />} />
                 <Route path="/" element={
                   <ProtectedRoute>
                     <Navigation />
