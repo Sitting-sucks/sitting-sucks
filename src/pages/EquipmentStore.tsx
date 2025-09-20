@@ -87,9 +87,9 @@ const EquipmentStore = () => {
       inStock: true
     },
     {
-      name: "3-4' PVC Pipe",
+      name: "5' PVC Pipe",
       description: "Lightweight PVC pipe for mobility and stretching exercises",
-      price: 15.99,
+      price: 9.99,
       category: "Mobility",
       image: pvcPipeImg,
       inStock: true
