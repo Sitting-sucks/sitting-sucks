@@ -10,7 +10,7 @@ import Navigation from "./components/Navigation";
 import Dashboard from "./pages/Dashboard";
 import ExerciseLibrary from "./pages/ExerciseLibrary";
 import EquipmentStore from "./pages/EquipmentStore";
-
+import Pricing from "./pages/Pricing";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -43,6 +43,12 @@ const App = () => (
                   <ProtectedRoute>
                     <Navigation />
                     <EquipmentStore />
+                  </ProtectedRoute>
+                } />
+                <Route path="/pricing" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <Pricing />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

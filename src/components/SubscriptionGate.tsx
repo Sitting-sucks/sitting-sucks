@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Lock, Crown, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useSubscription } from '@/hooks/useSubscription';
-import { toast } from 'sonner';
 
 interface SubscriptionGateProps {
   children: ReactNode;
@@ -13,15 +12,11 @@ interface SubscriptionGateProps {
 }
 
 export const SubscriptionGate = ({ children, feature, requiresPremium = true }: SubscriptionGateProps) => {
-  const { subscribed, createCheckoutSession } = useSubscription();
+  const { subscribed } = useSubscription();
+  const navigate = useNavigate();
 
-  const handleSubscribe = async () => {
-    try {
-      await createCheckoutSession();
-    } catch (error) {
-      toast.error('Failed to start subscription process. Please try again.');
-      console.error('Subscription error:', error);
-    }
+  const handleSubscribe = () => {
+    navigate('/pricing');
   };
 
   if (!requiresPremium || subscribed) {
@@ -64,16 +59,13 @@ export const SubscriptionGate = ({ children, feature, requiresPremium = true }: 
         </div>
         
         <div className="text-center">
-          <Badge variant="secondary" className="mb-4">
-            Special Offer: $15/month
-          </Badge>
           <Button 
             onClick={handleSubscribe}
             className="w-full"
             size="lg"
           >
             <Crown className="mr-2 h-4 w-4" />
-            Upgrade to Premium
+            Subscribe
           </Button>
         </div>
       </CardContent>
