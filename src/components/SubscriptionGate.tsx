@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Lock, Crown, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useSubscription } from '@/hooks/useSubscription';
 
 interface SubscriptionGateProps {
   children: ReactNode;
@@ -12,14 +11,15 @@ interface SubscriptionGateProps {
 }
 
 export const SubscriptionGate = ({ children, feature, requiresPremium = true }: SubscriptionGateProps) => {
-  const { subscribed } = useSubscription();
   const navigate = useNavigate();
 
   const handleSubscribe = () => {
     navigate('/pricing');
   };
 
-  if (!requiresPremium || subscribed) {
+  // For now, always show the subscription gate for premium features
+  // TODO: Add proper subscription checking once billing is fully set up
+  if (!requiresPremium) {
     return <>{children}</>;
   }
 
