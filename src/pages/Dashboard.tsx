@@ -118,8 +118,11 @@ const Dashboard = () => {
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-sm font-bold text-primary">Premium Active</div>
-              <p className="text-xs text-muted-foreground">$15/month</p>
+              <Link to="/landing">
+                <Button className="w-full">
+                  Subscribe
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
