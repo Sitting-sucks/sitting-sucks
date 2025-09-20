@@ -47,9 +47,9 @@ const EquipmentStore = () => {
       inStock: true
     },
     {
-      name: "Two 25 lbs Plates",
+      name: "Two 2.5 lbs Plates",
       description: "Professional weight plates for added resistance",
-      price: 29.99,
+      price: 19.99,
       category: "Weights",
       image: weightPlatesImg,
       inStock: true
