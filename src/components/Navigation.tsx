@@ -76,9 +76,11 @@ const Navigation = () => {
             
             <ThemeToggle />
             
-            <Button variant="outline">
-              Subscribe
-            </Button>
+            <Link to="/landing">
+              <Button variant="outline">
+                Subscribe
+              </Button>
+            </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -141,9 +143,11 @@ const Navigation = () => {
               
               <div className="flex items-center justify-between">
                 <ThemeToggle />
-                <Button variant="outline" className="flex-1 ml-2">
-                  Subscribe
-                </Button>
+                <Link to="/landing" className="flex-1 ml-2">
+                  <Button variant="outline" className="w-full">
+                    Subscribe
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
