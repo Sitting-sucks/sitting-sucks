@@ -77,7 +77,7 @@ const Navigation = () => {
             <ThemeToggle />
             
             <Button variant="outline">
-              Subscribe - $15/month
+              Subscribe
             </Button>
 
             <DropdownMenu>
@@ -142,7 +142,7 @@ const Navigation = () => {
               <div className="flex items-center justify-between">
                 <ThemeToggle />
                 <Button variant="outline" className="flex-1 ml-2">
-                  Subscribe - $15/month
+                  Subscribe
                 </Button>
               </div>
             </div>
