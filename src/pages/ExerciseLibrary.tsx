@@ -54,6 +54,13 @@ const ExerciseLibrary = () => {
     return 0;
   });
 
+  // Get available joint movements from filtered exercises
+  const availableJointMovements = Array.from(
+    new Set(
+      filteredExercises.flatMap(exercise => exercise.jointMovements)
+    )
+  ).filter(movement => jointMovements.includes(movement));
+
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedEquipment("all");
@@ -219,30 +226,32 @@ const ExerciseLibrary = () => {
       </Card>
 
       {/* Joint Movement Categories */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Joint Movement Categories</CardTitle>
-          <CardDescription>
-            Select specific joint movements to target
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {jointMovements.map((movement) => (
-              <Badge
-                key={movement}
-                variant={selectedJointMovement === movement ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => setSelectedJointMovement(
-                  selectedJointMovement === movement ? "all" : movement
-                )}
-              >
-                {movement}
-              </Badge>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {availableJointMovements.length > 0 && (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Joint Movement Categories</CardTitle>
+            <CardDescription>
+              Select specific joint movements to target
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {availableJointMovements.map((movement) => (
+                <Badge
+                  key={movement}
+                  variant={selectedJointMovement === movement ? "default" : "outline"}
+                  className="cursor-pointer"
+                  onClick={() => setSelectedJointMovement(
+                    selectedJointMovement === movement ? "all" : movement
+                  )}
+                >
+                  {movement}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Results Count */}
       <div className="mb-6 flex items-center justify-between">
