@@ -277,6 +277,25 @@ export const exercises: Exercise[] = [
     progression: "Overhead shoulder flexion with longer hold times or single-arm variations",
     regression: "Overhead shoulder flexion without foam roller or with shorter range of motion",
     categories: ["mobility"],
+  },
+  {
+    id: "19",
+    name: "Supine Core Stability with Band Hold",
+    description: "A core stability drill that integrates shoulder stability with trunk control. By holding the band under tension across the chest, you train the deep core to resist extension and reinforce spinal alignment.",
+    instructions: "Anchor the purple plastic-handle band securely to a stable point just above head level when lying on your back. Lie on the floor with head near the anchor and feet pointed away. Grab the band with both hands, arms extended straight above the chest or slightly lower. Pull to create tension on the band, then hold the arms steady, keeping elbows locked. Keep ribs down and low back flat to the floor. For progression: Add alternating hip flexion/leg raises while maintaining the band hold.",
+    equipment: ["Purple Plastic Handle"],
+    jointMovements: ["Shoulder Flexion", "Lumbar Neutral", "Hip Flexion"],
+    difficulty: 2,
+    intensity: 3,
+    duration: "2–3 sets of 20–40 seconds hold (progress to 60 seconds)",
+    hasVideo: true,
+    hasDocument: false,
+    videoUrl: "https://www.youtube.com/embed/8pJqShYuhHU",
+    targetMuscles: ["Rectus Abdominis", "Transverse Abdominis", "Hip Flexors", "Anterior Deltoids", "Pectoralis Major", "Serratus Anterior", "Lower Trapezius", "Gluteus Maximus", "External Obliques", "Internal Obliques"],
+    baseline: "Supine band hold with arms extended, maintaining spinal contact",
+    progression: "Add alternating hip flexion/leg raises while maintaining band hold",
+    regression: "Reduce band tension or perform without band resistance",
+    categories: ["strength"],
   }
 ];
 
