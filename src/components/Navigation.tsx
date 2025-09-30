@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dumbbell, Library, ShoppingCart, Target, Menu, X, LogOut, User } from "lucide-react";
+import { Dumbbell, Library, ShoppingCart, Menu, X, LogOut, User } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -42,7 +42,6 @@ const Navigation = () => {
   const navItems = [
     { path: "/", label: "Dashboard", icon: Dumbbell },
     { path: "/exercise-library", label: "Exercise Library", icon: Library },
-    { path: "/programs", label: "Programs", icon: Target },
     { path: "/store", label: "Equipment Store", icon: ShoppingCart },
   ];
 
