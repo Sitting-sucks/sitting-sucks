@@ -10,6 +10,7 @@ import Navigation from "./components/Navigation";
 import Dashboard from "./pages/Dashboard";
 import ExerciseLibrary from "./pages/ExerciseLibrary";
 import EquipmentStore from "./pages/EquipmentStore";
+import Programs from "./pages/Programs";
 import Pricing from "./pages/Pricing";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -45,6 +46,12 @@ const App = () => (
                   <ProtectedRoute>
                     <Navigation />
                     <EquipmentStore />
+                  </ProtectedRoute>
+                } />
+                <Route path="/programs" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <Programs />
                   </ProtectedRoute>
                 } />
                 <Route path="/pricing" element={
