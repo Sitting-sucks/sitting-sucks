@@ -1,96 +1,140 @@
+/* Import Inter font for modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/*
+  SITTING SUCKS - Design System
+  Modern fitness app design inspired by Peloton, Strava, and Strong
+  Colors are HSL for consistency
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 210 60% 15%;
+    /* Light Mode - Clean, energetic, professional */
+    --background: 0 0% 99%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 60% 15%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 60% 15%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 0 85% 55%;
-    --primary-foreground: 0 0% 98%;
+    /* Primary: Energetic Coral/Red - Action, Energy, Passion */
+    --primary: 4 90% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 60% 15%;
+    /* Secondary: Deep Navy - Trust, Professionalism */
+    --secondary: 222 47% 11%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 0 85% 90%;
-    --accent-foreground: 210 60% 15%;
+    /* Accent: Vibrant Orange - Motivation, Achievement */
+    --accent: 24 95% 53%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 0 85% 55%;
+    /* Success: Emerald Green - Progress, Health */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Warning: Amber - Attention, Caution */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Info: Sky Blue - Information, Calm */
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    /* Streak: Fire Orange for streak displays */
+    --streak: 24 100% 50%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 4 90% 58%;
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 4 90% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 4 90% 58%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Chart colors for analytics */
+    --chart-1: 4 90% 58%;
+    --chart-2: 160 84% 39%;
+    --chart-3: 24 95% 53%;
+    --chart-4: 199 89% 48%;
+    --chart-5: 262 83% 58%;
   }
 
   .dark {
-    --background: 210 60% 8%;
+    /* Dark Mode - Premium, immersive fitness experience */
+    --background: 222 47% 6%;
     --foreground: 0 0% 98%;
 
-    --card: 210 60% 12%;
+    --card: 222 47% 9%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 210 60% 12%;
+    --popover: 222 47% 9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 85% 55%;
-    --primary-foreground: 0 0% 98%;
+    /* Primary: Brighter coral in dark mode for visibility */
+    --primary: 4 90% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 60% 20%;
+    --secondary: 222 30% 18%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 60% 20%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 222 30% 15%;
+    --muted-foreground: 220 9% 60%;
 
-    --accent: 0 85% 20%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 24 95% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 60% 25%;
-    --input: 210 60% 25%;
-    --ring: 0 85% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --success: 160 84% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 0%;
+
+    --info: 199 89% 55%;
+    --info-foreground: 0 0% 100%;
+
+    --streak: 24 100% 55%;
+
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 4 90% 60%;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 4 90% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 222 30% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 222 30% 20%;
+    --sidebar-ring: 4 90% 60%;
+
+    --chart-1: 4 90% 60%;
+    --chart-2: 160 84% 45%;
+    --chart-3: 24 95% 55%;
+    --chart-4: 199 89% 55%;
+    --chart-5: 262 83% 62%;
   }
 }
 
@@ -99,7 +143,123 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utility classes for the fitness app */
+@layer utilities {
+  /* Gradient backgrounds */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary to-accent;
+  }
+
+  .gradient-success {
+    @apply bg-gradient-to-r from-success to-emerald-400;
+  }
+
+  .gradient-streak {
+    @apply bg-gradient-to-r from-orange-500 to-red-500;
+  }
+
+  /* Glow effects for achievements and highlights */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+
+  .glow-success {
+    box-shadow: 0 0 20px hsl(var(--success) / 0.4);
+  }
+
+  .glow-streak {
+    box-shadow: 0 0 20px hsl(var(--streak) / 0.5);
+  }
+
+  /* Streak flame animation */
+  @keyframes flame {
+    0%, 100% { transform: scaleY(1) scaleX(1); }
+    50% { transform: scaleY(1.1) scaleX(0.95); }
+  }
+
+  .animate-flame {
+    animation: flame 0.5s ease-in-out infinite;
+  }
+
+  /* Pulse animation for CTAs */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4); }
+    50% { box-shadow: 0 0 20px 10px hsl(var(--primary) / 0); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Celebration confetti animation */
+  @keyframes confetti {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  }
+
+  .animate-confetti {
+    animation: confetti 1s ease-out forwards;
+  }
+
+  /* Bounce in animation */
+  @keyframes bounce-in {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.5s ease-out forwards;
+  }
+
+  /* Slide up animation */
+  @keyframes slide-up {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out forwards;
+  }
+
+  /* Number counter animation */
+  @keyframes count-up {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-count-up {
+    animation: count-up 0.5s ease-out forwards;
+  }
+
+  /* Card hover lift effect */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  /* Stat card styling */
+  .stat-card {
+    @apply relative overflow-hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-5;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, transparent 50%);
   }
 }

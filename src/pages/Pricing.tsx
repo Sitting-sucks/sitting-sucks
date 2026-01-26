@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Check, Crown, UserCheck, Calendar, MessageSquare } from 'lucide-react';
+import { Check, Crown, UserCheck, Calendar, MessageSquare, Flame, TrendingUp, Award, Dumbbell } from 'lucide-react';
 import { useSubscription } from '@/hooks/useSubscription';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const Pricing = () => {
@@ -10,8 +11,8 @@ const Pricing = () => {
 
   const handleSubscribe = async (tier: 'basic' | 'coaching') => {
     try {
-      await createCheckoutSession();
-      toast.success(`Starting ${tier} subscription process...`);
+      await createCheckoutSession(tier);
+      toast.success(`Starting ${tier === 'basic' ? 'Full Access' : '1-on-1 Coaching'} subscription...`);
     } catch (error) {
       toast.error('Failed to start subscription process. Please try again.');
       console.error('Subscription error:', error);
@@ -28,8 +29,26 @@ const Pricing = () => {
           </p>
         </div>
 
+        {/* Free Tier Banner */}
+        <Card className="max-w-4xl mx-auto mb-8 bg-gradient-to-r from-success/10 to-primary/10 border-success/20">
+          <CardContent className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-success/20 flex items-center justify-center">
+                <Dumbbell className="h-6 w-6 text-success" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">Free Anti-Sitting Guide</h3>
+                <p className="text-sm text-muted-foreground">Start your recovery journey at no cost</p>
+              </div>
+            </div>
+            <Button variant="outline" asChild>
+              <Link to="/anti-sitting-guide">Get Free Guide</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Full App Access */}
+          {/* Full App Access - Tier 1 */}
           <Card className="relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10" />
             <CardHeader className="relative text-center">
@@ -38,10 +57,10 @@ const Pricing = () => {
               </div>
               <CardTitle className="text-2xl">Full App Access</CardTitle>
               <CardDescription>
-                Complete access to all movement protocols and exercises
+                Complete access to all programs, tracking, and features
               </CardDescription>
               <div className="text-center mt-4">
-                <span className="text-4xl font-bold">$30</span>
+                <span className="text-4xl font-bold">$29</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
             </CardHeader>
@@ -53,23 +72,27 @@ const Pricing = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Full exercise library with video demonstrations</span>
+                  <span>Full exercise library with video guides</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span className="font-medium">Workout logging & tracking</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Flame className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span className="font-medium">Streaks, points & gamification</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Award className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span className="font-medium">Achievements & progress analytics</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Equipment recommendations and alternatives</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Progress tracking and movement analytics</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Lifetime updates and new protocols</span>
+                  <span>All current & future programs</span>
                 </div>
               </div>
-              
-              <Button 
+
+              <Button
                 onClick={() => handleSubscribe('basic')}
                 className="w-full"
                 size="lg"
@@ -92,7 +115,7 @@ const Pricing = () => {
                 Personalized coaching with weekly check-ins and custom programs
               </CardDescription>
               <div className="text-center mt-4">
-                <span className="text-4xl font-bold">$200</span>
+                <span className="text-4xl font-bold">$249</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
             </CardHeader>

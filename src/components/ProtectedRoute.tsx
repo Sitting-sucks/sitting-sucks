@@ -1,12 +1,14 @@
 import { useAuth } from '@/contexts/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  skipOnboarding?: boolean;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, skipOnboarding = false }: ProtectedRouteProps) => {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -18,6 +20,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   if (!user) {
     return <Navigate to="/auth" replace />;
+  }
+
+  // Check if user needs onboarding (skip if we're already on onboarding page)
+  const onboardingComplete = localStorage.getItem('onboarding_complete') === 'true';
+  const isOnboardingPage = location.pathname === '/onboarding';
+
+  if (!skipOnboarding && !onboardingComplete && !isOnboardingPage) {
+    return <Navigate to="/onboarding" replace />;
   }
 
   return <>{children}</>;

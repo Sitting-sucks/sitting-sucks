@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,14 +7,21 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Search, Filter, X } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Search, Filter, X, Loader2 } from "lucide-react";
 import ExerciseCard from "@/components/ExerciseCard";
 import { SubscriptionGate } from "@/components/SubscriptionGate";
 import { useSubscription } from "@/hooks/useSubscription";
-import { exercises, equipmentList, jointMovements } from "@/data/exercises";
+import { useExercises, Exercise } from "@/hooks/useExercises";
+import { useRole } from "@/hooks/useRole";
+import { useToast } from "@/hooks/use-toast";
+import { ExerciseForm } from "@/components/admin/ExerciseForm";
+import { equipmentList, jointMovements } from "@/data/exercises";
 
 const ExerciseLibrary = () => {
   const { subscribed } = useSubscription();
+  const { isTrainer } = useRole();
+  const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedJointMovement, setSelectedJointMovement] = useState("all");
@@ -22,44 +29,41 @@ const ExerciseLibrary = () => {
   const [selectedIntensity, setSelectedIntensity] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [previewVariations, setPreviewVariations] = useState(false);
+  const [editingExercise, setEditingExercise] = useState<Exercise | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Premium exercises array - empty for now
-  const premiumExercises: any[] = [];
-
-  const allExercises = subscribed ? [...exercises, ...premiumExercises] : exercises;
-
-  const filteredExercises = allExercises.filter(exercise => {
-    const matchesSearch = exercise.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         exercise.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesEquipment = selectedEquipment === "all" || 
-                           exercise.equipment.some(eq => eq === selectedEquipment);
-    const matchesJointMovement = selectedJointMovement === "all" ||
-                               exercise.jointMovements.some(jm => jm === selectedJointMovement);
-    const matchesDifficulty = selectedDifficulty === "all" ||
-                            exercise.difficulty.toString() === selectedDifficulty;
-    const matchesIntensity = selectedIntensity === "all" ||
-                           exercise.intensity.toString() === selectedIntensity;
-    const matchesCategory = selectedCategory === "all" ||
-                           exercise.categories.includes(selectedCategory);
-    
-    return matchesSearch && matchesEquipment && matchesJointMovement && matchesDifficulty && matchesIntensity && matchesCategory;
-  }).sort((a, b) => {
-    // Prioritize mobility exercises
-    if (a.categories.includes("mobility") && !b.categories.includes("mobility")) {
-      return -1;
-    }
-    if (!a.categories.includes("mobility") && b.categories.includes("mobility")) {
-      return 1;
-    }
-    return 0;
+  // Fetch exercises from database
+  const { exercises, loading, error, updateExercise } = useExercises({
+    searchQuery: searchTerm || undefined,
+    equipment: selectedEquipment !== "all" ? [selectedEquipment] : undefined,
+    jointMovements: selectedJointMovement !== "all" ? [selectedJointMovement] : undefined,
+    difficulty: selectedDifficulty !== "all" ? selectedDifficulty : undefined,
+    intensity: selectedIntensity !== "all" ? selectedIntensity : undefined,
+    categories: selectedCategory !== "all" ? [selectedCategory] : undefined,
   });
 
-  // Get available joint movements from filtered exercises
-  const availableJointMovements = Array.from(
-    new Set(
-      filteredExercises.flatMap(exercise => exercise.jointMovements)
-    )
-  ).filter(movement => jointMovements.includes(movement));
+  // Sort exercises with mobility first
+  const sortedExercises = useMemo(() => {
+    return [...exercises].sort((a, b) => {
+      if (a.categories.includes("mobility") && !b.categories.includes("mobility")) {
+        return -1;
+      }
+      if (!a.categories.includes("mobility") && b.categories.includes("mobility")) {
+        return 1;
+      }
+      return 0;
+    });
+  }, [exercises]);
+
+  // Get available joint movements from current exercises
+  const availableJointMovements = useMemo(() => {
+    return Array.from(
+      new Set(
+        sortedExercises.flatMap(exercise => exercise.joint_movements)
+      )
+    ).filter(movement => jointMovements.includes(movement));
+  }, [sortedExercises]);
 
   const clearFilters = () => {
     setSearchTerm("");
@@ -69,6 +73,50 @@ const ExerciseLibrary = () => {
     setSelectedIntensity("all");
     setSelectedCategory("all");
   };
+
+  const handleEditExercise = (exerciseId: string) => {
+    const exercise = exercises.find(ex => ex.id === exerciseId);
+    if (exercise) {
+      setEditingExercise(exercise);
+      setIsEditDialogOpen(true);
+    }
+  };
+
+  const handleEditSubmit = async (data: any) => {
+    if (!editingExercise) return;
+
+    try {
+      setIsSubmitting(true);
+      await updateExercise(editingExercise.id, data);
+      toast({
+        title: "Exercise updated",
+        description: `"${data.name}" has been updated successfully.`,
+      });
+      setIsEditDialogOpen(false);
+      setEditingExercise(null);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update exercise. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <Card>
+          <CardContent className="text-center py-12">
+            <p className="text-lg text-destructive mb-4">Error loading exercises</p>
+            <p className="text-sm text-muted-foreground">{error}</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -137,11 +185,9 @@ const ExerciseLibrary = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Difficulties</SelectItem>
-                <SelectItem value="1">1 - Beginner</SelectItem>
-                <SelectItem value="2">2 - Easy</SelectItem>
-                <SelectItem value="3">3 - Intermediate</SelectItem>
-                <SelectItem value="4">4 - Advanced</SelectItem>
-                <SelectItem value="5">5 - Expert</SelectItem>
+                <SelectItem value="beginner">Beginner</SelectItem>
+                <SelectItem value="intermediate">Intermediate</SelectItem>
+                <SelectItem value="advanced">Advanced</SelectItem>
               </SelectContent>
             </Select>
 
@@ -151,11 +197,9 @@ const ExerciseLibrary = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Intensities</SelectItem>
-                <SelectItem value="1">1 - Very Light</SelectItem>
-                <SelectItem value="2">2 - Light</SelectItem>
-                <SelectItem value="3">3 - Moderate</SelectItem>
-                <SelectItem value="4">4 - High</SelectItem>
-                <SelectItem value="5">5 - Very High</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="moderate">Moderate</SelectItem>
+                <SelectItem value="high">High</SelectItem>
               </SelectContent>
             </Select>
 
@@ -256,7 +300,7 @@ const ExerciseLibrary = () => {
       {/* Results Count */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {filteredExercises.length} of {allExercises.length} exercises
+          {loading ? "Loading..." : `Showing ${sortedExercises.length} exercises`}
         </p>
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4" />
@@ -264,8 +308,18 @@ const ExerciseLibrary = () => {
         </div>
       </div>
 
+      {/* Loading State */}
+      {loading && (
+        <Card>
+          <CardContent className="text-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading exercises...</p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Exercise Grid */}
-      {filteredExercises.length === 0 ? (
+      {!loading && sortedExercises.length === 0 ? (
         <Card>
           <CardContent className="text-center py-12">
             <p className="text-lg text-muted-foreground mb-4">No exercises found</p>
@@ -277,28 +331,31 @@ const ExerciseLibrary = () => {
             </Button>
           </CardContent>
         </Card>
-      ) : (
+      ) : !loading && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredExercises.map((exercise) => (
+          {sortedExercises.map((exercise) => (
             <ExerciseCard
               key={exercise.id}
+              id={exercise.id}
               name={exercise.name}
-              description={exercise.description}
-              instructions={exercise.instructions}
+              description={exercise.description || ""}
+              instructions={exercise.instructions || undefined}
               equipment={exercise.equipment}
-              jointMovements={exercise.jointMovements}
+              jointMovements={exercise.joint_movements}
               difficulty={exercise.difficulty}
               intensity={exercise.intensity}
-              duration={exercise.duration}
-              hasVideo={exercise.hasVideo}
-              hasDocument={exercise.hasDocument}
-              videoUrl={exercise.videoUrl}
-              targetMuscles={exercise.targetMuscles}
+              duration={exercise.duration || undefined}
+              hasVideo={!!exercise.video_url}
+              hasDocument={false}
+              videoUrl={exercise.video_url || undefined}
+              targetMuscles={exercise.muscle_groups}
               categories={exercise.categories}
-              baseline={subscribed || previewVariations ? exercise.baseline : undefined}
-              progression={subscribed || previewVariations ? exercise.progression : undefined}
-              regression={subscribed || previewVariations ? exercise.regression : undefined}
+              baseline={subscribed || previewVariations ? exercise.baseline || undefined : undefined}
+              progression={subscribed || previewVariations ? exercise.progression || undefined : undefined}
+              regression={subscribed || previewVariations ? exercise.regression || undefined : undefined}
               allowPreview={previewVariations}
+              isTrainer={isTrainer}
+              onEdit={handleEditExercise}
             />
           ))}
         </div>
@@ -327,7 +384,7 @@ const ExerciseLibrary = () => {
       <div className="text-center space-y-4">
         <h3 className="text-2xl font-semibold">Transform Your Movement</h3>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Each exercise is specifically designed to counteract the negative effects of prolonged sitting, 
+          Each exercise is specifically designed to counteract the negative effects of prolonged sitting,
           helping you restore mobility, build strength, and improve your overall movement quality.
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
@@ -337,6 +394,32 @@ const ExerciseLibrary = () => {
           <Badge variant="outline">Functional Movement</Badge>
         </div>
       </div>
+
+      {/* Edit Exercise Dialog (Trainers Only) */}
+      {isTrainer && (
+        <Dialog open={isEditDialogOpen} onOpenChange={(open) => {
+          setIsEditDialogOpen(open);
+          if (!open) setEditingExercise(null);
+        }}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Exercise</DialogTitle>
+              <DialogDescription>
+                Update the exercise details below. Changes will be visible to all users.
+              </DialogDescription>
+            </DialogHeader>
+            <ExerciseForm
+              exercise={editingExercise}
+              onSubmit={handleEditSubmit}
+              onCancel={() => {
+                setIsEditDialogOpen(false);
+                setEditingExercise(null);
+              }}
+              isLoading={isSubmitting}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

@@ -1,8 +1,36 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Check, Crown, UserCheck, Calendar, MessageSquare, ArrowRight } from 'lucide-react';
+import {
+  Check,
+  UserCheck,
+  Calendar,
+  MessageSquare,
+  ArrowRight,
+  Dumbbell,
+  Target,
+  TrendingUp,
+  AlertTriangle,
+  Shield,
+  Clock,
+  Zap,
+  Star,
+  ChevronDown,
+  Play,
+  Users,
+  Heart,
+  Award,
+  Flame,
+  Activity,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -15,174 +43,494 @@ const Landing = () => {
     navigate('/auth');
   };
 
+  // Social proof stats
+  const stats = [
+    { value: '10,000+', label: 'Active Users' },
+    { value: '500K+', label: 'Workouts Logged' },
+    { value: '4.9/5', label: 'User Rating' },
+    { value: '95%', label: 'Feel Better in 2 Weeks' },
+  ];
+
+  // Features
+  const features = [
+    {
+      icon: Activity,
+      title: 'Smart Workout Recommendations',
+      description: 'AI-powered recommendations based on your history, goals, and muscle recovery time.',
+    },
+    {
+      icon: Flame,
+      title: 'Streak & Gamification',
+      description: 'Stay motivated with streaks, achievements, and points that reward consistency.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Progress Analytics',
+      description: 'Track sets, reps, weight lifted, and see your progress over time with visual charts.',
+    },
+    {
+      icon: Target,
+      title: 'Targeted Anti-Sitting Exercises',
+      description: 'Exercises specifically designed to counteract the damage from prolonged sitting.',
+    },
+    {
+      icon: Heart,
+      title: 'Wearable Integration',
+      description: 'Sync with Apple Health, Google Fit, and Fitbit to automatically track your activity.',
+    },
+    {
+      icon: Users,
+      title: '1-on-1 Coaching',
+      description: 'Get personalized guidance from certified coaches with our premium tier.',
+    },
+  ];
+
+  // FAQs
+  const faqs = [
+    {
+      question: 'How is this different from other fitness apps?',
+      answer: "Sitting Sucks is specifically designed to combat the negative effects of prolonged sitting. Our exercises target the exact muscle imbalances and mobility restrictions caused by desk work, with progression systems that adapt to your level.",
+    },
+    {
+      question: 'Do I need any equipment?',
+      answer: "Most exercises can be done with no equipment at all. Some advanced progressions benefit from basic equipment like resistance bands or a foam roller, but these are optional.",
+    },
+    {
+      question: 'How long are the workouts?',
+      answer: "Workouts range from 5-minute quick sessions to 30-minute comprehensive routines. Most users start with 10-15 minute daily sessions and see significant improvements within 2 weeks.",
+    },
+    {
+      question: 'What if I miss a day?',
+      answer: "Life happens! While streaks are great for motivation, our recommendation system adjusts to get you back on track without guilt. Missing a day won't reset all your progress.",
+    },
+    {
+      question: 'Can I cancel anytime?',
+      answer: "Absolutely. No contracts, no commitments. Cancel anytime with one click from your account settings. We also offer a 30-day money-back guarantee.",
+    },
+    {
+      question: "What's included in the coaching tier?",
+      answer: "The coaching tier includes weekly video check-ins with a certified coach, personalized program adjustments, direct messaging support, custom exercise modifications, and lifestyle/ergonomic assessments.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Crown className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">FitTracker</span>
+            <img
+              src="/lovable-uploads/e3d51457-4b9e-46e8-8a17-47f87911ecbf.png"
+              alt="Sitting Sucks Logo"
+              className="h-10 w-10"
+            />
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Sitting Sucks
+            </span>
           </div>
-          <Button onClick={handleLogin} variant="outline">
-            Login
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleLogin} variant="ghost">
+              Log In
+            </Button>
+            <Button onClick={handleGetStarted} className="hidden sm:flex">
+              Get Started
+            </Button>
+          </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            Transform Your Health with the
-            <span className="text-primary block">Anti-Sitting Daily Protocol</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Combat the effects of prolonged sitting with our evidence-based movement protocols. 
-            Designed by experts to keep you healthy, mobile, and pain-free.
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Button onClick={handleGetStarted} size="lg" className="text-lg px-8">
-              Get Started <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button onClick={handleLogin} variant="outline" size="lg" className="text-lg px-8">
-              I Have an Account
-            </Button>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
+
+        <div className="relative container mx-auto px-4 py-16 sm:py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 animate-fade-in">
+              <Zap className="h-3.5 w-3.5 mr-1.5 inline" />
+              Evidence-Based Movement Protocols
+            </Badge>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 animate-fade-up">
+              Your Body Wasn't Built to
+              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mt-2">
+                Sit All Day
+              </span>
+            </h1>
+
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              Prolonged sitting is destroying your posture, mobility, and health. Our Anti-Sitting Protocol
+              gives you the exact exercises you need to counteract the damage and feel incredible again.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              <Button
+                onClick={handleGetStarted}
+                size="lg"
+                className="text-lg px-8 gap-2 shadow-lg hover:shadow-xl transition-all animate-pulse-ring"
+              >
+                Start Your Recovery
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+              <Button
+                onClick={handleLogin}
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 gap-2"
+              >
+                <Play className="h-5 w-5" />
+                Watch Demo
+              </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center gap-6 mt-12 text-sm text-muted-foreground animate-fade-up" style={{ animationDelay: '0.3s' }}>
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-success" />
+                30-Day Money Back Guarantee
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-success" />
+                Cancel Anytime
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="h-4 w-4 text-yellow-500" />
+                4.9/5 Rating
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="h-6 w-6 text-muted-foreground" />
+        </div>
+      </section>
+
+      {/* Social Proof Stats */}
+      <section className="py-12 border-y bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Section */}
+      <section className="py-20 bg-destructive/5">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-2 justify-center mb-6">
+              <AlertTriangle className="h-6 w-6 text-destructive" />
+              <h2 className="text-2xl sm:text-3xl font-bold">The Sitting Epidemic</h2>
+            </div>
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Sitting is the new smoking. Here's what prolonged sitting is doing to your body:
+            </p>
+            <div className="grid sm:grid-cols-3 gap-8 text-center">
+              <Card className="border-destructive/20 bg-background">
+                <CardContent className="pt-6">
+                  <div className="text-5xl font-bold text-destructive mb-2">8+ hrs</div>
+                  <p className="text-muted-foreground">Average time spent sitting daily</p>
+                </CardContent>
+              </Card>
+              <Card className="border-destructive/20 bg-background">
+                <CardContent className="pt-6">
+                  <div className="text-5xl font-bold text-destructive mb-2">80%</div>
+                  <p className="text-muted-foreground">Of desk workers experience back pain</p>
+                </CardContent>
+              </Card>
+              <Card className="border-destructive/20 bg-background">
+                <CardContent className="pt-6">
+                  <div className="text-5xl font-bold text-destructive mb-2">40%</div>
+                  <p className="text-muted-foreground">Increased disease risk from sitting</p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Why Choose FitTracker?</h2>
-            <p className="text-xl text-muted-foreground">
-              Everything you need to counteract the negative effects of sitting
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Everything You Need to Fight Back</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              A complete system designed to reverse the damage from sitting and restore your body's natural function
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card>
-              <CardHeader className="text-center">
-                <Crown className="h-12 w-12 text-primary mx-auto mb-4" />
-                <CardTitle>Evidence-Based Protocols</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Our Anti-Sitting Daily Protocol is backed by research and designed by movement experts to address the root causes of sitting-related health issues.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="text-center">
-                <UserCheck className="h-12 w-12 text-primary mx-auto mb-4" />
-                <CardTitle>Expert Coaching</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Get personalized guidance from certified coaches with weekly check-ins and custom program design tailored to your needs.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="text-center">
-                <MessageSquare className="h-12 w-12 text-primary mx-auto mb-4" />
-                <CardTitle>Complete Exercise Library</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Access hundreds of exercises with video demonstrations, equipment alternatives, and detailed instructions for every movement.
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {features.map((feature, i) => (
+              <Card key={i} className="card-hover border-2 hover:border-primary/20">
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <feature.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Preview */}
-      <section className="py-20">
+      {/* How It Works */}
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-muted-foreground">Get started in 3 simple steps</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {[
+              { step: '1', title: 'Sign Up', description: 'Create your account in under 30 seconds. No credit card required for the free trial.' },
+              { step: '2', title: 'Get Your Protocol', description: 'Receive personalized exercise recommendations based on your goals and fitness level.' },
+              { step: '3', title: 'Start Moving', description: 'Follow your daily protocol and track your progress. See results in as little as 2 weeks.' },
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground text-2xl font-bold mb-4">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                <p className="text-muted-foreground">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-20" id="pricing">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Choose Your Path</h2>
             <p className="text-xl text-muted-foreground">
-              Choose the plan that works best for your health journey
+              Two options designed for different needs and budgets
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="relative overflow-hidden">
-              <CardHeader className="text-center">
+            {/* Tier 1 */}
+            <Card className="relative overflow-hidden card-hover">
+              <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl">Full App Access</CardTitle>
-                <CardDescription>Complete movement protocols</CardDescription>
+                <CardDescription className="text-base">
+                  Everything you need to start your anti-sitting journey
+                </CardDescription>
                 <div className="text-center mt-4">
-                  <span className="text-4xl font-bold">$30</span>
+                  <span className="text-5xl font-bold">$30</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary" />
-                  <span>Complete Anti-Sitting Protocol</span>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  {[
+                    'Complete exercise library with videos',
+                    'Anti-Sitting Protocol program',
+                    'Smart workout recommendations',
+                    'Progress tracking & analytics',
+                    'Streak & gamification system',
+                    'Wearable device sync',
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="h-5 w-5 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0">
+                        <Check className="h-3 w-3 text-success" />
+                      </div>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary" />
-                  <span>Full exercise library</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary" />
-                  <span>Progress tracking</span>
-                </div>
+                <Button onClick={handleGetStarted} className="w-full" size="lg" variant="outline">
+                  Get Started
+                </Button>
               </CardContent>
             </Card>
 
-            <Card className="relative overflow-hidden border-primary">
-              <Badge className="absolute top-4 right-4 bg-primary">Most Popular</Badge>
-              <CardHeader className="text-center">
+            {/* Tier 2 */}
+            <Card className="relative overflow-hidden border-primary border-2 card-hover shadow-lg">
+              <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-accent text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
+                Most Popular
+              </div>
+              <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl">1-on-1 Coaching</CardTitle>
-                <CardDescription>Personalized expert guidance</CardDescription>
+                <CardDescription className="text-base">
+                  Personalized guidance for maximum results
+                </CardDescription>
                 <div className="text-center mt-4">
-                  <span className="text-4xl font-bold">$200</span>
+                  <span className="text-5xl font-bold">$200</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-primary" />
-                  <span>Everything in Full Access</span>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  {[
+                    { text: 'Everything in Full Access', bold: true },
+                    { text: 'Weekly video check-ins with coach' },
+                    { text: 'Personalized program design' },
+                    { text: 'Direct messaging with coach' },
+                    { text: 'Custom exercise modifications' },
+                    { text: 'Lifestyle & ergonomic assessments' },
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                      <span className={feature.bold ? 'font-medium' : ''}>{feature.text}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-primary" />
-                  <span>Weekly check-ins</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <UserCheck className="h-5 w-5 text-primary" />
-                  <span>Custom programs</span>
-                </div>
+                <Button onClick={handleGetStarted} className="w-full" size="lg">
+                  Start Coaching
+                </Button>
               </CardContent>
             </Card>
           </div>
 
+          {/* Money-back guarantee */}
           <div className="text-center mt-12">
-            <Button onClick={handleGetStarted} size="lg" className="text-lg px-12">
-              Start Your Journey Today
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-success/10 text-success">
+              <Shield className="h-5 w-5" />
+              <span className="font-medium">30-Day Money-Back Guarantee</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Real Results</h2>
+            <p className="text-xl text-muted-foreground">
+              Join thousands of people who've transformed their mobility and eliminated pain
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                quote: "After just 2 weeks, my lower back pain that I'd had for years started to disappear. This program actually works.",
+                name: "Sarah M.",
+                role: "Software Engineer",
+              },
+              {
+                quote: "I've tried other fitness apps but none were designed for desk workers like me. The targeted exercises make all the difference.",
+                name: "James K.",
+                role: "Financial Analyst",
+              },
+              {
+                quote: "The coaching tier is worth every penny. My coach helped me correct imbalances I didn't even know I had.",
+                name: "Michelle T.",
+                role: "Marketing Manager",
+              },
+            ].map((testimonial, i) => (
+              <Card key={i} className="bg-background">
+                <CardContent className="pt-6">
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground italic mb-6">"{testimonial.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
+                      <span className="text-lg font-bold text-primary">{testimonial.name[0]}</span>
+                    </div>
+                    <div>
+                      <div className="font-medium">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <p className="text-xl text-muted-foreground">
+              Everything you need to know about Sitting Sucks
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={i} value={`item-${i}`}>
+                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary to-accent text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Stop Letting Sitting Destroy Your Body
+          </h2>
+          <p className="text-xl opacity-90 max-w-2xl mx-auto mb-8">
+            Join now and start feeling the difference within your first week. Your future self will thank you.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={handleGetStarted}
+              size="lg"
+              variant="secondary"
+              className="text-lg px-12 shadow-lg"
+            >
+              Get Started Today
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
+          <p className="text-sm opacity-75 mt-6">
+            No credit card required • Cancel anytime • 30-day guarantee
+          </p>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Crown className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">FitTracker</span>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2">
+              <img
+                src="/lovable-uploads/e3d51457-4b9e-46e8-8a17-47f87911ecbf.png"
+                alt="Sitting Sucks Logo"
+                className="h-8 w-8"
+              />
+              <span className="text-xl font-bold">Sitting Sucks</span>
+            </div>
+            <p className="text-muted-foreground text-center">
+              Evidence-based movement protocols to counteract the damage from sitting
+            </p>
+            <div className="flex gap-4 text-sm text-muted-foreground">
+              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
+              <a href="#" className="hover:text-foreground transition-colors">Terms</a>
+              <a href="#" className="hover:text-foreground transition-colors">Contact</a>
+            </div>
           </div>
-          <p className="text-muted-foreground">
-            Transform your health with evidence-based movement protocols
-          </p>
         </div>
       </footer>
     </div>

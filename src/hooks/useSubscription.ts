@@ -42,7 +42,7 @@ export const useSubscription = () => {
     }
   }, [user, session]);
 
-  const createCheckoutSession = useCallback(async () => {
+  const createCheckoutSession = useCallback(async (tier: 'basic' | 'coaching' = 'basic') => {
     if (!user || !session) {
       throw new Error('User must be logged in to subscribe');
     }
@@ -51,6 +51,7 @@ export const useSubscription = () => {
       headers: {
         Authorization: `Bearer ${session.access_token}`,
       },
+      body: { tier },
     });
 
     if (error) {

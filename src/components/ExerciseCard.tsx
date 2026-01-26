@@ -4,16 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SubscriptionGate } from "@/components/SubscriptionGate";
-import { Play, FileText, Star, Target, Clock, Info } from "lucide-react";
+import { Play, FileText, Star, Target, Clock, Info, Pencil } from "lucide-react";
 
 interface ExerciseCardProps {
+  id?: string;
   name: string;
   description: string;
   instructions?: string;
   equipment: string[];
   jointMovements: string[];
-  difficulty: number;
-  intensity: number;
+  difficulty: string | number;
+  intensity: string | number;
   hasVideo?: boolean;
   hasDocument?: boolean;
   duration?: string;
@@ -24,15 +25,40 @@ interface ExerciseCardProps {
   regression?: string;
   categories?: string[];
   allowPreview?: boolean;
+  isTrainer?: boolean;
+  onEdit?: (exerciseId: string) => void;
 }
 
-const ExerciseCard = ({ 
-  name, 
+// Convert string difficulty to number for star display
+const difficultyToNumber = (difficulty: string | number): number => {
+  if (typeof difficulty === 'number') return difficulty;
+  const map: Record<string, number> = {
+    'beginner': 1,
+    'intermediate': 3,
+    'advanced': 5,
+  };
+  return map[difficulty] || 3;
+};
+
+// Convert string intensity to number for star display
+const intensityToNumber = (intensity: string | number): number => {
+  if (typeof intensity === 'number') return intensity;
+  const map: Record<string, number> = {
+    'low': 1,
+    'moderate': 3,
+    'high': 5,
+  };
+  return map[intensity] || 3;
+};
+
+const ExerciseCard = ({
+  id,
+  name,
   description,
   instructions,
-  equipment, 
-  jointMovements, 
-  difficulty, 
+  equipment,
+  jointMovements,
+  difficulty,
   intensity,
   hasVideo = false,
   hasDocument = false,
@@ -43,8 +69,11 @@ const ExerciseCard = ({
   progression,
   regression,
   categories = [],
-  allowPreview = false
+  allowPreview = false,
+  isTrainer = false,
+  onEdit
 }: ExerciseCardProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const getDifficultyColor = (level: number) => {
     const colors = {
       1: "bg-green-100 text-green-800",
@@ -56,13 +85,22 @@ const ExerciseCard = ({
     return colors[level as keyof typeof colors] || colors[3];
   };
 
-  const renderStars = (count: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star 
-        key={i} 
-        className={`h-3 w-3 ${i < count ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-      />
-    ));
+  const renderStars = (count: number, label: string) => {
+    return (
+      <div
+        role="img"
+        aria-label={`${label}: ${count} out of 5 stars`}
+        className="flex items-center space-x-0.5"
+      >
+        {Array.from({ length: 5 }, (_, i) => (
+          <Star
+            key={i}
+            className={`h-3 w-3 ${i < count ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+            aria-hidden="true"
+          />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -152,20 +190,16 @@ const ExerciseCard = ({
           {/* Difficulty & Intensity */}
           <div className="flex justify-between items-center">
             <div>
-              <p className="text-sm font-medium">Difficulty:</p>
-              <div className="flex items-center space-x-1">
-                {renderStars(difficulty)}
-              </div>
+              <p className="text-sm font-medium" id={`difficulty-label-${name}`}>Difficulty:</p>
+              {renderStars(difficultyToNumber(difficulty), 'Difficulty')}
             </div>
             <div>
-              <p className="text-sm font-medium">Intensity:</p>
-              <div className="flex items-center space-x-1">
-                {renderStars(intensity)}
-              </div>
+              <p className="text-sm font-medium" id={`intensity-label-${name}`}>Intensity:</p>
+              {renderStars(intensityToNumber(intensity), 'Intensity')}
             </div>
           </div>
 
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" className="w-full">
                 <Info className="h-4 w-4 mr-2" />
@@ -174,10 +208,28 @@ const ExerciseCard = ({
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="text-2xl">{name}</DialogTitle>
-                <DialogDescription className="text-base">
-                  {description}
-                </DialogDescription>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <DialogTitle className="text-2xl">{name}</DialogTitle>
+                    <DialogDescription className="text-base">
+                      {description}
+                    </DialogDescription>
+                  </div>
+                  {isTrainer && onEdit && id && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setIsDialogOpen(false);
+                        onEdit(id);
+                      }}
+                      className="flex items-center gap-1 shrink-0"
+                    >
+                      <Pencil className="h-4 w-4" />
+                      Edit
+                    </Button>
+                  )}
+                </div>
               </DialogHeader>
               
               <div className="space-y-6">
@@ -199,6 +251,9 @@ const ExerciseCard = ({
                         title={`${name} exercise tutorial`}
                         className="w-full h-full rounded-lg"
                         allowFullScreen
+                        sandbox="allow-scripts allow-same-origin allow-presentation"
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -226,18 +281,14 @@ const ExerciseCard = ({
                         </div>
                       )}
                       
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Difficulty:</span>
-                        <div className="flex items-center gap-1">
-                          {renderStars(difficulty)}
-                        </div>
+                        {renderStars(difficultyToNumber(difficulty), 'Difficulty')}
                       </div>
-                      
-                      <div className="flex justify-between">
+
+                      <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Intensity:</span>
-                        <div className="flex items-center gap-1">
-                          {renderStars(intensity)}
-                        </div>
+                        {renderStars(intensityToNumber(intensity), 'Intensity')}
                       </div>
                     </div>
                   </div>
