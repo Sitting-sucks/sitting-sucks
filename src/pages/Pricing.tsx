@@ -11,11 +11,11 @@ const Pricing = () => {
   const handleSubscribe = (tier: 'app' | 'coaching') => {
     if (tier === 'app') {
       const url = billingPeriod === 'monthly'
-        ? 'STRIPE_MONTHLY_URL'
-        : 'STRIPE_YEARLY_URL';
+        ? 'https://buy.stripe.com/cNi5kv63a4vFgl02FOgQE0a'
+        : 'https://buy.stripe.com/8x28wHgHOfajecS0xGgQE09';
       window.open(url, '_blank', 'noopener,noreferrer');
     } else {
-      window.open('STRIPE_COACHING_URL', '_blank', 'noopener,noreferrer');
+      window.open('https://buy.stripe.com/8x214f2QYe6fgl04NWgQE01', '_blank', 'noopener,noreferrer');
     }
   };
 
