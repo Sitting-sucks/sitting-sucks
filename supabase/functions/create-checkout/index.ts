@@ -8,9 +8,8 @@ const ALLOWED_ORIGINS = [
   "http://localhost:3000",
   "http://localhost:5173",
   "http://localhost:8080",
-  // Add your production domain here, e.g.:
-  // "https://sittingsucks.com",
-  // "https://www.sittingsucks.com",
+  "https://sittingsucks.com",
+  "https://www.sittingsucks.com",
 ];
 
 const getCorsHeaders = (origin: string | null) => {

@@ -3,10 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
 import EquipmentCard from "@/components/EquipmentCard";
 import { useCart } from "@/contexts/CartContext";
-import { ShoppingCart, Package, Star, CheckCircle, Minus, Plus, Trash2, Gift } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { ShoppingCart, Package, Star, CheckCircle, Minus, Plus, Trash2, Gift, Loader2 } from "lucide-react";
 
 import weightPlatesImg from "@/assets/equipment/weight-plates.jpg";
 import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
@@ -15,7 +17,10 @@ import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
 
 const EquipmentStore = () => {
   const { items, addItem, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
+  const { session } = useAuth();
+  const { toast } = useToast();
   const [cartOpen, setCartOpen] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
 
   const equipmentItems = [
     {
@@ -132,10 +137,36 @@ const EquipmentStore = () => {
     setCartOpen(true);
   };
 
-  const handleCheckout = () => {
-    // Redirect to Stripe checkout
-    // TODO: Replace with actual Stripe checkout URL or API call
-    window.open('STRIPE_STORE_CHECKOUT_URL', '_blank', 'noopener,noreferrer');
+  const handleCheckout = async () => {
+    if (!session?.access_token) {
+      toast({ title: "Please sign in", description: "You need to be signed in to checkout.", variant: "destructive" });
+      return;
+    }
+
+    setCheckingOut(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('cart-checkout', {
+        body: {
+          items: items.map(i => ({ id: i.id, quantity: i.quantity })),
+        },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      toast({
+        title: "Checkout failed",
+        description: err instanceof Error ? err.message : "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setCheckingOut(false);
+    }
   };
 
   return (
@@ -217,8 +248,12 @@ const EquipmentStore = () => {
                         <span>Total</span>
                         <span>${totalPrice.toFixed(2)}</span>
                       </div>
-                      <Button className="w-full" size="lg" onClick={handleCheckout}>
-                        Checkout — ${totalPrice.toFixed(2)}
+                      <Button className="w-full" size="lg" onClick={handleCheckout} disabled={checkingOut}>
+                        {checkingOut ? (
+                          <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Processing...</>
+                        ) : (
+                          <>Checkout — ${totalPrice.toFixed(2)}</>
+                        )}
                       </Button>
                       <Button variant="ghost" className="w-full" size="sm" onClick={clearCart}>
                         Clear Cart
