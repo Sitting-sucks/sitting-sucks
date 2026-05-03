@@ -18,7 +18,92 @@ export interface Exercise {
   progression: string;
   regression: string;
   categories: string[];
+  bodyAreas: BodyArea[];
 }
+
+export type BodyArea =
+  | "Foot/Ankle"
+  | "Knee"
+  | "Hip"
+  | "Shoulder"
+  | "Elbow"
+  | "Wrist"
+  | "C Spine"
+  | "T Spine"
+  | "L Spine";
+
+export const bodyAreaList: BodyArea[] = [
+  "Foot/Ankle",
+  "Knee",
+  "Hip",
+  "L Spine",
+  "T Spine",
+  "C Spine",
+  "Shoulder",
+  "Elbow",
+  "Wrist",
+];
+
+// Maps joint movement strings to their body area(s)
+export const jointMovementToBodyAreas: Record<string, BodyArea[]> = {
+  // Foot/Ankle
+  "Ankle Dorsiflexion": ["Foot/Ankle"],
+  "Ankle Plantarflexion": ["Foot/Ankle"],
+  "Ankle Inversion": ["Foot/Ankle"],
+  "Ankle Eversion": ["Foot/Ankle"],
+  "Toe Extension": ["Foot/Ankle"],
+  // Knee
+  "Knee Flexion": ["Knee"],
+  "Knee Extension": ["Knee"],
+  "Knee Internal Rotation": ["Knee"],
+  "Knee External Rotation": ["Knee"],
+  // Hip
+  "Hip Flexion": ["Hip"],
+  "Hip Extension": ["Hip"],
+  "Hip Abduction": ["Hip"],
+  "Hip Adduction": ["Hip"],
+  "Hip Internal Rotation": ["Hip"],
+  "Hip External Rotation": ["Hip"],
+  "Hip Neutral": ["Hip"],
+  // Lumbar Spine
+  "Lumbar Flexion": ["L Spine"],
+  "Lumbar Extension": ["L Spine"],
+  "Lumbar Lateral Flexion": ["L Spine"],
+  "Lumbar Rotation": ["L Spine"],
+  "Lumbar Neutral": ["L Spine"],
+  // Thoracic Spine
+  "Thoracic Flexion": ["T Spine"],
+  "Thoracic Extension": ["T Spine"],
+  "Thoracic Lateral Flexion": ["T Spine"],
+  "Thoracic Rotation": ["T Spine"],
+  // Cervical Spine
+  "Cervical Flexion": ["C Spine"],
+  "Cervical Extension": ["C Spine"],
+  "Cervical Lateral Flexion": ["C Spine"],
+  "Cervical Rotation": ["C Spine"],
+  "Cervical Neutral": ["C Spine"],
+  // Shoulder
+  "Shoulder Flexion": ["Shoulder"],
+  "Shoulder Extension": ["Shoulder"],
+  "Shoulder Abduction": ["Shoulder"],
+  "Shoulder Adduction": ["Shoulder"],
+  "Shoulder Internal Rotation": ["Shoulder"],
+  "Shoulder External Rotation": ["Shoulder"],
+  "Shoulder Horizontal Abduction": ["Shoulder"],
+  "Shoulder Horizontal Adduction": ["Shoulder"],
+  "Shoulder Retraction": ["Shoulder"],
+  "Shoulder Stabilization": ["Shoulder"],
+  // Elbow
+  "Elbow Flexion": ["Elbow"],
+  "Elbow Extension": ["Elbow"],
+  "Forearm Pronation": ["Elbow"],
+  "Forearm Supination": ["Elbow"],
+  // Wrist
+  "Wrist Flexion": ["Wrist"],
+  "Wrist Extension": ["Wrist"],
+  "Wrist Radial Deviation": ["Wrist"],
+  "Wrist Ulnar Deviation": ["Wrist"],
+};
 
 export const exercises: Exercise[] = [
   {
@@ -39,6 +124,7 @@ export const exercises: Exercise[] = [
     progression: "Decline push-ups with feet elevated on chair",
     regression: "Incline push-ups with hands on chair",
     categories: ["strength"],
+    bodyAreas: ["Shoulder", "Elbow", "Wrist"],
   },
   {
     id: "2",
@@ -57,6 +143,7 @@ export const exercises: Exercise[] = [
     progression: "Squat with weight plates or single-leg pistol squat",
     regression: "Squat to chair or with heel wedges for ankle mobility assistance",
     categories: ["mobility", "strength"],
+    bodyAreas: ["Foot/Ankle", "Knee", "Hip", "L Spine"],
   },
   {
     id: "3",
@@ -76,6 +163,7 @@ export const exercises: Exercise[] = [
     progression: "Single-arm plank or plank with leg lifts",
     regression: "Incline plank with hands on chair/box or knee plank",
     categories: ["strength"],
+    bodyAreas: ["Shoulder", "L Spine", "T Spine"],
   },
   {
     id: "4",
@@ -95,6 +183,7 @@ export const exercises: Exercise[] = [
     progression: "Walking lunges or lunges with weight plates",
     regression: "Stationary lunge with chair support or reverse lunge",
     categories: ["mobility", "strength"],
+    bodyAreas: ["Foot/Ankle", "Knee", "Hip"],
   },
   {
     id: "8",
@@ -114,6 +203,7 @@ export const exercises: Exercise[] = [
     progression: "Single-leg calf raises or calf raises on heel wedges",
     regression: "Calf raises with chair support",
     categories: ["strength"],
+    bodyAreas: ["Foot/Ankle"],
   },
   {
     id: "10",
@@ -133,6 +223,7 @@ export const exercises: Exercise[] = [
     progression: "Add light weight (5' PVC Pipe or dumbbell) for deeper stretch",
     regression: "Hip hinge stretch without heel wedges or with chair support",
     categories: ["mobility"],
+    bodyAreas: ["Foot/Ankle", "Knee", "Hip"],
   },
   {
     id: "11",
@@ -151,6 +242,7 @@ export const exercises: Exercise[] = [
     progression: "Ankle inversion with stronger resistance band",
     regression: "Ankle inversion without resistance",
     categories: ["strength"],
+    bodyAreas: ["Foot/Ankle"],
   },
   {
     id: "12",
@@ -169,6 +261,7 @@ export const exercises: Exercise[] = [
     progression: "Ankle eversion with stronger resistance band",
     regression: "Ankle eversion without resistance",
     categories: ["strength"],
+    bodyAreas: ["Foot/Ankle"],
   },
   {
     id: "13",
@@ -187,6 +280,7 @@ export const exercises: Exercise[] = [
     progression: "Toe extension plank without chair support",
     regression: "Toe extension stretch while seated",
     categories: ["mobility"],
+    bodyAreas: ["Foot/Ankle"],
   },
   {
     id: "14",
@@ -205,6 +299,7 @@ export const exercises: Exercise[] = [
     progression: "Wrist flexion/extension with heavier weight",
     regression: "Wrist flexion/extension without weight",
     categories: ["strength"],
+    bodyAreas: ["Wrist", "Elbow"],
   },
   {
     id: "15",
@@ -223,6 +318,7 @@ export const exercises: Exercise[] = [
     progression: "Walk further away from sturdy structure",
     regression: "Reverse fly without band",
     categories: ["strength"],
+    bodyAreas: ["Shoulder", "T Spine"],
   },
   {
     id: "16",
@@ -241,6 +337,7 @@ export const exercises: Exercise[] = [
     progression: "Standing hip abduction with yellow perform better band",
     regression: "Side-lying hip abduction",
     categories: ["strength"],
+    bodyAreas: ["Hip"],
   },
   {
     id: "17",
@@ -259,6 +356,7 @@ export const exercises: Exercise[] = [
     progression: "Side plank with leg lifts or arm reaches",
     regression: "Modified side plank with knees on ground or against wall",
     categories: ["strength"],
+    bodyAreas: ["L Spine", "T Spine", "Shoulder", "C Spine"],
   },
   {
     id: "18",
@@ -277,6 +375,7 @@ export const exercises: Exercise[] = [
     progression: "Overhead shoulder flexion with longer hold times or single-arm variations",
     regression: "Overhead shoulder flexion without foam roller or with shorter range of motion",
     categories: ["mobility"],
+    bodyAreas: ["Shoulder", "T Spine"],
   },
   {
     id: "19",
@@ -296,6 +395,7 @@ export const exercises: Exercise[] = [
     progression: "Add alternating hip flexion/leg raises while maintaining band hold",
     regression: "Reduce band tension or perform without band resistance",
     categories: ["strength"],
+    bodyAreas: ["Shoulder", "L Spine"],
   }
 ];
 
@@ -317,14 +417,14 @@ export const equipmentList = [
 export const jointMovements = [
   // Ankle
   "Ankle Dorsiflexion", "Ankle Plantarflexion", "Ankle Inversion", "Ankle Eversion",
-  // Knee  
+  // Knee
   "Knee Flexion", "Knee Extension", "Knee Internal Rotation", "Knee External Rotation",
   // Hip
-  "Hip Flexion", "Hip Extension", "Hip Abduction", "Hip Adduction", 
+  "Hip Flexion", "Hip Extension", "Hip Abduction", "Hip Adduction",
   "Hip Internal Rotation", "Hip External Rotation",
   // Lumbar Spine
   "Lumbar Flexion", "Lumbar Extension", "Lumbar Lateral Flexion", "Lumbar Rotation",
-  // Thoracic Spine  
+  // Thoracic Spine
   "Thoracic Flexion", "Thoracic Extension", "Thoracic Lateral Flexion", "Thoracic Rotation",
   // Cervical Spine
   "Cervical Flexion", "Cervical Extension", "Cervical Lateral Flexion", "Cervical Rotation",

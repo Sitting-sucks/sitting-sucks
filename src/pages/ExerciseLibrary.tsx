@@ -16,7 +16,7 @@ import { useExercises, Exercise } from "@/hooks/useExercises";
 import { useRole } from "@/hooks/useRole";
 import { useToast } from "@/hooks/use-toast";
 import { ExerciseForm } from "@/components/admin/ExerciseForm";
-import { equipmentList, jointMovements } from "@/data/exercises";
+import { equipmentList, jointMovements, bodyAreaList, jointMovementToBodyAreas, BodyArea } from "@/data/exercises";
 
 const ExerciseLibrary = () => {
   const { subscribed } = useSubscription();
@@ -28,6 +28,7 @@ const ExerciseLibrary = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedBodyArea, setSelectedBodyArea] = useState<BodyArea | "all">("all");
   const [previewVariations, setPreviewVariations] = useState(false);
   const [editingExercise, setEditingExercise] = useState<Exercise | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -65,6 +66,17 @@ const ExerciseLibrary = () => {
     ).filter(movement => jointMovements.includes(movement));
   }, [sortedExercises]);
 
+  // Filter by body area using joint_movements → bodyArea mapping
+  const displayedExercises = useMemo(() => {
+    if (selectedBodyArea === "all") return sortedExercises;
+    return sortedExercises.filter(exercise =>
+      exercise.joint_movements.some(jm => {
+        const areas = jointMovementToBodyAreas[jm] || [];
+        return areas.includes(selectedBodyArea as BodyArea);
+      })
+    );
+  }, [sortedExercises, selectedBodyArea]);
+
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedEquipment("all");
@@ -72,6 +84,7 @@ const ExerciseLibrary = () => {
     setSelectedDifficulty("all");
     setSelectedIntensity("all");
     setSelectedCategory("all");
+    setSelectedBodyArea("all");
   };
 
   const handleEditExercise = (exerciseId: string) => {
@@ -126,6 +139,29 @@ const ExerciseLibrary = () => {
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Comprehensive collection of mobility and strengthening exercises designed to counteract the effects of prolonged sitting.
         </p>
+      </div>
+
+      {/* Body Area Filter Bar */}
+      <div className="mb-6">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <Badge
+            variant={selectedBodyArea === "all" ? "default" : "outline"}
+            className="cursor-pointer px-3 py-1.5 text-sm"
+            onClick={() => setSelectedBodyArea("all")}
+          >
+            All Areas
+          </Badge>
+          {bodyAreaList.map((area) => (
+            <Badge
+              key={area}
+              variant={selectedBodyArea === area ? "default" : "outline"}
+              className="cursor-pointer px-3 py-1.5 text-sm"
+              onClick={() => setSelectedBodyArea(selectedBodyArea === area ? "all" : area)}
+            >
+              {area}
+            </Badge>
+          ))}
+        </div>
       </div>
 
       {/* Search and Filters */}
@@ -300,7 +336,7 @@ const ExerciseLibrary = () => {
       {/* Results Count */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          {loading ? "Loading..." : `Showing ${sortedExercises.length} exercises`}
+          {loading ? "Loading..." : `Showing ${displayedExercises.length} exercises`}
         </p>
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4" />
@@ -319,7 +355,7 @@ const ExerciseLibrary = () => {
       )}
 
       {/* Exercise Grid */}
-      {!loading && sortedExercises.length === 0 ? (
+      {!loading && displayedExercises.length === 0 ? (
         <Card>
           <CardContent className="text-center py-12">
             <p className="text-lg text-muted-foreground mb-4">No exercises found</p>
@@ -333,7 +369,7 @@ const ExerciseLibrary = () => {
         </Card>
       ) : !loading && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {sortedExercises.map((exercise) => (
+          {displayedExercises.map((exercise) => (
             <ExerciseCard
               key={exercise.id}
               id={exercise.id}

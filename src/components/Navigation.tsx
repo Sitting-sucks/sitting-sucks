@@ -62,11 +62,6 @@ const Navigation = () => {
     { path: "/exercise-diary", label: "Diary", icon: BookOpen },
   ];
 
-  // Free users get the Anti-Sitting Guide
-  const freeUserNavItems = !subscribed ? [
-    { path: "/anti-sitting-guide", label: "Free Guide", icon: Dumbbell },
-  ] : [];
-
   // Tier 1+ subscribers get programs and progress tracking
   const tier1NavItems = subscribed ? [
     { path: "/my-programs", label: "My Programs", icon: Calendar },
@@ -81,7 +76,7 @@ const Navigation = () => {
     { path: "/admin/clients", label: "Clients", icon: Users },
   ] : [];
 
-  const allNavItems = [...baseNavItems, ...freeUserNavItems, ...tier1NavItems];
+  const allNavItems = [...baseNavItems, ...tier1NavItems];
 
   return (
     <nav className="bg-card border-b border-border">

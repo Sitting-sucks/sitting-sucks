@@ -22,7 +22,6 @@ import NotFound from "./pages/NotFound";
 import MyPrograms from "./pages/MyPrograms";
 import LogWorkout from "./pages/LogWorkout";
 import ProgressHistory from "./pages/ProgressHistory";
-import AntiSittingGuide from "./pages/AntiSittingGuide";
 import ExerciseDiary from "./pages/ExerciseDiary";
 import Onboarding from "./pages/Onboarding";
 import Settings from "./pages/Settings";
@@ -79,12 +78,6 @@ const App = () => (
                   <ProtectedRoute>
                     <Navigation />
                     <Pricing />
-                  </ProtectedRoute>
-                } />
-                <Route path="/anti-sitting-guide" element={
-                  <ProtectedRoute>
-                    <Navigation />
-                    <AntiSittingGuide />
                   </ProtectedRoute>
                 } />
                 <Route path="/exercise-diary" element={
