@@ -36,7 +36,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/pricing');
+    navigate('/auth');
   };
 
   const handleLogin = () => {
@@ -45,10 +45,10 @@ const Landing = () => {
 
   // Social proof stats
   const stats = [
-    { value: '10,000+', label: 'Active Users' },
-    { value: '500K+', label: 'Workouts Logged' },
-    { value: '4.9/5', label: 'User Rating' },
-    { value: '95%', label: 'Feel Better in 2 Weeks' },
+    { value: '14 Days', label: 'Free Trial' },
+    { value: '4+', label: 'Programs Included' },
+    { value: '100+', label: 'Video Exercises' },
+    { value: '$10', label: '/month after trial' },
   ];
 
   // Features
@@ -75,13 +75,13 @@ const Landing = () => {
     },
     {
       icon: Heart,
-      title: 'Wearable Integration',
-      description: 'Sync with Apple Health, Google Fit, and Fitbit to automatically track your activity.',
+      title: 'Personalized Programs',
+      description: 'Get matched to the right program based on your goals, pain points, and fitness level.',
     },
     {
       icon: Users,
-      title: '1-on-1 Coaching',
-      description: 'Get personalized guidance from certified coaches with our premium tier.',
+      title: '1-on-1 Coaching Available',
+      description: 'Want more? Get direct access to our trainers for accountability and custom programming.',
     },
   ];
 
@@ -92,6 +92,10 @@ const Landing = () => {
       answer: "Sitting Sucks is specifically designed to combat the negative effects of prolonged sitting. Our exercises target the exact muscle imbalances and mobility restrictions caused by desk work, with progression systems that adapt to your level.",
     },
     {
+      question: 'What do I get during the free trial?',
+      answer: "Everything. Full access to all programs, exercises, video guides, tracking tools, and features for 14 days. No restrictions, no credit card required.",
+    },
+    {
       question: 'Do I need any equipment?',
       answer: "Most exercises can be done with no equipment at all. Some advanced progressions benefit from basic equipment like resistance bands or a foam roller, but these are optional.",
     },
@@ -100,16 +104,12 @@ const Landing = () => {
       answer: "Workouts range from 5-minute quick sessions to 30-minute comprehensive routines. Most users start with 10-15 minute daily sessions and see significant improvements within 2 weeks.",
     },
     {
-      question: 'What if I miss a day?',
-      answer: "Life happens! While streaks are great for motivation, our recommendation system adjusts to get you back on track without guilt. Missing a day won't reset all your progress.",
-    },
-    {
       question: 'Can I cancel anytime?',
-      answer: "Absolutely. No contracts, no commitments. Cancel anytime with one click from your account settings. We also offer a 30-day money-back guarantee.",
+      answer: "Absolutely. No contracts, no commitments. Cancel anytime with one click from your account settings.",
     },
     {
-      question: "What's included in the coaching tier?",
-      answer: "The coaching tier includes weekly video check-ins with a certified coach, personalized program adjustments, direct messaging support, custom exercise modifications, and lifestyle/ergonomic assessments.",
+      question: "What's the coaching tier?",
+      answer: "For $249/month you get everything in the app plus direct access to our trainers — weekly check-ins, personalized program design, direct messaging, custom modifications, and lifestyle assessments. It's for people who want accountability and expert guidance.",
     },
   ];
 
@@ -187,15 +187,15 @@ const Landing = () => {
             <div className="flex flex-wrap justify-center gap-6 mt-12 text-sm text-muted-foreground animate-fade-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-success" />
-                30-Day Money Back Guarantee
+                14-Day Free Trial
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-success" />
-                Cancel Anytime
+                No Credit Card Required
               </div>
               <div className="flex items-center gap-2">
                 <Star className="h-4 w-4 text-yellow-500" />
-                4.9/5 Rating
+                Cancel Anytime
               </div>
             </div>
           </div>
@@ -294,9 +294,9 @@ const Landing = () => {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { step: '1', title: 'Sign Up', description: 'Create your account in under 30 seconds. No credit card required for the free trial.' },
-              { step: '2', title: 'Get Your Protocol', description: 'Receive personalized exercise recommendations based on your goals and fitness level.' },
-              { step: '3', title: 'Start Moving', description: 'Follow your daily protocol and track your progress. See results in as little as 2 weeks.' },
+              { step: '1', title: 'Sign Up Free', description: 'Create your account in 30 seconds. Full access to everything for 14 days.' },
+              { step: '2', title: 'Get Matched', description: 'Answer a few questions and get assigned a program based on your goals and fitness level.' },
+              { step: '3', title: 'Start Training', description: 'Follow your program, log your workouts, and start feeling the difference within your first week.' },
             ].map((item, i) => (
               <div key={i} className="text-center">
                 <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground text-2xl font-bold mb-4">
@@ -314,34 +314,35 @@ const Landing = () => {
       <section className="py-20" id="pricing">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Choose Your Path</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Simple Pricing, Full Access</h2>
             <p className="text-xl text-muted-foreground">
-              Two options designed for different needs and budgets
+              Try everything free for 14 days. Then choose your plan.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Tier 1 */}
+            {/* Full App */}
             <Card className="relative overflow-hidden card-hover">
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl">Full App Access</CardTitle>
                 <CardDescription className="text-base">
-                  Everything you need to start your anti-sitting journey
+                  All programs, exercises, videos, and tracking
                 </CardDescription>
                 <div className="text-center mt-4">
-                  <span className="text-5xl font-bold">$30</span>
+                  <span className="text-5xl font-bold">$10</span>
                   <span className="text-muted-foreground">/month</span>
+                  <p className="text-sm text-success mt-1">or $60/year (save 50%)</p>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   {[
-                    'Complete exercise library with videos',
-                    'Anti-Sitting Protocol program',
-                    'Smart workout recommendations',
-                    'Progress tracking & analytics',
-                    'Streak & gamification system',
-                    'Wearable device sync',
+                    'All workout programs',
+                    'Full exercise library with videos',
+                    'Workout logging & progress tracking',
+                    'Streaks, points & gamification',
+                    'Achievements & analytics',
+                    'All future programs & updates',
                   ].map((feature, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="h-5 w-5 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0">
@@ -352,33 +353,33 @@ const Landing = () => {
                   ))}
                 </div>
                 <Button onClick={handleGetStarted} className="w-full" size="lg" variant="outline">
-                  Get Started
+                  Start Free Trial
                 </Button>
               </CardContent>
             </Card>
 
-            {/* Tier 2 */}
+            {/* Coaching */}
             <Card className="relative overflow-hidden border-primary border-2 card-hover shadow-lg">
               <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-accent text-white px-4 py-1 text-sm font-medium rounded-bl-lg">
-                Most Popular
+                Best Value
               </div>
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl">1-on-1 Coaching</CardTitle>
                 <CardDescription className="text-base">
-                  Personalized guidance for maximum results
+                  Direct trainer access for accountability and results
                 </CardDescription>
                 <div className="text-center mt-4">
-                  <span className="text-5xl font-bold">$200</span>
+                  <span className="text-5xl font-bold">$249</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   {[
-                    { text: 'Everything in Full Access', bold: true },
-                    { text: 'Weekly video check-ins with coach' },
+                    { text: 'Everything in Full App Access', bold: true },
+                    { text: 'Weekly 1-on-1 check-in sessions' },
                     { text: 'Personalized program design' },
-                    { text: 'Direct messaging with coach' },
+                    { text: 'Direct messaging with your coach' },
                     { text: 'Custom exercise modifications' },
                     { text: 'Lifestyle & ergonomic assessments' },
                   ].map((feature, i) => (
@@ -397,11 +398,11 @@ const Landing = () => {
             </Card>
           </div>
 
-          {/* Money-back guarantee */}
+          {/* Free trial note */}
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-success/10 text-success">
               <Shield className="h-5 w-5" />
-              <span className="font-medium">30-Day Money-Back Guarantee</span>
+              <span className="font-medium">14-Day Free Trial — No Credit Card Required</span>
             </div>
           </div>
         </div>
@@ -505,7 +506,7 @@ const Landing = () => {
             </Button>
           </div>
           <p className="text-sm opacity-75 mt-6">
-            No credit card required • Cancel anytime • 30-day guarantee
+            14-day free trial • No credit card required • Cancel anytime
           </p>
         </div>
       </section>
