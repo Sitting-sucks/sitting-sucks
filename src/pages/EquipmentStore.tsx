@@ -2,25 +2,21 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
 import EquipmentCard from "@/components/EquipmentCard";
-import { ShoppingCart, Package, Star, CheckCircle } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { ShoppingCart, Package, Star, CheckCircle, Minus, Plus, Trash2, Gift } from "lucide-react";
 
-// Import equipment images
-import yellowBandImg from "@/assets/equipment/yellow-band.jpg";
-import purpleHandleImg from "@/assets/equipment/purple-handle.jpg";
-import heelWedgesImg from "@/assets/equipment/heel-wedges.jpg";
 import weightPlatesImg from "@/assets/equipment/weight-plates.jpg";
-import forearmSpinnerImg from "@/assets/equipment/forearm-spinner.jpg";
 import foamRollerImg from "@/assets/equipment/foam-roller.jpg";
 import lacrosseBallImg from "@/assets/equipment/lacrosse-ball.jpg";
-import exerciseChairImg from "@/assets/equipment/exercise-chair.jpg";
-import yogaBlocksImg from "@/assets/equipment/yoga-blocks.jpg";
 import pvcPipeImg from "@/assets/equipment/pvc-pipe.jpg";
 
 const EquipmentStore = () => {
-  const [cartItems, setCartItems] = useState<string[]>([]);
+  const { items, addItem, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
 
-  // Equipment data with your uploaded photos only
   const equipmentItems = [
     {
       name: "Yellow Perform Better Band",
@@ -31,7 +27,7 @@ const EquipmentStore = () => {
       inStock: true
     },
     {
-      name: "Purple Plastic Handle", 
+      name: "Purple Plastic Handle",
       description: "Ergonomic handle for resistance band exercises",
       price: 14.99,
       category: "Accessories",
@@ -96,7 +92,6 @@ const EquipmentStore = () => {
     }
   ];
 
-  // Premium add-on equipment (not in starter kit)
   const premiumEquipment = [
     {
       name: "Gray Cook Band",
@@ -126,26 +121,120 @@ const EquipmentStore = () => {
     }
   ];
 
-  // Calculate starter kit price (with discount)
-  const starterKitPrice = equipmentItems.reduce((total, item) => total + item.price, 0);
-  const starterKitDiscount = starterKitPrice * 0.15; // 15% discount
-  const starterKitFinalPrice = starterKitPrice - starterKitDiscount;
+  const handleAddStarterKit = () => {
+    // Add as a single bundle item
+    addItem({
+      id: 'starter-kit',
+      name: 'Complete Starter Kit + 1 Month Free',
+      price: 150,
+      image: "/lovable-uploads/341515b9-64c7-49bd-ac77-1129071bed02.png",
+    });
+    setCartOpen(true);
+  };
+
+  const handleCheckout = () => {
+    // Redirect to Stripe checkout
+    // TODO: Replace with actual Stripe checkout URL or API call
+    window.open('STRIPE_STORE_CHECKOUT_URL', '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-4">Equipment Store</h1>
-          <p className="text-xl text-muted-foreground">
-            Get everything you need for your anti-sitting protocols
-          </p>
+        {/* Header with Cart Button */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-foreground mb-2">Equipment Store</h1>
+            <p className="text-xl text-muted-foreground">
+              Get everything you need for your anti-sitting protocols
+            </p>
+          </div>
+          <Sheet open={cartOpen} onOpenChange={setCartOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="relative gap-2">
+                <ShoppingCart className="h-5 w-5" />
+                Cart
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                    {totalItems}
+                  </Badge>
+                )}
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Your Cart ({totalItems} items)</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 flex flex-col h-full">
+                {items.length === 0 ? (
+                  <div className="flex-1 flex items-center justify-center text-center">
+                    <div>
+                      <ShoppingCart className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
+                      <p className="text-muted-foreground">Your cart is empty</p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex-1 space-y-4 overflow-y-auto pb-4">
+                      {items.map((item) => (
+                        <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg border">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm truncate">{item.name}</p>
+                            <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="text-sm font-medium w-4 text-center">{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive"
+                              onClick={() => removeItem(item.id)}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="border-t pt-4 space-y-4">
+                      <div className="flex items-center justify-between font-bold text-lg">
+                        <span>Total</span>
+                        <span>${totalPrice.toFixed(2)}</span>
+                      </div>
+                      <Button className="w-full" size="lg" onClick={handleCheckout}>
+                        Checkout — ${totalPrice.toFixed(2)}
+                      </Button>
+                      <Button variant="ghost" className="w-full" size="sm" onClick={clearCart}>
+                        Clear Cart
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
 
         {/* Starter Kit Highlight */}
         <Card className="mb-8 border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="text-2xl flex items-center space-x-2">
                   <Star className="h-6 w-6 text-yellow-500" />
@@ -153,18 +242,14 @@ const EquipmentStore = () => {
                   <Badge variant="secondary">BEST VALUE</Badge>
                 </CardTitle>
                 <CardDescription className="text-lg mt-2">
-                  Everything you need to start your anti-sitting journey
+                  Everything you need to start your anti-sitting journey — plus a free month of app access
                 </CardDescription>
               </div>
               <div className="text-right">
-                <div className="text-sm text-muted-foreground line-through">
-                  ${starterKitPrice.toFixed(2)}
-                </div>
-                <div className="text-3xl font-bold text-primary">
-                  ${starterKitFinalPrice.toFixed(2)}
-                </div>
-                <div className="text-sm text-green-600 font-medium">
-                  Save ${starterKitDiscount.toFixed(2)} (15% off)
+                <div className="text-3xl font-bold text-primary">$150</div>
+                <div className="flex items-center gap-1 text-sm text-success font-medium justify-end">
+                  <Gift className="h-4 w-4" />
+                  Includes 1 free month
                 </div>
               </div>
             </div>
@@ -176,7 +261,7 @@ const EquipmentStore = () => {
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   {equipmentItems.map((item, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
                       <span>{item.name}</span>
                     </div>
                   ))}
@@ -186,15 +271,15 @@ const EquipmentStore = () => {
                 <div className="bg-card p-4 rounded-lg">
                   <h4 className="font-semibold mb-2">Why choose the starter kit?</h4>
                   <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• 15% discount vs. individual purchases</li>
+                    <li>• Save vs. buying individually</li>
+                    <li>• 1 free month of full app access included</li>
                     <li>• Free shipping on complete kit</li>
-                    <li>• Everything arrives together</li>
-                    <li>• Curated for optimal results</li>
+                    <li>• Everything arrives together, ready to go</li>
                   </ul>
                 </div>
-                <Button size="lg" className="w-full">
+                <Button size="lg" className="w-full" onClick={handleAddStarterKit}>
                   <Package className="h-5 w-5 mr-2" />
-                  Add Starter Kit to Cart
+                  Add Starter Kit to Cart — $150
                 </Button>
               </div>
             </div>
@@ -235,31 +320,6 @@ const EquipmentStore = () => {
                 image={item.image}
                 inStock={item.inStock}
               />
-            ))}
-          </div>
-        </div>
-
-        {/* Equipment Categories */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6">Shop by Category</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Resistance", "Recovery", "Mobility", "Support", "Weights", "Accessories"].map((category) => (
-              <Card key={category} className="cursor-pointer hover:shadow-md transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="text-3xl mb-3">
-                    {category === "Resistance" && "🔥"}
-                    {category === "Recovery" && "💆"}
-                    {category === "Mobility" && "🤸"}
-                    {category === "Support" && "🧘"}
-                    {category === "Weights" && "🏋️"}
-                    {category === "Accessories" && "🛠️"}
-                  </div>
-                  <h3 className="font-semibold">{category}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {equipmentItems.filter(item => item.category === category).length} items
-                  </p>
-                </CardContent>
-              </Card>
             ))}
           </div>
         </div>

@@ -154,7 +154,9 @@ const Dashboard = () => {
                   ? "You've already worked out today. Great job!"
                   : context?.daysSinceLastWorkout === 1
                   ? "Keep the momentum going with today's workout!"
-                  : `It's been ${context?.daysSinceLastWorkout || 0} days. Let's get moving!`}
+                  : context?.daysSinceLastWorkout && context.daysSinceLastWorkout < 999
+                  ? `It's been ${context.daysSinceLastWorkout} days. Let's get moving!`
+                  : "Ready to start your first workout? Let's go!"}
               </p>
 
               {/* Level Progress */}
@@ -205,12 +207,11 @@ const Dashboard = () => {
                     size="lg"
                     variant="secondary"
                     className="gap-2 shadow-lg hover:shadow-xl transition-all animate-pulse-ring"
-                    asChild
+                    onClick={handleStartRecommendedWorkout}
+                    disabled={isStartingWorkout}
                   >
-                    <Link to="/anti-sitting-guide">
-                      <Play className="h-5 w-5" />
-                      Start Free Guide
-                    </Link>
+                    <Play className="h-5 w-5" />
+                    {isStartingWorkout ? 'Starting...' : "Start Today's Workout"}
                   </Button>
                   <Button
                     size="lg"
@@ -597,20 +598,17 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Free User CTA - Guide to Free Anti-Sitting Guide */}
+            {/* Free Trial CTA */}
             {!subscribed && (
-              <Card className="bg-gradient-to-br from-success/10 to-primary/10 border-success/20">
+              <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
                 <CardContent className="pt-6 text-center">
-                  <Heart className="h-10 w-10 mx-auto text-success mb-3" />
-                  <h3 className="font-bold mb-2">Start Your Recovery</h3>
+                  <Zap className="h-10 w-10 mx-auto text-primary mb-3" />
+                  <h3 className="font-bold mb-2">You're on Your Free Trial</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Get our free Anti-Sitting Guide to start reversing the damage from prolonged sitting.
+                    Explore everything — all programs, exercises, and tracking. Subscribe to keep access after your trial.
                   </p>
-                  <Button className="w-full mb-2" asChild>
-                    <Link to="/anti-sitting-guide">Get Free Guide</Link>
-                  </Button>
-                  <Button variant="outline" className="w-full" size="sm" asChild>
-                    <Link to="/pricing">Upgrade for Full Access</Link>
+                  <Button className="w-full" asChild>
+                    <Link to="/pricing">View Plans</Link>
                   </Button>
                 </CardContent>
               </Card>
