@@ -104,7 +104,7 @@ const Onboarding = () => {
   const completeOnboarding = () => {
     localStorage.setItem('onboarding_complete', 'true');
     localStorage.setItem('user_preferences', JSON.stringify(data));
-    navigate('/');
+    navigate('/dashboard');
   };
 
   const nextStep = () => {
