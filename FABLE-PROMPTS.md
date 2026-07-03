@@ -1,212 +1,298 @@
-# Fable Prompts for Sitting Sucks
+# Fable Prompts — Sitting Sucks v2 (Knowledge-Baked)
 
-Use these with Claude Code running `claude-fable-5` model. These are meant to be copy-pasted into Claude Code / Fable.
-
----
-
-## PROMPT 1: Exercise Video Embed System
-
-> **Use when:** You're ready to set up the video system for your own recorded exercise videos.
-> **Fable cost:** $0 (single-shot code generation)
-
-```
-Build a custom video embed component for my Sitting Sucks React/TypeScript app called ExerciseVideo.
-
-Requirements:
-- Self-hosted video player (NOT YouTube embeds — no iframes, no YouTube)
-- Supports MP4/WebM uploads stored in Supabase storage bucket called 'exercise-videos'
-- Fallback poster image when no video is available
-- Play/pause, progress bar, fullscreen toggle
-- Dark theme matching shadcn/ui dark mode
-- Mobile responsive (portrait + landscape)
-- Accessible (keyboard controls, aria labels)
-- Component props: { exerciseId, videoUrl, posterUrl, title }
-
-Also create a Supabase Edge Function `generate-video-thumbnail` that extracts a frame from uploaded MP4 and saves it as a poster image.
-
-The file should live at src/components/ExerciseVideo.tsx
-```
+Use with Claude Code running `claude-fable-5`. These encode Ryan Venezia's complete movement philosophy — the vault at `/mnt/h/Knowledge Vault/Knowledge/Movement/` has the raw notes if Fable needs deeper context.
 
 ---
 
-## PROMPT 2: Onboarding Generator (Fable-Powered)
+## PROMPT A: Extended Onboarding Consultation
 
-> **Use when:** You're ready to build the personalized onboarding flow.
-> **Fable cost:** Fable generates the code once ($0). Fable runs per-user at signup (~$0.35/user).
+> **Use when:** Ready to build the health intake flow.
+> **Fable cost:** $0 one-time code gen.
 
 ```
-Create an onboarding flow for my Sitting Sucks fitness app that asks users 5 questions and uses the new user's answers to generate a personalized starter workout program.
+Build an extended onboarding flow for Sitting Sucks at src/pages/Onboarding.tsx.
 
-LOCATION: src/pages/Onboarding.tsx (already exists, rewrite it)
+This onboarding is a HEALTH CONSULTATION, not just a signup form. It asks more questions than a typical fitness app because Ryan's approach treats every person differently. The answers determine the user's personalized "top 5" exercises, their compensation chain focus, and the right starting approach.
 
-QUESTIONS:
-1. "What's your main pain point?" — Lower back, Hips, Shoulders, Neck, Knees, Feet/Ankles, Multiple areas
-2. "How active are you right now?" — Sedentary (no exercise), Light (1-2x/week), Moderate (3-4x/week), Very active (5+)
-3. "Do you have any equipment?" — None (bodyweight only), Basic (chair, wall), Some (bands, foam roller), Full (bands, weights, roller)
-4. "What's your primary goal?" — Relieve pain, Improve posture, Build strength, Increase mobility, All of the above
-5. "How much time per day?" — 5-10 min, 10-20 min, 20-30 min, 30+ min
+QUESTIONS (one at a time, smooth transitions, progress indicator):
 
-After they answer, call a Supabase Edge Function (`generate-workout-program`) that:
-1. Takes the user's answers as input
-2. Returns a structured 7-day program (array of objects: { day: number, focus: string, exercises: [{ name, sets, reps, notes }] })
-3. Saves the program to a user_programs table
+1. PAIN/CONCERN:
+   "What's your main area of concern?"
+   Options: Lower back, Hips, Shoulders, Neck, Knees, Feet/Ankles, Wrist/Elbow, Multiple areas, No pain (preventative)
+   If "Multiple areas" → show multi-select of all options
+   Design: Large buttons with body-part icons, not dropdowns
 
-For now, the edge function returns a rule-based program (not AI). The AI layer comes in the next prompt.
+2. PAIN QUALITY:
+   "What does it feel like?"
+   Options: Sharp/stabbing, Dull/ache, Burning, Stiff/tight, Numbness/tingling, Just discomfort
+   "Not sure? That's okay. Just pick what comes closest."
+   Design: Emoji + text buttons
 
-The UI should:
-- One question at a time with smooth transitions (swipe/fade)
-- Progress indicator showing 1/5, 2/5 etc.
-- Shadcn/ui radio group / button select answers
-- After last question, show loading state "Building your program..." with animation
-- Then show the generated program with day-by-day tabs
-- "Start Day 1" button → navigates to /dashboard
+3. WHEN IT HAPPENS:
+   "When does it bother you most?"
+   Options: After sitting, After exercise, First thing in morning, At night, All the time, During specific movements
 
-Keep the existing completed-program logic that redirects to /dashboard on finish.
+4. SITTING HABITS:
+   "How many hours a day do you sit?"
+   Options: Less than 4, 4-8, 8-10, 10+
+   Sub-text: "Includes desk work, commuting, meals, couch time"
+
+5. ACTIVITY LEVEL:
+   "How active are you right now?"
+   Options:
+   - Sedentary (desk job, no exercise)
+   - Light (desk job, walk sometimes)
+   - Moderate (move throughout day + exercise 1-2x/week)
+   - Active (move well + exercise 3-4x/week)
+   - Very active (exercise 5+ times/week)
+
+6. EQUIPMENT:
+   "What equipment do you have?"
+   Options (multi-select):
+   - None (just my body)
+   - Chair / Wall / Floor
+   - Resistance bands
+   - Foam roller or lacrosse ball
+   - Weights or dumbbells
+   - Full gym access
+
+7. GOAL:
+   "What's your primary goal?"
+   Options: Relieve pain, Improve posture, Build strength, Increase mobility, All of the above — I want everything
+   Design: Make "All of the above" feel like the exciting option
+
+8. TIME:
+   "How much time can you commit per day?"
+   Options: 5-10 minutes, 10-20 minutes, 20-30 minutes, 30+ minutes
+   Sub-text: "Consistency beats intensity. Pick what you can actually do."
+
+9. INJURY HISTORY:
+   "Any past injuries, surgeries, or chronic conditions we should know about?"
+   Design: Text area, optional
+   Sub-text: "This helps us make sure every exercise is safe for you."
+
+10. BODY STATE RIGHT NOW:
+    "What does your body feel like RIGHT NOW, in this moment?"
+    Options: Stiff, Tight, Weak, Sore, Energized, Achy, Normal
+    Sub-text: "There's no wrong answer. This helps us meet you where you are."
+
+11. BODY CONNECTION:
+    "How connected do you feel to your body today?"
+    Scale: 1 (totally disconnected) to 5 (fully aware)
+    Sub-text: "This changes day to day. Being honest helps us help you."
+    Design: 5 buttons with labels
+
+After all questions answered → call a Supabase Edge Function (generate-workout-program) that:
+1. Takes all answers as input
+2. Returns a personalized 7-day starter program with:
+   - day-by-day breakdown
+   - exercises selected based on their pain points, equipment, and body state
+   - Each exercise includes: name, description, sets/reps/duration, form cues (from Ryan's actual cues), regression option, progression option
+3. Save to user_programs table
+4. Show the program with tabbed days
+5. "Start Day 1" button → navigate to /dashboard
+
+The tone throughout should feel like Ryan is talking to you — direct, human, no corporate fitness BS.
 ```
 
 ---
 
-## PROMPT 3: Fable AI Engine for Personalized Programs
+## PROMPT B: Build the Complete Sitting Sucks Site
 
-> **Use when:** The onboarding flow works and you want Fable to generate REAL personalized programs instead of rule-based.
-> **Fable cost:** ~$0.35 per generated program.
+> **Use when:** Ready to build the full site with philosophy baked in.
+> **Fable cost:** $0 one-time code gen.
 
 ```
-Create a Supabase Edge Function at supabase/functions/generate-workout-program/index.ts
+Build the complete Sitting Sucks fitness app from the existing codebase at github.com/Sitting-sucks/sitting-sucks.
 
-This function receives a user's onboarding answers and returns a personalized 7-day program.
+RYAN'S PHILOSOPHY (this must be baked into EVERY feature):
 
-Use the Fable 5 API (claude-fable-5) via OpenRouter or Anthropic API to generate the program.
+1. Brain-Body Connection:
+   - Exercise is a total human experience, not just mechanical movement
+   - The body is always communicating — pain, stiffness, tightness are messages
+   - "The brain adapts the body to what we do most. If you sit, your body will adapt you to becoming the world's best sitter."
+   - SMR (foam rolling) before exercise wakes up the nerve before you can use the muscle
+   - Different states (stiff, tight, weak, sore, energized, achy, normal) require different approaches
 
-SYSTEM PROMPT FOR FABLE:
+2. Compensation Chains (this is the core differentiator):
+   - Pain is a full-body approach. The SYMPTOMATIC thing is NOT always the PROBLEMATIC thing.
+   - Knee pain and low-back pain often come from the foot/ankle first → then hip → then core
+   - Shoulder pain: check wrist, C-spine, T-spine, chest/ribs before the shoulder
+   - THE CALF CRISIS: 9 muscles plantar flex. Nobody trains ankles. Tight calves → can't extend knee → low back over-extends to compensate
+   - Universal truths: abdominal bracing helps everything. Hip strengthening (all 6 directions) helps every human
 
-You are Ryan Venezia, an NASM-certified personal trainer with 8 years of experience in corrective exercise, mobility, and anti-sitting fitness. You run Sitting Sucks.
+3. Variables Beyond Weight:
+   - There are 14+ ways to make an exercise harder without adding load
+   - Ryan's go-to: challenge position + deeper joint ranges + isometrics
+   - Pay attention to EVERY part of your body during exercise. Is your stabilizing leg engaged?
+   - The heel wedge example: touch toes with straight legs, add heel wedges, BOOM — full chain awakening
 
-Generate a 7-day workout program for a user with these answers:
-- Pain point: {painPoint}
-- Activity level: {activityLevel}
-- Equipment: {equipment}
+4. State-Based Training:
+   - Stiff → deep, challenging ranges with isometrics (heel wedge, hinge stretch, chest stretch)
+   - Weak → isometric holds, slow tempo, mind-muscle connection drills
+   - Tight → SMR, stretching, end-range work
+   - Achy → blood flow work, pain-free range only
+   - The brain may reject certain exercises — if ROM decreases, try a different exercise for the same purpose
+
+5. Onboarding is everything:
+   - 11 questions covering pain, quality, timing, sitting habits, activity, equipment, goals, time, injury history, body state, body connection
+   - Generate a personalized "top 5" program, not a generic one
+   - The first workout program must feel like it was built for THEM
+
+BUILD THESE PAGES/COMPONENTS:
+
+A. LANDING PAGE (src/pages/Landing.tsx) — already exists, enhance it
+   - Hero: "Your Body Wasn't Built to Sit All Day"
+   - Problem stats: 8+ hrs sitting avg, 80% desk workers back pain, 40% increased disease risk
+   - Features: Smart recommendations (AI with Ryan's logic), streak/gamification, progress analytics, targeted anti-sitting exercises, personalized programs, 1-on-1 coaching
+   - How it works: 3 steps
+   - Pricing: $10/mo or $60/yr, $249/mo coaching
+   - Video section: embedded exercise demos (your videos, not YouTube)
+   - Testimonials
+   - FAQ
+
+B. ONBOARDING (src/pages/Onboarding.tsx) — 11 questions, one at a time, generates personalized program
+   - Smooth transitions, progress indicator
+   - After answers → generate program via edge function
+   - Show program with day tabs
+
+C. DASHBOARD (src/pages/Dashboard.tsx) — premium redesign
+   - Dark theme default (#0a0a0f background)
+   - Glass-morphism cards
+   - Animated stat counters (streak, weekly progress, total workouts, achievements)
+   - "Today's Focus" card showing personalized recommendation based on user's CURRENT STATE
+   - Horizontal scrollable exercise cards with video poster images
+   - "How are you feeling today?" quick-check button → adjusts recommendations
+   - Streak fire animation
+   - Quick-log FAB for workouts
+
+D. EXERCISE LIBRARY (src/pages/ExerciseLibrary.tsx) — upgrade
+   - Filter by: body area, equipment, difficulty, joint movement, PAIN POINT (new filter!)
+   - Exercise cards show video poster, difficulty/intensity stars
+   - Click opens ExerciseVideo component (custom player, not YouTube)
+   - Each exercise shows: description, instructions, equipment, target muscles, joint movements, regression, progression, form cues
+   - "Add to Today" button
+   - Tags: mobility, strength, no equipment, chair only, beginner friendly
+
+E. VIDEO PLAYER (src/components/ExerciseVideo.tsx) — already exists, verify
+   - MP4/WebM from Supabase storage
+   - Play/pause, seek, fullscreen, mute
+   - Poster image fallback
+   - Dark theme
+
+F. AI CHECK-IN (src/components/WeeklyCheckin.tsx) — weekly retention
+   - "How's your [pain point] this week?" (1-5)
+   - "Did you complete your workouts?"
+   - "Anything feel better or worse?" (text)
+   - Calls cheap model (GLM 5.2 / DeepSeek) with vault context → adjusts program
+
+G. PROGRESS (src/pages/ProgressHistory.tsx) — upgrade
+   - Progress narrative (not just charts — actual words describing their improvement)
+   - "Your squat depth has improved 30% since using heel wedges"
+   - Muscle group balance visualization
+   - Streak history calendar
+
+COLOR PALETTE:
+- Background: #0a0a0f
+- Cards: #1a1a2e with subtle border
+- Primary gradient: #7c3aed → #a855f7
+- Accent: #f59e0b (amber)
+- Success: #22c55e
+- Text: white/off-white
+
+TOOLS/MODELS:
+- The AI recommendation engine uses GLM 5.2 or DeepSeek, not Fable (cost optimization)
+- Fable is the builder, not the runtime
+- Context for the cheap model comes from the Obsidian vault at /mnt/h/Knowledge Vault/Knowledge/Movement/
+```
+
+---
+
+## PROMPT C: The Recommendation Engine
+
+> **Use when:** Ready to build the AI that generates personalized programs.
+> **Fable cost:** $0 one-time code gen. The runtime uses cheap models.
+
+```
+Build a recommendation engine service at src/lib/recommendation-engine.ts that generates personalized workout programs using Ryan's movement philosophy.
+
+ARCHITECTURE:
+- This is called AFTER onboarding (when user's answers are saved)
+- Called again on weekly check-in (when user reports how they feel)
+- Uses a cheap model (GLM 5.2, Kimi K2.6, or DeepSeek via OpenRouter API)
+- Passes vault context as the system prompt so the AI generates Ryan-quality programs
+
+SYSTEM PROMPT (passed to the cheap model):
+
+You are Ryan Venezia, an NASM-certified personal trainer with 8 years of experience. You run Sitting Sucks — a fitness company specifically for people who sit all day.
+
+YOUR PHILOSOPHY:
+1. Exercise is a total human experience, not just mechanical movement. The body communicates constantly — listen to it.
+2. Pain is a full-body approach. The symptomatic thing is NOT the problematic thing. Check everything together AND individually.
+3. The calf crisis: 9 plantar flexors, nobody trains ankles. Tight calves → can't extend knee → low back compensates.
+4. Knee and low-back pain usually start at the foot/ankle → hip → core before reaching the knee or back.
+5. Shoulder pain usually starts at wrist, C-spine, T-spine, or chest/ribs — not the shoulder itself.
+6. There are 14+ ways to make an exercise harder without adding weight. Your go-to: deeper position + isometrics + full-body awareness.
+7. Different states require different approaches:
+   - Stiff → deep ranges with isometrics
+   - Weak → isometric holds, slow tempo, connection drills
+   - Tight → SMR release, stretching, end-range
+   - Achy → pain-free ROM, blood flow work
+8. The brain may reject an exercise. If ROM decreases, try a different exercise for the same purpose.
+9. Abdominal bracing helps everything. Hip training (all 6 directions) helps every human being.
+10. Quality over quantity. One perfect rep teaches more than ten sloppy ones.
+
+Generate a personalized workout program based on the user's profile below.
+
+User profile (from onboarding):
+- Pain area: {pain_area}
+- Pain quality: {pain_quality}
+- Sitting hours: {sitting_hours}
+- Activity level: {activity_level}
+- Equipment: {equipment_list}
 - Goal: {goal}
-- Time per day: {timePerDay}
-
-YOUR TRAINING PHILOSOPHY (must follow):
-1. Mobility FIRST — every session starts with joint prep before strength
-2. No muscle isolation — train movement patterns, not body parts
-3. Know compensation chains: tight hips → tight T-spine → shoulder issues. Tight ankles → knee Valgus → hip pain. Always fix the root.
-4. Progressions and regressions for every exercise
-5. The world is your gym — use chairs, walls, floors, bands. No fancy equipment needed.
-6. Anti-sitting focus: open up the front line (hips, chest, shoulders), strengthen the posterior chain (glutes, upper back, deep neck flexors)
+- Time per day: {time_per_day}
+- Injury history: {injury_history}
+- Body state: {body_state}
+- Body connection score: {body_connection}/5
 
 Return JSON:
 {
-  "focus": "string describing the week's theme based on their needs",
-  "dailyTip": "one actionable tip for this week",
+  "focus": "1-2 sentence theme for the week based on their needs",
+  "dailyTip": "one actionable mindset or body-awareness tip",
+  "compensationChainNote": "what's likely happening in their body based on their answers",
   "days": [
     {
       "day": 1,
-      "focus": "e.g. Hip Mobility & Core Stability",
+      "focus": "e.g. Reconnecting with Your Feet",
       "exercises": [
         {
           "name": "exercise name",
-          "description": "1 sentence what this does",
-          "sets": "e.g. 3",
-          "reps": "e.g. 8-12 each side",
-          "regression": "easier version if needed",
-          "progression": "harder version when ready",
-          "formCues": ["key 1", "key 2", "key 3"]
+          "description": "1 sentence why this exercise for THIS person",
+          "sets": "e.g. 2-3",
+          "reps": "e.g. 30 seconds or 8-12",
+          "formCues": ["key cue 1", "key cue 2", "key cue 3"],
+          "regression": "easier version",
+          "progression": "harder version when ready"
         }
       ],
-      "estimatedMinutes": 15
+      "estimatedMinutes": 10
     }
-  ]
+  ],
+  "weeklyCheckInQuestion": "a question to ask them at the end of the week specific to their program"
 }
-
-Make every exercise achievable with their listed equipment. If equipment=None, use only bodyweight, chairs, and walls.
 ```
 
 ---
 
-## PROMPT 4: Fucking Cool Dashboard Redesign
+## Quick Reference: How Fable Sits in the Stack
 
-> **Use when:** The onboarding works and you want the UI to feel premium.
-> **Fable cost:** $0 (code generation, no ongoing cost)
+| What | Model | When | Cost |
+|------|-------|------|------|
+| Build the site | Fable (claude-fable-5) | One-time | $0 (code gen) |
+| Onboarding program | GLM 5.2 / DeepSeek | Per signup | ~$0.01-0.03 |
+| Daily recommendations | GLM 5.2 / DeepSeek | Per request | ~$0.002 |
+| Weekly check-in | GLM 5.2 / DeepSeek | Weekly per user | ~$0.01 |
+| Video storage | Supabase | Per upload | Storage costs |
 
-```
-Redesign my Sitting Sucks Dashboard (src/pages/Dashboard.tsx) to feel premium and modern.
-
-CURRENT:
-- Basic shadcn/ui cards with purple primary color
-- Standard grid layout
-- Default typography
-
-REQUIRED:
-- Dark theme as DEFAULT (remove light mode toggle or keep optional)
-- Deep gradient hero section (purple/indigo → dark)
-- Glass-morphism cards with backdrop blur where appropriate
-- Animated stat counters (number rolls up on load)
-- Exercise recommendations shown as horizontal scrollable cards with video thumbnails
-- Streak fire animation (already exists, make it more prominent)
-- "Today's Focus" card showing the day's recommended muscle groups / movement pattern
-- Quick-start floating action button for logging a workout
-- Mobile: bottom nav instead of sidebar
-
-COLOR PALETTE:
-- Background: #0a0a0f (very dark)
-- Cards: #1a1a2e with subtle border
-- Primary gradient: #7c3aed → #a855f7
-- Accent: #f59e0b (amber for streaks/energy)
-- Success: #22c55e
-
-ANIMATIONS:
-- Framer Motion or CSS transitions on card entrance
-- Streak fire pulsing
-- Counter roll-up
-
-The dashboard should make you FEEL something when you open it.
-```
-
----
-
-## PROMPT 5: Weekly Check-in (Retention Engine)
-
-> **Use when:** Users exist and you want Fable to improve retention.
-> **Fable cost:** ~$0.30 per check-in.
-
-```
-Create a weekly check-in system for Sitting Sucks.
-
-COMPONENT: src/components/WeeklyCheckin.tsx
-EDGE FUNCTION: supabase/functions/weekly-checkin/index.ts
-
-The check-in asks 3 questions:
-1. "How's your [main pain point] this week?" (1-5 scale)
-2. "Did you complete all your workouts?" (Yes/Mostly/Some/None)
-3. "Anything feel better or worse?"
-
-On submit, the edge function calls Fable (claude-fable-5) with their history + odpovědi and returns:
-- Adjustments to their current program
-- A new focus for next week
-- An encouraging message
-
-The component shows as a modal once per week after their last scheduled workout.
-```
-
----
-
-## PROMPT 6: Exercise Library Video Upgrades
-
-> **Use when:** Your exercise videos are recorded and uploaded.
-> **Fable cost:** $0
-
-```
-Upgrade the ExerciseLibrary page (src/pages/ExerciseLibrary.tsx):
-
-1. Each exercise card shows a video thumbnail poster image
-2. Clicking opens a modal with the custom ExerciseVideo component
-3. Modal also shows: description, instructions, equipment needed, target muscles, joint movements, difficulty, regressions, progressions
-4. "Add to Today's Workout" button on each exercise
-5. Filter by pain point (new filter: "Helps with: Lower Back, Hips, Shoulders, etc.")
-6. Each exercise has tags for: "Mobility", "Strength", "No Equipment", "Chair Only", "Beginner Friendly"
-7. Mobile: swipeable exercise cards
-```
-
+Fable writes the code. Your vault + cheap models run the features. Your knowledge is the moat.
