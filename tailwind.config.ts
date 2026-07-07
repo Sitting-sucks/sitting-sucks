@@ -76,6 +76,9 @@ export default {
 					foreground: 'hsl(var(--info-foreground))'
 				},
 				streak: 'hsl(var(--streak))',
+				// Anatomy theme
+				bone: 'hsl(var(--bone))',
+				tissue: 'hsl(var(--tissue))',
 				chart: {
 					'1': 'hsl(var(--chart-1))',
 					'2': 'hsl(var(--chart-2))',

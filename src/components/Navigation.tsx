@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { BodyMap } from "@/components/BodyMap";
+import { exercises } from "@/data/exercises";
 import { Button } from "@/components/ui/button";
 import {
   Dumbbell, Library, ShoppingCart, Menu, X, LogOut, User,
-  Calendar, TrendingUp, Settings, Users, LayoutDashboard, BookOpen, MessageCircle
+  Calendar, TrendingUp, Settings, Users, LayoutDashboard, BookOpen, MessageCircle,
+  CalendarCheck, ClipboardList, CalendarPlus, UserPlus
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { GamificationBadge } from "./GamificationBadge";
@@ -27,6 +30,7 @@ import { Badge } from "@/components/ui/badge";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { isTrainer } = useRole();
   const { subscribed, subscriptionTier } = useSubscription();
@@ -58,6 +62,7 @@ const Navigation = () => {
   // Base nav items for all users (including free users)
   const baseNavItems = [
     { path: "/", label: "Dashboard", icon: LayoutDashboard },
+    { path: "/today", label: "Today", icon: CalendarCheck },
     { path: "/exercise-library", label: "Exercises", icon: Library },
     { path: "/exercise-diary", label: "Diary", icon: BookOpen },
   ];
@@ -71,9 +76,12 @@ const Navigation = () => {
 
   // Admin nav items (only for trainers)
   const adminNavItems = isTrainer ? [
+    { path: "/admin/my-clients", label: "My Clients", icon: UserPlus },
+    { path: "/admin/session-recap", label: "Session Recap", icon: ClipboardList },
+    { path: "/admin/prescribe", label: "Prescribe", icon: CalendarPlus },
     { path: "/admin/exercises", label: "Manage Exercises", icon: Dumbbell },
     { path: "/admin/programs", label: "Program Builder", icon: Calendar },
-    { path: "/admin/clients", label: "Clients", icon: Users },
+    { path: "/admin/clients", label: "All Clients", icon: Users },
   ] : [];
 
   const allNavItems = [...baseNavItems, ...tier1NavItems];
@@ -344,6 +352,24 @@ const Navigation = () => {
                 <LogOut className="h-4 w-4" />
                 <span>Log out</span>
               </Button>
+
+              {/* Mini body map — tap a muscle to browse exercises */}
+              <div className="pt-4 mt-2 border-t border-border">
+                <span className="anatomy-label block text-center mb-2">
+                  Find exercises by muscle
+                </span>
+                <BodyMap
+                  exercises={exercises}
+                  side="front"
+                  style="minimal"
+                  height="12rem"
+                  showTooltips={false}
+                  onMuscleClick={() => {
+                    setIsOpen(false);
+                    navigate('/exercise-library');
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}

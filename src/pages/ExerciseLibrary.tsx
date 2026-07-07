@@ -16,7 +16,11 @@ import { useExercises, Exercise } from "@/hooks/useExercises";
 import { useRole } from "@/hooks/useRole";
 import { useToast } from "@/hooks/use-toast";
 import { ExerciseForm } from "@/components/admin/ExerciseForm";
-import { equipmentList, jointMovements, bodyAreaList, jointMovementToBodyAreas, BodyArea } from "@/data/exercises";
+import { equipmentList, jointMovements, bodyAreaList, jointMovementToBodyAreas, BodyArea, exercises as exerciseDatabase } from "@/data/exercises";
+import { useSearchParams } from "react-router-dom";
+import { BodyMap } from "@/components/BodyMap";
+import type { MuscleClickInfo } from "@/components/BodyMap";
+import { getExercisesForMuscle, MUSCLE_MAP_BY_SLUG, bodyAreaLabels } from "@/data/muscle-mapping";
 
 const ExerciseLibrary = () => {
   const { subscribed } = useSubscription();
@@ -28,7 +32,18 @@ const ExerciseLibrary = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedBodyArea, setSelectedBodyArea] = useState<BodyArea | "all">("all");
+  const [searchParams] = useSearchParams();
+  const [selectedBodyArea, setSelectedBodyArea] = useState<BodyArea | "all">(() => {
+    // Support ?area= links from the Dashboard body map (label or raw value)
+    const areaParam = searchParams.get("area");
+    if (!areaParam) return "all";
+    return (
+      bodyAreaList.find(
+        (a) => a === areaParam || bodyAreaLabels[a] === areaParam
+      ) ?? "all"
+    );
+  });
+  const [activeMuscle, setActiveMuscle] = useState<MuscleClickInfo | null>(null);
   const [previewVariations, setPreviewVariations] = useState(false);
   const [editingExercise, setEditingExercise] = useState<Exercise | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -67,7 +82,7 @@ const ExerciseLibrary = () => {
   }, [sortedExercises]);
 
   // Filter by body area using joint_movements → bodyArea mapping
-  const displayedExercises = useMemo(() => {
+  const areaFilteredExercises = useMemo(() => {
     if (selectedBodyArea === "all") return sortedExercises;
     return sortedExercises.filter(exercise =>
       exercise.joint_movements.some(jm => {
@@ -77,6 +92,25 @@ const ExerciseLibrary = () => {
     );
   }, [sortedExercises, selectedBodyArea]);
 
+  // Refine by clicked muscle: filter the Supabase exercises directly —
+  // getExercisesForMuscle derives body areas from joint_movements and
+  // matches keywords against muscle_groups
+  const displayedExercises = useMemo(() => {
+    if (!activeMuscle) return areaFilteredExercises;
+    return getExercisesForMuscle(areaFilteredExercises, activeMuscle.muscle);
+  }, [areaFilteredExercises, activeMuscle]);
+
+  const handleMuscleClick = (info: MuscleClickInfo) => {
+    setActiveMuscle(info);
+    const entry = MUSCLE_MAP_BY_SLUG[info.muscle];
+    if (entry) setSelectedBodyArea(entry.bodyArea);
+  };
+
+  const clearMuscleFilter = () => {
+    setActiveMuscle(null);
+    setSelectedBodyArea("all");
+  };
+
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedEquipment("all");
@@ -85,6 +119,7 @@ const ExerciseLibrary = () => {
     setSelectedIntensity("all");
     setSelectedCategory("all");
     setSelectedBodyArea("all");
+    setActiveMuscle(null);
   };
 
   const handleEditExercise = (exerciseId: string) => {
@@ -141,13 +176,47 @@ const ExerciseLibrary = () => {
         </p>
       </div>
 
+      {/* Interactive Body Map Filter */}
+      <Card className="mb-6">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <span className="anatomy-label">Filter by muscle</span>
+              <CardTitle className="text-xl mt-1">
+                {activeMuscle ? activeMuscle.label : "Tap where you want to work"}
+              </CardTitle>
+            </div>
+            {activeMuscle && (
+              <Button variant="outline" size="sm" onClick={clearMuscleFilter} className="gap-1.5">
+                <X className="h-3.5 w-3.5" />
+                Clear muscle filter
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <BodyMap
+            exercises={exerciseDatabase}
+            side="front"
+            height="18rem"
+            multiSelect={false}
+            onMuscleClick={handleMuscleClick}
+          />
+          {activeMuscle && (
+            <p className="text-sm text-muted-foreground text-center mt-2">
+              {activeMuscle.description}
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Body Area Filter Bar */}
       <div className="mb-6">
         <div className="flex flex-wrap gap-2 justify-center">
           <Badge
             variant={selectedBodyArea === "all" ? "default" : "outline"}
             className="cursor-pointer px-3 py-1.5 text-sm"
-            onClick={() => setSelectedBodyArea("all")}
+            onClick={() => { setSelectedBodyArea("all"); setActiveMuscle(null); }}
           >
             All Areas
           </Badge>
@@ -156,7 +225,10 @@ const ExerciseLibrary = () => {
               key={area}
               variant={selectedBodyArea === area ? "default" : "outline"}
               className="cursor-pointer px-3 py-1.5 text-sm"
-              onClick={() => setSelectedBodyArea(selectedBodyArea === area ? "all" : area)}
+              onClick={() => {
+                setActiveMuscle(null);
+                setSelectedBodyArea(selectedBodyArea === area ? "all" : area);
+              }}
             >
               {area}
             </Badge>

@@ -9,6 +9,7 @@ import { useMyPrograms } from "@/hooks/usePrograms";
 import { supabase } from "@/integrations/supabase/client";
 import { Calendar, Dumbbell, Loader2, Lock, Play, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { PersonalizedProgramCard } from "@/components/PersonalizedProgramCard";
 
 interface ProgramExerciseDetail {
   id: string;
@@ -124,6 +125,11 @@ const MyPrograms = () => {
             ? "View your assigned workout programs and pre-made protocols"
             : "Access the Anti-Sitting Protocol and pre-made workout programs"}
         </p>
+      </div>
+
+      {/* Personalized program from onboarding */}
+      <div className="mb-8">
+        <PersonalizedProgramCard />
       </div>
 
       {loading ? (

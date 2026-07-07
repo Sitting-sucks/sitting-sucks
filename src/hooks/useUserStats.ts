@@ -170,8 +170,8 @@ export const useUserStats = () => {
     const needsWeekReset = !stats.week_start_date || stats.week_start_date !== weekStart;
     const needsMonthReset = !stats.month_start_date || stats.month_start_date !== monthStart;
 
-    const updatedMuscleGroups = { ...(stats.muscle_group_counts || {}) };
-    const updatedExerciseCounts = { ...(stats.exercise_counts || {}) };
+    const updatedMuscleGroups = { ...((stats.muscle_group_counts as Record<string, number> | null) || {}) };
+    const updatedExerciseCounts = { ...((stats.exercise_counts as Record<string, number> | null) || {}) };
 
     workoutData.muscleGroups?.forEach(mg => {
       updatedMuscleGroups[mg] = (updatedMuscleGroups[mg] || 0) + 1;

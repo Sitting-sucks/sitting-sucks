@@ -11,26 +11,41 @@ import TrainerRoute from "./components/TrainerRoute";
 import Navigation from "./components/Navigation";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 
-// Pages
-import Dashboard from "./pages/Dashboard";
-import ExerciseLibrary from "./pages/ExerciseLibrary";
-import EquipmentStore from "./pages/EquipmentStore";
-import Pricing from "./pages/Pricing";
-import Landing from "./pages/Landing";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
-import MyPrograms from "./pages/MyPrograms";
-import LogWorkout from "./pages/LogWorkout";
-import ProgressHistory from "./pages/ProgressHistory";
-import ExerciseDiary from "./pages/ExerciseDiary";
-import Onboarding from "./pages/Onboarding";
-import Settings from "./pages/Settings";
-import Messages from "./pages/Messages";
+// Pages — lazy-loaded so each route ships its own chunk
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const ExerciseLibrary = lazy(() => import("./pages/ExerciseLibrary"));
+const EquipmentStore = lazy(() => import("./pages/EquipmentStore"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const Landing = lazy(() => import("./pages/Landing"));
+const Auth = lazy(() => import("./pages/Auth"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const MyPrograms = lazy(() => import("./pages/MyPrograms"));
+const LogWorkout = lazy(() => import("./pages/LogWorkout"));
+const ProgressHistory = lazy(() => import("./pages/ProgressHistory"));
+const ExerciseDiary = lazy(() => import("./pages/ExerciseDiary"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+const Settings = lazy(() => import("./pages/Settings"));
+const Messages = lazy(() => import("./pages/Messages"));
+const Today = lazy(() => import("./pages/Today"));
+const PainProtocols = lazy(() => import("./pages/PainProtocols"));
+const PainProtocol = lazy(() => import("./pages/PainProtocol"));
 
 // Admin Pages
-import ExerciseManagement from "./pages/admin/ExerciseManagement";
-import ProgramBuilder from "./pages/admin/ProgramBuilder";
-import ClientManagement from "./pages/admin/ClientManagement";
+const ExerciseManagement = lazy(() => import("./pages/admin/ExerciseManagement"));
+const ProgramBuilder = lazy(() => import("./pages/admin/ProgramBuilder"));
+const ClientManagement = lazy(() => import("./pages/admin/ClientManagement"));
+const MyClients = lazy(() => import("./pages/admin/MyClients"));
+const SessionRecap = lazy(() => import("./pages/admin/SessionRecap"));
+const PrescribeExercises = lazy(() => import("./pages/admin/PrescribeExercises"));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -45,10 +60,13 @@ const App = () => (
           <PWAInstallPrompt />
           <BrowserRouter>
             <div className="min-h-screen">
+              <Suspense fallback={<PageLoader />}>
               <Routes>
                 {/* Public Routes */}
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/landing" element={<Landing />} />
+                <Route path="/pain-protocols" element={<PainProtocols />} />
+                <Route path="/pain-protocols/:slug" element={<PainProtocol />} />
                 <Route path="/onboarding" element={
                   <ProtectedRoute skipOnboarding>
                     <Onboarding />
@@ -98,6 +116,12 @@ const App = () => (
                     <Messages />
                   </ProtectedRoute>
                 } />
+                <Route path="/today" element={
+                  <ProtectedRoute>
+                    <Navigation />
+                    <Today />
+                  </ProtectedRoute>
+                } />
 
                 {/* Client Routes - Subscribers */}
                 <Route path="/my-programs" element={
@@ -138,10 +162,29 @@ const App = () => (
                     <ClientManagement />
                   </TrainerRoute>
                 } />
+                <Route path="/admin/my-clients" element={
+                  <TrainerRoute>
+                    <Navigation />
+                    <MyClients />
+                  </TrainerRoute>
+                } />
+                <Route path="/admin/session-recap" element={
+                  <TrainerRoute>
+                    <Navigation />
+                    <SessionRecap />
+                  </TrainerRoute>
+                } />
+                <Route path="/admin/prescribe" element={
+                  <TrainerRoute>
+                    <Navigation />
+                    <PrescribeExercises />
+                  </TrainerRoute>
+                } />
 
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </Suspense>
             </div>
           </BrowserRouter>
         </TooltipProvider>

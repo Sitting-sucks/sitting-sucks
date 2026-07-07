@@ -1,0 +1,30 @@
+# Foot & Ankle exercises — Sitting Sucks
+# See content/exercises/_TEMPLATE.md for the field reference and vocabularies.
+# Validate:  node scripts/seed-exercises.mjs --check
+# This file ships with one worked example. Replace/extend with your own.
+
+- name: Wall Calf Stretch
+  bodyArea: Foot/Ankle
+  description: Restores ankle dorsiflexion locked up by sitting with feet tucked.
+  difficulty: beginner
+  intensity: low
+  duration: 30s each side
+  equipment: []
+  categories: [mobility]
+  jointMovements: [Ankle Dorsiflexion]
+  targetMuscles: [gastrocnemius, soleus, calf]
+  videoUrl: https://youtube.com/@sittingsucks
+  instructions: |
+    Hands on wall, one foot back, heel down, back knee straight.
+    Lean forward until you feel a stretch in the back calf. Hold.
+    Then bend the back knee slightly to shift the stretch to the lower calf (soleus).
+  feelCue: A deep pull through the belly of the calf — not the achilles, not the knee.
+  baseline: Straight back leg, heel flat, 30s hold.
+  regression: Hands higher on wall, smaller lean. Or seated towel-pull dorsiflexion.
+  progression: Elevate ball of foot on a book to increase dorsiflexion range.
+  variables:
+    tempo: Hold 30s; or pulse 2s in, 2s out for 10 reps.
+    rom: Increase lean depth as the ankle opens up.
+    stability: Progress to a single-leg balance version off a step.
+    breath: Exhale into each deepening of the stretch.
+    plane: Sagittal lean; add slight inversion/eversion to bias medial/lateral calf.

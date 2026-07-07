@@ -31,9 +31,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BodyMap } from '@/components/BodyMap';
+import type { MuscleClickInfo, HighlightConfig } from '@/components/BodyMap';
+import { MuscleInfoPanel } from '@/components/MuscleInfoPanel';
+import { exercises } from '@/data/exercises';
+import { PAIN_PROTOCOLS } from '@/data/pain-protocols';
+
+// The Sitting Epidemic pattern: tight calves + traps (red), underworked glutes (grey)
+const SITTING_HIGHLIGHTS: HighlightConfig[] = [
+  { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'gluteal', color: '#6b7280', opacity: 0.4 },
+  { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
+];
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [selectedMuscle, setSelectedMuscle] = useState<MuscleClickInfo | null>(null);
 
   const handleGetStarted = () => {
     navigate('/auth');
@@ -129,6 +142,9 @@ const Landing = () => {
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <Button variant="ghost" onClick={() => navigate('/pain-protocols')} className="hidden sm:flex">
+              Pain Protocols
+            </Button>
             <Button onClick={handleLogin} variant="ghost">
               Log In
             </Button>
@@ -145,61 +161,91 @@ const Landing = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
 
         <div className="relative container mx-auto px-4 py-16 sm:py-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 animate-fade-in">
-              <Zap className="h-3.5 w-3.5 mr-1.5 inline" />
-              Evidence-Based Movement Protocols
-            </Badge>
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            {/* Left: headline */}
+            <div className="text-center lg:text-left">
+              <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 animate-fade-in">
+                <Zap className="h-3.5 w-3.5 mr-1.5 inline" />
+                Evidence-Based Movement Protocols
+              </Badge>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 animate-fade-up">
-              Your Body Wasn't Built to
-              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mt-2">
-                Sit All Day
-              </span>
-            </h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 animate-fade-up">
+                Your Body Wasn't Built to
+                <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mt-2">
+                  Sit All Day
+                </span>
+              </h1>
 
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              Prolonged sitting is destroying your posture, mobility, and health. Our Anti-Sitting Protocol
-              gives you the exact exercises you need to counteract the damage and feel incredible again.
-            </p>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+                Prolonged sitting reshapes your posture and mobility. Our Anti-Sitting Protocol
+                gives you the exact exercises to address the patterns desk work creates — from the ground up.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              <Button
-                onClick={handleGetStarted}
-                size="lg"
-                className="text-lg px-8 gap-2 shadow-lg hover:shadow-xl transition-all animate-pulse-ring"
-              >
-                Start Your Recovery
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-              <Button
-                onClick={handleLogin}
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 gap-2"
-              >
-                <Play className="h-5 w-5" />
-                Watch Demo
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up" style={{ animationDelay: '0.2s' }}>
+                <Button
+                  onClick={handleGetStarted}
+                  size="lg"
+                  className="text-lg px-8 gap-2 shadow-lg hover:shadow-xl transition-all animate-pulse-ring"
+                >
+                  Start Your Recovery
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+                <Button
+                  onClick={handleLogin}
+                  variant="outline"
+                  size="lg"
+                  className="text-lg px-8 gap-2"
+                >
+                  <Play className="h-5 w-5" />
+                  Watch Demo
+                </Button>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-6 mt-12 text-sm text-muted-foreground animate-fade-up" style={{ animationDelay: '0.3s' }}>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-success" />
+                  14-Day Free Trial
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-success" />
+                  No Credit Card Required
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="h-4 w-4 text-yellow-500" />
+                  Cancel Anytime
+                </div>
+              </div>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-6 mt-12 text-sm text-muted-foreground animate-fade-up" style={{ animationDelay: '0.3s' }}>
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-success" />
-                14-Day Free Trial
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-success" />
-                No Credit Card Required
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-yellow-500" />
-                Cancel Anytime
-              </div>
+            {/* Right: interactive body map */}
+            <div className="animate-fade-in">
+              <p className="anatomy-label text-center mb-3">
+                Where sitting hits you — tap a muscle
+              </p>
+              <BodyMap
+                exercises={exercises}
+                side="front"
+                style="medical"
+                height="30rem"
+                initialHighlights={SITTING_HIGHLIGHTS}
+                onMuscleClick={setSelectedMuscle}
+              />
             </div>
           </div>
         </div>
+
+        {/* Muscle detail modal */}
+        <MuscleInfoPanel
+          muscle={selectedMuscle}
+          mode="modal"
+          onClose={() => setSelectedMuscle(null)}
+          onExerciseClick={() => navigate('/auth')}
+          onPainProtocolClick={(condition) => {
+            const p = PAIN_PROTOCOLS.find((pp) => pp.condition === condition);
+            if (p) navigate(`/pain-protocols/${p.slug}`);
+          }}
+        />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">

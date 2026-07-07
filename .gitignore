@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Tool artifacts & local DBs
+ruvector.db
+.codegraph/
+dev-dist/
+supabase/.temp/

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +46,18 @@ import { StatsChart } from "@/components/StatsChart";
 import { AchievementCard } from "@/components/AchievementCard";
 import { QuickLogModal } from "@/components/QuickLogModal";
 import { useToast } from "@/hooks/use-toast";
+import { PersonalizedProgramCard } from "@/components/PersonalizedProgramCard";
+import { BodyMap, buildMuscleHeatmap } from "@/components/BodyMap";
+import type { HighlightConfig } from "@/components/BodyMap";
+import { exercises as exerciseDatabase } from "@/data/exercises";
+
+// Heatmap intensity (1-4) → color, cool amber to hot red
+const HEAT_COLORS: Record<number, string> = {
+  1: '#fcd34d',
+  2: '#fbbf24',
+  3: '#f97316',
+  4: '#ef4444',
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -95,6 +107,25 @@ const Dashboard = () => {
 
   // Top muscle groups for chart
   const topMuscleGroups = getTopMuscleGroups(5);
+
+  // "Your Body Today" heatmap — muscles worked recently, mapped to highlight colors.
+  // Keyed on a stable string so the map doesn't redraw on unrelated re-renders.
+  const heatmapKey = topMuscleGroups.map((mg) => `${mg.name}:${mg.count}`).join('|');
+  const bodyHeatmap: HighlightConfig[] = useMemo(() => {
+    if (topMuscleGroups.length === 0) return [];
+    const logged = topMuscleGroups.map((mg) => ({
+      targetMuscles: [mg.name],
+      count: mg.count,
+    }));
+    return buildMuscleHeatmap(logged)
+      .filter(([, intensity]) => intensity > 0)
+      .map(([muscle, intensity]) => ({
+        muscle,
+        color: HEAT_COLORS[intensity] ?? HEAT_COLORS[1],
+        opacity: 0.4 + intensity * 0.15,
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heatmapKey]);
 
   const handleStartRecommendedWorkout = useCallback(async () => {
     if (isStartingWorkout) return;
@@ -309,6 +340,35 @@ const Dashboard = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Recommendations & Quick Actions */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Your Body Today — heatmap of recently worked muscles */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Activity className="h-5 w-5 text-primary" />
+                  Your Body Today
+                </CardTitle>
+                <CardDescription>
+                  {bodyHeatmap.length > 0
+                    ? 'Muscles you\'ve worked recently — hotter color means more volume. Tap one to find exercises.'
+                    : 'Log workouts to light up your body map. Tap a muscle to find exercises for it.'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <BodyMap
+                  exercises={exerciseDatabase}
+                  side="front"
+                  height="20rem"
+                  initialHighlights={bodyHeatmap}
+                  onMuscleClick={(info) =>
+                    navigate(`/exercise-library?area=${encodeURIComponent(info.bodyArea)}`)
+                  }
+                />
+              </CardContent>
+            </Card>
+
+            {/* Your Program — generated from onboarding */}
+            <PersonalizedProgramCard compact onStartWorkout={handleStartRecommendedWorkout} />
+
             {/* Today's Recommendation */}
             {recommendation && recommendedExercises.length > 0 && (
               <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-accent/5">
