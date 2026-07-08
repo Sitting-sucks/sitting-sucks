@@ -50,6 +50,9 @@ import { PersonalizedProgramCard } from "@/components/PersonalizedProgramCard";
 import { BodyMap, buildMuscleHeatmap } from "@/components/BodyMap";
 import type { HighlightConfig } from "@/components/BodyMap";
 import { exercises as exerciseDatabase } from "@/data/exercises";
+import { useOnboardingData } from "@/hooks/useOnboardingData";
+import { buildPainHighlights, mergeHighlights } from "@/lib/personalization";
+import { TopFiveCard } from "@/components/TopFiveCard";
 
 // Heatmap intensity (1-4) → color, cool amber to hot red
 const HEAT_COLORS: Record<number, string> = {
@@ -108,22 +111,31 @@ const Dashboard = () => {
   // Top muscle groups for chart
   const topMuscleGroups = getTopMuscleGroups(5);
 
-  // "Your Body Today" heatmap — muscles worked recently, mapped to highlight colors.
+  // "Your Body Today" heatmap — muscles worked recently, mapped to highlight
+  // colors, overlaid with the pain areas reported during onboarding (deep red).
   // Keyed on a stable string so the map doesn't redraw on unrelated re-renders.
-  const heatmapKey = topMuscleGroups.map((mg) => `${mg.name}:${mg.count}`).join('|');
+  const { onboarding } = useOnboardingData();
+  const painAreas = useMemo(
+    () => (onboarding?.painAreas ?? []).filter((p) => p !== 'none'),
+    [onboarding]
+  );
+  const heatmapKey =
+    topMuscleGroups.map((mg) => `${mg.name}:${mg.count}`).join('|') +
+    '::' +
+    painAreas.join(',');
   const bodyHeatmap: HighlightConfig[] = useMemo(() => {
-    if (topMuscleGroups.length === 0) return [];
     const logged = topMuscleGroups.map((mg) => ({
       targetMuscles: [mg.name],
       count: mg.count,
     }));
-    return buildMuscleHeatmap(logged)
+    const heat = buildMuscleHeatmap(logged)
       .filter(([, intensity]) => intensity > 0)
       .map(([muscle, intensity]) => ({
         muscle,
         color: HEAT_COLORS[intensity] ?? HEAT_COLORS[1],
         opacity: 0.4 + intensity * 0.15,
       }));
+    return mergeHighlights(heat, buildPainHighlights(painAreas));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [heatmapKey]);
 
@@ -348,7 +360,9 @@ const Dashboard = () => {
                   Your Body Today
                 </CardTitle>
                 <CardDescription>
-                  {bodyHeatmap.length > 0
+                  {painAreas.length > 0
+                    ? 'Deep red marks the areas you told us about. Warmer colors are muscles you\'ve trained recently. Tap one to find exercises.'
+                    : bodyHeatmap.length > 0
                     ? 'Muscles you\'ve worked recently — hotter color means more volume. Tap one to find exercises.'
                     : 'Log workouts to light up your body map. Tap a muscle to find exercises for it.'}
                 </CardDescription>
@@ -368,6 +382,9 @@ const Dashboard = () => {
 
             {/* Your Program — generated from onboarding */}
             <PersonalizedProgramCard compact onStartWorkout={handleStartRecommendedWorkout} />
+
+            {/* Your Top 5 — personalized exercise picks */}
+            <TopFiveCard />
 
             {/* Today's Recommendation */}
             {recommendation && recommendedExercises.length > 0 && (

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SubscriptionGate } from "@/components/SubscriptionGate";
+import { VariationDial } from "@/components/VariationDial";
 import { Play, FileText, Star, Target, Clock, Info, Pencil } from "lucide-react";
 
 interface ExerciseCardProps {
@@ -334,44 +335,11 @@ const ExerciseCard = ({
                           </Badge>
                         </div>
                       )}
-                      <h3 className="text-lg font-semibold mb-3">Exercise Variations</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {regression && (
-                          <div className="p-4 border rounded-lg bg-green-50 dark:bg-green-900/10">
-                            <h4 className="font-medium text-green-700 dark:text-green-400 mb-2">Regression (Easier)</h4>
-                            <p className="text-sm text-green-600 dark:text-green-300 mb-3">{regression}</p>
-                            <div className="flex flex-wrap gap-1">
-                              <Badge className="text-xs bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-400 border-green-200 dark:border-green-700">
-                                Knees
-                              </Badge>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {baseline && (
-                          <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-900/10">
-                            <h4 className="font-medium text-blue-700 dark:text-blue-400 mb-2">Baseline (Standard)</h4>
-                            <p className="text-sm text-blue-600 dark:text-blue-300 mb-3">{baseline}</p>
-                            <div className="flex flex-wrap gap-1">
-                              <Badge className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-800/20 dark:text-blue-400 border-blue-200 dark:border-blue-700">
-                                Floor
-                              </Badge>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {progression && (
-                          <div className="p-4 border rounded-lg bg-orange-50 dark:bg-orange-900/10">
-                            <h4 className="font-medium text-orange-700 dark:text-orange-400 mb-2">Progression (Harder)</h4>
-                            <p className="text-sm text-orange-600 dark:text-orange-300 mb-3">{progression}</p>
-                            <div className="flex flex-wrap gap-1">
-                              <Badge className="text-xs bg-orange-100 text-orange-800 dark:bg-orange-800/20 dark:text-orange-400 border-orange-200 dark:border-orange-700">
-                                Foam Roller
-                              </Badge>
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                      <VariationDial
+                        baseline={baseline}
+                        progression={progression}
+                        regression={regression}
+                      />
                     </div>
                   </SubscriptionGate>
                 )}
