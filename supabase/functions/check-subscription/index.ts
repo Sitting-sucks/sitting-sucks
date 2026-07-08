@@ -8,9 +8,8 @@ const ALLOWED_ORIGINS = [
   "http://localhost:3000",
   "http://localhost:5173",
   "http://localhost:8080",
-  // Add your production domain here, e.g.:
-  // "https://sittingsucks.com",
-  // "https://www.sittingsucks.com",
+  "https://sittingsucks.com",
+  "https://www.sittingsucks.com",
 ];
 
 const getCorsHeaders = (origin: string | null) => {
@@ -84,17 +83,21 @@ serve(async (req) => {
     const customerId = customers.data[0].id;
     logStep("Found Stripe customer", { customerId });
 
+    // "trialing" counts as subscribed — Stripe reports 14-day-trial customers
+    // as trialing, not active, until the first charge.
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
-      status: "active",
-      limit: 1,
+      status: "all",
+      limit: 10,
     });
-    const hasActiveSub = subscriptions.data.length > 0;
+    const activeStatuses = ["active", "trialing"];
+    const activeSubs = subscriptions.data.filter((s) => activeStatuses.includes(s.status));
+    const hasActiveSub = activeSubs.length > 0;
     let subscriptionTier = null;
     let subscriptionEnd = null;
 
     if (hasActiveSub) {
-      const subscription = subscriptions.data[0];
+      const subscription = activeSubs[0];
       subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
       logStep("Active subscription found", { subscriptionId: subscription.id, endDate: subscriptionEnd });
 

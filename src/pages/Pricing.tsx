@@ -23,9 +23,10 @@ const Pricing = () => {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
+          <p className="anatomy-label mb-3">Membership</p>
           <h1 className="text-4xl font-bold mb-4">Simple, Honest Pricing</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Try everything free for 14 days. No credit card required.
+            Try everything free for 14 days. Cancel anytime.
           </p>
         </div>
 
@@ -117,7 +118,7 @@ const Pricing = () => {
                 Start 14-Day Free Trial
               </Button>
               <p className="text-xs text-center text-muted-foreground">
-                No credit card required to start
+                Won't be charged until your trial ends — cancel anytime
               </p>
             </CardContent>
           </Card>
@@ -189,7 +190,7 @@ const Pricing = () => {
             <span className="font-medium">14-Day Free Trial on All Plans</span>
           </div>
           <p className="text-muted-foreground text-center max-w-md">
-            Get full access to everything. If you love it, your subscription starts automatically. Cancel anytime.
+            Full access to everything during your trial. If you love it, your subscription starts automatically. Cancel anytime.
           </p>
         </div>
       </div>

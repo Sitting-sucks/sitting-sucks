@@ -8,6 +8,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { Chrome } from 'lucide-react';
+import { BodyMap } from '@/components/BodyMap';
+import type { HighlightConfig } from '@/components/BodyMap';
+import { exercises } from '@/data/exercises';
+
+// Same sitting-damage pattern as the landing hero: tight calves + traps, dormant glutes
+const SITTING_HIGHLIGHTS: HighlightConfig[] = [
+  { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'gluteal', color: '#6b7280', opacity: 0.4 },
+  { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
+];
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -85,10 +95,28 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
+      <div className="w-full max-w-4xl grid lg:grid-cols-2 gap-8 items-center">
+        {/* Anatomy panel — desktop only */}
+        <div className="hidden lg:block">
+          <p className="anatomy-label text-center mb-3">What sitting does to a body</p>
+          <BodyMap
+            exercises={exercises}
+            side="front"
+            style="medical"
+            height="26rem"
+            initialHighlights={SITTING_HIGHLIGHTS}
+            showTooltips={false}
+          />
+          <p className="text-sm text-muted-foreground text-center mt-4 max-w-xs mx-auto">
+            Red: overworked and tight. Grey: dormant and weak.
+            Your program starts by mapping yours.
+          </p>
+        </div>
+
+      <Card className="w-full max-w-md mx-auto lg:mx-0">
         <CardHeader className="text-center">
-          <img 
-            src="/lovable-uploads/e3d51457-4b9e-46e8-8a17-47f87911ecbf.png" 
+          <img
+            src="/lovable-uploads/e3d51457-4b9e-46e8-8a17-47f87911ecbf.png"
             alt="Sitting Sucks Logo"
             className="h-16 w-16 mx-auto mb-4"
           />
@@ -209,6 +237,7 @@ const Auth = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

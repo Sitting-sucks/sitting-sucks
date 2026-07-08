@@ -36,6 +36,11 @@ import type { MuscleClickInfo, HighlightConfig } from '@/components/BodyMap';
 import { MuscleInfoPanel } from '@/components/MuscleInfoPanel';
 import { exercises } from '@/data/exercises';
 import { PAIN_PROTOCOLS } from '@/data/pain-protocols';
+import { ChainDiagram } from '@/components/protocols/ChainDiagram';
+
+// The classic ground-up compensation chain, rendered on the landing page
+const CALF_CRISIS_CHAIN =
+  'Tight calves → Knee can\'t fully extend → Low back over-extends to compensate → Lumbar stress and pain';
 
 // The Sitting Epidemic pattern: tight calves + traps (red), underworked glutes (grey)
 const SITTING_HIGHLIGHTS: HighlightConfig[] = [
@@ -454,54 +459,44 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* The Compensation Chain — why pain shows up where it does */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Real Results</h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of people who've transformed their mobility and eliminated pain
-            </p>
-          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="anatomy-label mb-3">The Method</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                Your Pain Is Usually the Victim, Not the Culprit
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                When one joint stops doing its job, its neighbors pick up the slack —
+                and they pay for it. That's a compensation chain. Here's the classic one:
+              </p>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                quote: "After just 2 weeks, my lower back pain that I'd had for years started to disappear. This program actually works.",
-                name: "Sarah M.",
-                role: "Software Engineer",
-              },
-              {
-                quote: "I've tried other fitness apps but none were designed for desk workers like me. The targeted exercises make all the difference.",
-                name: "James K.",
-                role: "Financial Analyst",
-              },
-              {
-                quote: "The coaching tier is worth every penny. My coach helped me correct imbalances I didn't even know I had.",
-                name: "Michelle T.",
-                role: "Marketing Manager",
-              },
-            ].map((testimonial, i) => (
-              <Card key={i} className="bg-background">
-                <CardContent className="pt-6">
-                  <div className="flex gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground italic mb-6">"{testimonial.quote}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
-                      <span className="text-lg font-bold text-primary">{testimonial.name[0]}</span>
-                    </div>
-                    <div>
-                      <div className="font-medium">{testimonial.name}</div>
-                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            <Card className="bg-background mb-8">
+              <CardHeader>
+                <CardTitle className="text-lg">The Calf Crisis</CardTitle>
+                <CardDescription>
+                  How tight calves from all-day sitting end up as a sore lower back
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChainDiagram chainText={CALF_CRISIS_CHAIN} />
+                <p className="text-sm text-muted-foreground mt-4">
+                  This is why we work from the ground up: ankle, then hip, then core —
+                  <span className="font-medium text-foreground"> then</span> the low back.
+                  Treating only where it hurts leaves the cause untouched.
+                </p>
+              </CardContent>
+            </Card>
+
+            <div className="text-center">
+              <Button onClick={() => navigate('/pain-protocols')} size="lg" variant="outline" className="gap-2">
+                Explore the Pain Protocols
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
