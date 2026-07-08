@@ -37,6 +37,7 @@ import { MuscleInfoPanel } from '@/components/MuscleInfoPanel';
 import { exercises } from '@/data/exercises';
 import { PAIN_PROTOCOLS } from '@/data/pain-protocols';
 import { ChainDiagram } from '@/components/protocols/ChainDiagram';
+import { TESTIMONIALS, GOOGLE_RATING } from '@/data/testimonials';
 
 // The classic ground-up compensation chain, rendered on the landing page
 const CALF_CRISIS_CHAIN =
@@ -500,6 +501,44 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials — real Google reviews only; hidden until populated */}
+      {TESTIMONIALS.length > 0 && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <p className="anatomy-label mb-3">Client Results</p>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">What Clients Say</h2>
+              <p className="text-xl text-muted-foreground">
+                {GOOGLE_RATING.stars.toFixed(1)} stars across {GOOGLE_RATING.count} Google reviews
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {TESTIMONIALS.map((t, i) => (
+                <Card key={i} className="bg-background">
+                  <CardContent className="pt-6">
+                    <div className="flex gap-1 mb-4">
+                      {Array.from({ length: t.stars }).map((_, s) => (
+                        <Star key={s} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground italic mb-6">"{t.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
+                        <span className="text-lg font-bold text-primary">{t.name[0]}</span>
+                      </div>
+                      <div>
+                        <div className="font-medium">{t.name}</div>
+                        {t.source && <div className="text-sm text-muted-foreground">{t.source}</div>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* FAQ Section */}
       <section className="py-20">
