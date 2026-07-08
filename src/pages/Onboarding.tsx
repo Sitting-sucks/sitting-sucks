@@ -327,7 +327,7 @@ const Onboarding = () => {
     }
 
     setSaving(false);
-    navigate('/');
+    navigate('/dashboard');
   };
 
   const nextStep = () => {

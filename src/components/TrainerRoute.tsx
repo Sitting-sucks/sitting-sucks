@@ -27,7 +27,7 @@ const TrainerRoute = ({ children }: TrainerRouteProps) => {
 
   // Redirect to home if not a trainer
   if (!isTrainer) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

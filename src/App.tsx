@@ -63,6 +63,7 @@ const App = () => (
               <Suspense fallback={<PageLoader />}>
               <Routes>
                 {/* Public Routes */}
+                <Route path="/" element={<Landing />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/landing" element={<Landing />} />
                 <Route path="/pain-protocols" element={<PainProtocols />} />
@@ -74,7 +75,7 @@ const App = () => (
                 } />
 
                 {/* Protected Routes - All Users */}
-                <Route path="/" element={
+                <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Navigation />
                     <Dashboard />

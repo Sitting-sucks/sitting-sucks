@@ -61,7 +61,7 @@ const Navigation = () => {
 
   // Base nav items for all users (including free users)
   const baseNavItems = [
-    { path: "/", label: "Dashboard", icon: LayoutDashboard },
+    { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { path: "/today", label: "Today", icon: CalendarCheck },
     { path: "/exercise-library", label: "Exercises", icon: Library },
     { path: "/exercise-diary", label: "Diary", icon: BookOpen },
@@ -91,7 +91,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/dashboard" className="flex items-center space-x-2">
               <img
                 src="/lovable-uploads/e3d51457-4b9e-46e8-8a17-47f87911ecbf.png"
                 alt="Sitting Sucks Logo"
