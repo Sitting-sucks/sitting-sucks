@@ -37,6 +37,25 @@ const PAIN_LABELS: Record<string, string> = {
   wrists: 'wrist',
 };
 
+/**
+ * The classic sitting pattern (upper/lower crossed syndrome), shared by the
+ * Landing hero and Auth panel. Red = overworked and tight; grey = dormant
+ * and weak.
+ */
+export const SITTING_PATTERN_HIGHLIGHTS: HighlightConfig[] = [
+  // Overworked / tight
+  { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'hip-flexors', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'chest', color: '#ef4444', opacity: 0.55 },
+  { muscle: 'lower-back', color: '#ef4444', opacity: 0.55 },
+  // Dormant / weak
+  { muscle: 'gluteal', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'abs', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'rhomboids', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'lower-trapezius', color: '#6b7280', opacity: 0.45 },
+];
+
 /** Deep-red overlay for the muscles behind the user's reported pain areas. */
 export function buildPainHighlights(painAreas: string[]): HighlightConfig[] {
   const muscles = new Set<Muscle>();

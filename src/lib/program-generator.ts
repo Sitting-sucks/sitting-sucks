@@ -6,6 +6,8 @@
 import { PROGRAM_TEMPLATES, ProgramTemplate } from '@/data/program-templates';
 
 export interface OnboardingData {
+  /** Which body model to render on all body maps: 'female' | 'male' */
+  bodyModel?: string;
   sittingHours: string;
   painAreas: string[];
   painSeverity: string;

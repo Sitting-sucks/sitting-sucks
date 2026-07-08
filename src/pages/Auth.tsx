@@ -9,15 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { Chrome } from 'lucide-react';
 import { BodyMap } from '@/components/BodyMap';
-import type { HighlightConfig } from '@/components/BodyMap';
 import { exercises } from '@/data/exercises';
-
-// Same sitting-damage pattern as the landing hero: tight calves + traps, dormant glutes
-const SITTING_HIGHLIGHTS: HighlightConfig[] = [
-  { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
-  { muscle: 'gluteal', color: '#6b7280', opacity: 0.4 },
-  { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
-];
+import { SITTING_PATTERN_HIGHLIGHTS } from '@/lib/personalization';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -104,7 +97,7 @@ const Auth = () => {
             side="front"
             style="medical"
             height="26rem"
-            initialHighlights={SITTING_HIGHLIGHTS}
+            initialHighlights={SITTING_PATTERN_HIGHLIGHTS}
             showTooltips={false}
           />
           <p className="text-sm text-muted-foreground text-center mt-4 max-w-xs mx-auto">

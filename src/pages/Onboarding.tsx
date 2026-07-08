@@ -32,6 +32,7 @@ import type { LucideIcon } from 'lucide-react';
 
 const STEPS = [
   { id: 'welcome', title: 'Welcome' },
+  { id: 'bodyModel', title: 'Body Map' },
   { id: 'sitting', title: 'Your Habits' },
   { id: 'pain', title: 'Pain Points' },
   { id: 'painSeverity', title: 'Pain Severity' }, // conditional
@@ -125,6 +126,11 @@ const EQUIPMENT_OPTIONS: Option[] = [
   { value: 'dumbbells', label: 'Dumbbells' },
   { value: 'kettlebell', label: 'Kettlebell' },
   { value: 'pull_up_bar', label: 'Pull-up bar' },
+];
+
+const BODY_MODEL_OPTIONS: Option[] = [
+  { value: 'female', label: 'Female body model', desc: 'All body maps in the app use this model' },
+  { value: 'male', label: 'Male body model', desc: 'All body maps in the app use this model' },
 ];
 
 const SITTING_OPTIONS: Option[] = [
@@ -242,6 +248,7 @@ const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [data, setData] = useState<OnboardingData>({
+    bodyModel: '',
     sittingHours: '',
     painAreas: [],
     painSeverity: '',
@@ -382,6 +389,17 @@ const Onboarding = () => {
                 </Card>
               </div>
             </div>
+          )}
+
+          {stepId === 'bodyModel' && (
+            <>
+              <StepHeader
+                icon={PersonStanding}
+                title="Choose your body map"
+                subtitle="We use an interactive anatomy model throughout the app — pick the one that fits you"
+              />
+              <RadioCards value={data.bodyModel ?? ''} onChange={(v) => set('bodyModel', v)} options={BODY_MODEL_OPTIONS} idPrefix="bodyModel" />
+            </>
           )}
 
           {stepId === 'sitting' && (

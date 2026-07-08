@@ -18,11 +18,13 @@ import { useToast } from "@/hooks/use-toast";
 import { ExerciseForm } from "@/components/admin/ExerciseForm";
 import { equipmentList, jointMovements, bodyAreaList, jointMovementToBodyAreas, BodyArea, exercises as exerciseDatabase } from "@/data/exercises";
 import { useSearchParams } from "react-router-dom";
+import { useBodyGender } from '@/hooks/useOnboardingData';
 import { BodyMap } from "@/components/BodyMap";
 import type { MuscleClickInfo } from "@/components/BodyMap";
 import { getExercisesForMuscle, MUSCLE_MAP_BY_SLUG, bodyAreaLabels } from "@/data/muscle-mapping";
 
 const ExerciseLibrary = () => {
+  const bodyGender = useBodyGender();
   const { subscribed } = useSubscription();
   const { isTrainer } = useRole();
   const { toast } = useToast();
@@ -196,6 +198,7 @@ const ExerciseLibrary = () => {
         </CardHeader>
         <CardContent>
           <BodyMap
+            gender={bodyGender}
             exercises={exerciseDatabase}
             side="front"
             height="18rem"

@@ -115,6 +115,7 @@ const Dashboard = () => {
   // colors, overlaid with the pain areas reported during onboarding (deep red).
   // Keyed on a stable string so the map doesn't redraw on unrelated re-renders.
   const { onboarding } = useOnboardingData();
+  const bodyGender = onboarding?.bodyModel === 'female' ? 'female' as const : 'male' as const;
   const painAreas = useMemo(
     () => (onboarding?.painAreas ?? []).filter((p) => p !== 'none'),
     [onboarding]
@@ -371,6 +372,7 @@ const Dashboard = () => {
                 <BodyMap
                   exercises={exerciseDatabase}
                   side="front"
+                  gender={bodyGender}
                   height="20rem"
                   initialHighlights={bodyHeatmap}
                   onMuscleClick={(info) =>

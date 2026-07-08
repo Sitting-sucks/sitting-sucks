@@ -34,3 +34,9 @@ export function useOnboardingData() {
 
   return { onboarding: data, loading };
 }
+
+/** Body model chosen during onboarding; defaults to male until loaded/chosen. */
+export function useBodyGender(): 'male' | 'female' {
+  const { onboarding } = useOnboardingData();
+  return onboarding?.bodyModel === 'female' ? 'female' : 'male';
+}

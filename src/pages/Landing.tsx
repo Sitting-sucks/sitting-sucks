@@ -43,12 +43,7 @@ import { TESTIMONIALS, GOOGLE_RATING } from '@/data/testimonials';
 const CALF_CRISIS_CHAIN =
   'Tight calves → Knee can\'t fully extend → Low back over-extends to compensate → Lumbar stress and pain';
 
-// The Sitting Epidemic pattern: tight calves + traps (red), underworked glutes (grey)
-const SITTING_HIGHLIGHTS: HighlightConfig[] = [
-  { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
-  { muscle: 'gluteal', color: '#6b7280', opacity: 0.4 },
-  { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
-];
+import { SITTING_PATTERN_HIGHLIGHTS } from '@/lib/personalization';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -229,12 +224,22 @@ const Landing = () => {
               <p className="anatomy-label text-center mb-3">
                 Where sitting hits you — tap a muscle
               </p>
+              <div className="flex justify-center gap-6 mb-3 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-500 inline-block" />
+                  Overworked &amp; tight
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-gray-500 inline-block" />
+                  Dormant &amp; weak
+                </span>
+              </div>
               <BodyMap
                 exercises={exercises}
                 side="front"
                 style="medical"
                 height="30rem"
-                initialHighlights={SITTING_HIGHLIGHTS}
+                initialHighlights={SITTING_PATTERN_HIGHLIGHTS}
                 onMuscleClick={setSelectedMuscle}
               />
             </div>

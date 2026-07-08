@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRole } from "@/hooks/useRole";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
+import { useBodyGender } from "@/hooks/useOnboardingData";
 import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
@@ -35,6 +36,7 @@ const Navigation = () => {
   const { isTrainer } = useRole();
   const { subscribed, subscriptionTier } = useSubscription();
   const { unreadCount } = useUnreadCount();
+  const bodyGender = useBodyGender();
   const { toast } = useToast();
 
   // Check if user has access to messaging (trainer or Tier 2)
@@ -360,6 +362,7 @@ const Navigation = () => {
                   Find exercises by muscle
                 </span>
                 <BodyMap
+                  gender={bodyGender}
                   exercises={exercises}
                   side="front"
                   style="minimal"
