@@ -97,21 +97,22 @@ const Navigation = () => {
                 alt="Sitting Sucks Logo"
                 className="h-8 w-8"
               />
-              <span className="text-xl font-bold text-primary">Sitting Sucks</span>
+              <span className="text-xl font-bold text-primary hidden lg:inline">Sitting Sucks</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center gap-1 xl:gap-1.5">
             {allNavItems.map((item) => (
               <Link key={item.path} to={item.path}>
                 <Button
                   variant={isActive(item.path) ? "default" : "ghost"}
                   size="sm"
-                  className="flex items-center space-x-2"
+                  className="flex items-center gap-2"
+                  title={item.label}
                 >
                   <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <span className="hidden xl:inline">{item.label}</span>
                 </Button>
               </Link>
             ))}
@@ -126,7 +127,7 @@ const Navigation = () => {
                     className="flex items-center space-x-2"
                   >
                     <Settings className="h-4 w-4" />
-                    <span>Admin</span>
+                    <span className="hidden xl:inline">Admin</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -153,7 +154,7 @@ const Navigation = () => {
                   className="flex items-center space-x-2 relative"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  <span>Messages</span>
+                  <span className="hidden xl:inline">Messages</span>
                   {unreadCount > 0 && (
                     <Badge
                       variant="destructive"
@@ -173,7 +174,7 @@ const Navigation = () => {
                 className="flex items-center space-x-2"
               >
                 <ShoppingCart className="h-4 w-4" />
-                <span>Store</span>
+                <span className="hidden xl:inline">Store</span>
               </Button>
             </Link>
 

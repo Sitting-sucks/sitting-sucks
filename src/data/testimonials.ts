@@ -57,4 +57,18 @@ export const TESTIMONIALS: Testimonial[] = [
     source: 'Google review',
     stars: 5,
   },
+  {
+    quote:
+      "I'm an experienced athlete and have researched and followed numerous training methods. I started working with Ryan after a sports related injury to my back. Ryan quickly assessed and isolated the injury location.",
+    name: 'Alexei B',
+    source: 'Google review',
+    stars: 5,
+  },
+  {
+    quote:
+      "I have been working out with Ryan over five years! And all I have to say is I can't ever find anyone else who is better than him and he helps you build up muscle and also helps you getting healthier!",
+    name: 'Jeni He',
+    source: 'Google review',
+    stars: 5,
+  },
 ];
