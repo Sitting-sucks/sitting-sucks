@@ -46,14 +46,24 @@ export const SITTING_PATTERN_HIGHLIGHTS: HighlightConfig[] = [
   // Overworked / tight
   { muscle: 'calves', color: '#ef4444', opacity: 0.6 },
   { muscle: 'hip-flexors', color: '#ef4444', opacity: 0.6 },
+  { muscle: 'adductors', color: '#ef4444', opacity: 0.55 },
   { muscle: 'upper-trapezius', color: '#ef4444', opacity: 0.6 },
   { muscle: 'chest', color: '#ef4444', opacity: 0.55 },
   { muscle: 'lower-back', color: '#ef4444', opacity: 0.55 },
+  { muscle: 'rotator-cuff', color: '#ef4444', opacity: 0.5 }, // teres major/minor
+  { muscle: 'biceps', color: '#ef4444', opacity: 0.5 },
+  // Hamstrings: overactive in knee flexion (shown red) but weak in hip extension
+  { muscle: 'hamstring', color: '#ef4444', opacity: 0.5 },
+  { muscle: 'forearm', color: '#ef4444', opacity: 0.5 }, // wrist extensors
+  { muscle: 'neck', color: '#ef4444', opacity: 0.5 }, // neck extensors
   // Dormant / weak
   { muscle: 'gluteal', color: '#6b7280', opacity: 0.45 },
   { muscle: 'abs', color: '#6b7280', opacity: 0.45 },
   { muscle: 'rhomboids', color: '#6b7280', opacity: 0.45 },
   { muscle: 'lower-trapezius', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'triceps', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'quadriceps', color: '#6b7280', opacity: 0.45 },
+  { muscle: 'tibialis', color: '#6b7280', opacity: 0.45 }, // dorsiflexors
 ];
 
 /** Deep-red overlay for the muscles behind the user's reported pain areas. */

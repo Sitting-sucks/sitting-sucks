@@ -28,3 +28,6 @@ ruvector.db
 .codegraph/
 dev-dist/
 supabase/.temp/
+
+# Graphify generated graph
+graphify-out/

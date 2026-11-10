@@ -61,18 +61,21 @@ const ExerciseLibrary = () => {
     categories: selectedCategory !== "all" ? [selectedCategory] : undefined,
   });
 
-  // Sort exercises with mobility first
+  // Clients only see finished exercises (with video); trainers see the whole
+  // database so they can manage content in place.
+  const publishedExercises = useMemo(
+    () => (isTrainer ? exercises : exercises.filter((e) => !!e.video_url)),
+    [exercises, isTrainer]
+  );
+
+  // Order by protocol stage: SMR → Mobility → Isometrics → Strength
+  const stageOf = (cats: string[]) =>
+    cats.includes('smr') ? 0 : cats.includes('mobility') ? 1 : cats.includes('isometrics') ? 2 : cats.includes('strength') ? 3 : 4;
   const sortedExercises = useMemo(() => {
-    return [...exercises].sort((a, b) => {
-      if (a.categories.includes("mobility") && !b.categories.includes("mobility")) {
-        return -1;
-      }
-      if (!a.categories.includes("mobility") && b.categories.includes("mobility")) {
-        return 1;
-      }
-      return 0;
-    });
-  }, [exercises]);
+    return [...publishedExercises].sort(
+      (a, b) => stageOf(a.categories) - stageOf(b.categories) || a.name.localeCompare(b.name)
+    );
+  }, [publishedExercises]);
 
   // Get available joint movements from current exercises
   const availableJointMovements = useMemo(() => {
@@ -320,7 +323,9 @@ const ExerciseLibrary = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="smr">SMR (Release)</SelectItem>
                 <SelectItem value="mobility">Mobility</SelectItem>
+                <SelectItem value="isometrics">Isometrics</SelectItem>
                 <SelectItem value="strength">Strength</SelectItem>
               </SelectContent>
             </Select>
@@ -415,7 +420,7 @@ const ExerciseLibrary = () => {
         </p>
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4" />
-          <span className="text-sm text-muted-foreground">Mobility exercises prioritized</span>
+          <span className="text-sm text-muted-foreground">Ordered by stage: SMR → Mobility → Strength</span>
         </div>
       </div>
 
