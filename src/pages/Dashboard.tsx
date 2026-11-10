@@ -183,7 +183,11 @@ const Dashboard = () => {
             <div className="text-white">
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-2xl sm:text-3xl font-bold">
-                  Welcome back{user?.email ? `, ${user.email.split('@')[0]}` : ''}!
+                  Welcome back{(() => {
+                    const metaName = (user?.user_metadata?.full_name as string | undefined)?.trim();
+                    const first = metaName ? metaName.split(/\s+/)[0] : (user?.email?.split('@')[0] ?? '');
+                    return first ? `, ${first}` : '';
+                  })()}!
                 </h1>
                 {streak > 0 && (
                   <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
