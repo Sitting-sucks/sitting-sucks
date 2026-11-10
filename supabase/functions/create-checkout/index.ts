@@ -26,21 +26,34 @@ const logStep = (step: string, details?: any) => {
   console.log(`[CREATE-CHECKOUT] ${step}${detailsStr}`);
 };
 
-// Tier pricing configuration
-const TIERS = {
-  basic: {
-    name: "Sitting Sucks - Full Access",
-    description: "Complete exercise library, Anti-Sitting Protocol, and progress tracking",
-    amount: 2900, // $29.00 in cents
+// Pricing configuration (single source of truth for checkout amounts).
+// Prices set 2026-11-10: Full Access $20/mo or $150/yr; Coaching $249/mo.
+const PLANS = {
+  basic_monthly: {
+    name: "Sitting Sucks — Full Access",
+    description: "Complete exercise library, pain protocols, Anti-Sitting Protocol, and progress tracking",
+    amount: 2000, // $20.00/mo
+    interval: "month" as const,
     tier: "basic",
   },
-  coaching: {
-    name: "Sitting Sucks - 1-on-1 Coaching",
+  basic_yearly: {
+    name: "Sitting Sucks — Full Access (Annual)",
+    description: "Complete exercise library, pain protocols, and progress tracking — billed yearly",
+    amount: 15000, // $150.00/yr
+    interval: "year" as const,
+    tier: "basic",
+  },
+  coaching_monthly: {
+    name: "Sitting Sucks — 1-on-1 Coaching",
     description: "Everything in Full Access plus personalized coaching and custom programs",
-    amount: 24900, // $249.00 in cents
+    amount: 24900, // $249.00/mo
+    interval: "month" as const,
     tier: "coaching",
   },
 };
+
+// Free trial the public pricing page promises. Set to 0 to disable.
+const TRIAL_DAYS = 14;
 
 serve(async (req) => {
   const origin = req.headers.get("origin");
@@ -67,21 +80,26 @@ serve(async (req) => {
     if (!authHeader) throw new Error("No authorization header provided");
     logStep("Authorization header found");
 
-    // Parse request body to get tier
-    let tier = "basic";
+    // Parse request body to get tier + billing period
+    let tier: "basic" | "coaching" = "basic";
+    let billing: "monthly" | "yearly" = "monthly";
     try {
       const body = await req.json();
-      if (body.tier && (body.tier === "basic" || body.tier === "coaching")) {
-        tier = body.tier;
-      }
+      if (body.tier === "basic" || body.tier === "coaching") tier = body.tier;
+      if (body.billing === "monthly" || body.billing === "yearly") billing = body.billing;
     } catch {
-      // Default to basic if no body or invalid JSON
+      // Default to basic/monthly if no body or invalid JSON
     }
-    logStep("Tier selected", { tier });
+    const planKey = (tier === "coaching"
+      ? "coaching_monthly"
+      : billing === "yearly"
+        ? "basic_yearly"
+        : "basic_monthly") as keyof typeof PLANS;
+    logStep("Plan selected", { tier, billing, planKey });
 
-    const tierConfig = TIERS[tier as keyof typeof TIERS];
-    if (!tierConfig) {
-      throw new Error("Invalid tier selected");
+    const plan = PLANS[planKey];
+    if (!plan) {
+      throw new Error("Invalid plan selected");
     }
 
     const token = authHeader.replace("Bearer ", "");
@@ -109,14 +127,14 @@ serve(async (req) => {
           price_data: {
             currency: "usd",
             product_data: {
-              name: tierConfig.name,
-              description: tierConfig.description,
+              name: plan.name,
+              description: plan.description,
               metadata: {
-                tier: tierConfig.tier,
+                tier: plan.tier,
               },
             },
-            unit_amount: tierConfig.amount,
-            recurring: { interval: "month" },
+            unit_amount: plan.amount,
+            recurring: { interval: plan.interval },
           },
           quantity: 1,
         },
@@ -126,17 +144,19 @@ serve(async (req) => {
       cancel_url: `${req.headers.get("origin")}/pricing?subscription=cancelled`,
       metadata: {
         user_id: user.id,
-        tier: tierConfig.tier,
+        tier: plan.tier,
+        billing,
       },
       subscription_data: {
+        ...(TRIAL_DAYS > 0 ? { trial_period_days: TRIAL_DAYS } : {}),
         metadata: {
           user_id: user.id,
-          tier: tierConfig.tier,
+          tier: plan.tier,
         },
       },
     });
 
-    logStep("Checkout session created", { sessionId: session.id, url: session.url, tier: tierConfig.tier });
+    logStep("Checkout session created", { sessionId: session.id, url: session.url, tier: plan.tier, billing });
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

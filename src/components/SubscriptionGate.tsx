@@ -14,11 +14,10 @@ export const SubscriptionGate = ({ children, feature, requiresPremium = true }: 
   const navigate = useNavigate();
 
   const handleSubscribe = () => {
-    navigate('/landing');
+    navigate('/pricing');
   };
 
-  // For now, always show the subscription gate for premium features
-  // TODO: Add proper subscription checking once billing is fully set up
+  // Gate is rendered by callers only for non-subscribers (see ExerciseLibrary).
   if (!requiresPremium) {
     return <>{children}</>;
   }
@@ -35,7 +34,7 @@ export const SubscriptionGate = ({ children, feature, requiresPremium = true }: 
           Premium Feature
         </CardTitle>
         <CardDescription>
-          Unlock {feature} with FitTracker Premium
+          Unlock {feature} with a Sitting Sucks membership
         </CardDescription>
       </CardHeader>
       <CardContent className="relative space-y-4">

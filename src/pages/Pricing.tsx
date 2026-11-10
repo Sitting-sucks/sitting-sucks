@@ -2,20 +2,26 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Check, Crown, UserCheck, Calendar, MessageSquare, Flame, TrendingUp, Award, Dumbbell, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Check, Crown, UserCheck, Calendar, MessageSquare, Flame, TrendingUp, Award, Shield, Loader2 } from 'lucide-react';
+import { useSubscription } from '@/hooks/useSubscription';
+import { toast } from 'sonner';
+
+type Tier = 'basic' | 'coaching';
 
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
+  const [loadingTier, setLoadingTier] = useState<Tier | null>(null);
+  const { createCheckoutSession } = useSubscription();
 
-  const handleSubscribe = (tier: 'app' | 'coaching') => {
-    if (tier === 'app') {
-      const url = billingPeriod === 'monthly'
-        ? 'https://buy.stripe.com/cNi5kv63a4vFgl02FOgQE0a'
-        : 'https://buy.stripe.com/8x28wHgHOfajecS0xGgQE09';
-      window.open(url, '_blank', 'noopener,noreferrer');
-    } else {
-      window.open('https://buy.stripe.com/8x214f2QYe6fgl04NWgQE01', '_blank', 'noopener,noreferrer');
+  const handleSubscribe = async (tier: Tier) => {
+    setLoadingTier(tier);
+    try {
+      await createCheckoutSession(tier, tier === 'coaching' ? 'monthly' : billingPeriod);
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : 'Could not start checkout. Please try again in a moment.'
+      );
+      setLoadingTier(null);
     }
   };
 
@@ -51,7 +57,7 @@ const Pricing = () => {
             }`}
           >
             Yearly
-            <Badge variant="secondary" className="ml-2 text-xs">Save 50%</Badge>
+            <Badge variant="secondary" className="ml-2 text-xs">Save $90</Badge>
           </button>
         </div>
 
@@ -70,14 +76,14 @@ const Pricing = () => {
               <div className="text-center mt-4">
                 {billingPeriod === 'monthly' ? (
                   <>
-                    <span className="text-4xl font-bold">$10</span>
+                    <span className="text-4xl font-bold">$20</span>
                     <span className="text-muted-foreground">/month</span>
                   </>
                 ) : (
                   <>
-                    <span className="text-4xl font-bold">$60</span>
+                    <span className="text-4xl font-bold">$150</span>
                     <span className="text-muted-foreground">/year</span>
-                    <p className="text-sm text-success mt-1">That's just $5/month</p>
+                    <p className="text-sm text-success mt-1">That's just $12.50/month</p>
                   </>
                 )}
               </div>
@@ -111,11 +117,16 @@ const Pricing = () => {
               </div>
 
               <Button
-                onClick={() => handleSubscribe('app')}
+                onClick={() => handleSubscribe('basic')}
                 className="w-full"
                 size="lg"
+                disabled={loadingTier !== null}
               >
-                Start 14-Day Free Trial
+                {loadingTier === 'basic' ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting…</>
+                ) : (
+                  'Start 14-Day Free Trial'
+                )}
               </Button>
               <p className="text-xs text-center text-muted-foreground">
                 Won't be charged until your trial ends — cancel anytime
@@ -173,8 +184,13 @@ const Pricing = () => {
                 className="w-full"
                 size="lg"
                 variant="default"
+                disabled={loadingTier !== null}
               >
-                Start Coaching
+                {loadingTier === 'coaching' ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting…</>
+                ) : (
+                  'Start Coaching'
+                )}
               </Button>
               <p className="text-xs text-center text-muted-foreground">
                 Includes full app access
