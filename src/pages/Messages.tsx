@@ -66,9 +66,9 @@ const Messages = () => {
               <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
                 <Lock className="h-8 w-8 text-muted-foreground" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Messaging Requires Coaching Tier</h2>
+              <h2 className="text-2xl font-bold mb-2">Messaging Requires Coaching</h2>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Direct messaging with your coach is available exclusively for Coaching (Tier 2) subscribers.
+                Direct messaging with your coach is available exclusively for Coaching subscribers.
                 Upgrade to get personalized support and guidance.
               </p>
               <Link to="/pricing">

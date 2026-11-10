@@ -187,7 +187,7 @@ const MyPrograms = () => {
                     <span className="font-medium">Custom Programs</span>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Upgrade to Tier 2 for personalized workout programs designed just for you.
+                    Upgrade to Coaching for personalized workout programs designed just for you.
                   </p>
                   <Link to="/pricing">
                     <Button variant="outline" size="sm">Upgrade</Button>

@@ -177,8 +177,8 @@ const ClientManagement = () => {
 
   const getTierBadge = (tier: string | null) => {
     if (!tier) return <Badge variant="outline">No Subscription</Badge>;
-    if (tier === "basic") return <Badge variant="secondary">Tier 1 ($30)</Badge>;
-    if (tier === "coaching") return <Badge variant="default">Tier 2 ($200)</Badge>;
+    if (tier === "basic") return <Badge variant="secondary">Full Access</Badge>;
+    if (tier === "coaching") return <Badge variant="default">Coaching</Badge>;
     return <Badge variant="outline">{tier}</Badge>;
   };
 
@@ -217,8 +217,8 @@ const ClientManagement = () => {
               <SelectContent>
                 <SelectItem value="all">All Tiers</SelectItem>
                 <SelectItem value="none">No Subscription</SelectItem>
-                <SelectItem value="basic">Tier 1 ($30)</SelectItem>
-                <SelectItem value="coaching">Tier 2 ($200)</SelectItem>
+                <SelectItem value="basic">Full Access</SelectItem>
+                <SelectItem value="coaching">Coaching</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -417,7 +417,7 @@ const ClientManagement = () => {
                                 <div className="p-4 bg-muted rounded-lg">
                                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                     <Award className="h-4 w-4" />
-                                    Custom program assignment is available for Tier 2 clients only
+                                    Custom program assignment is available for Coaching clients only
                                   </div>
                                 </div>
                               )}

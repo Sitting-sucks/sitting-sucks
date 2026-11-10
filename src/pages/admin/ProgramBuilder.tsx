@@ -254,7 +254,7 @@ const ProgramBuilder = () => {
                     checked={newProgram.is_premade}
                     onCheckedChange={(checked) => setNewProgram({ ...newProgram, is_premade: checked })}
                   />
-                  <Label htmlFor="is-premade">Available to all subscribers (Tier 1)</Label>
+                  <Label htmlFor="is-premade">Available to all subscribers</Label>
                 </div>
               </div>
               <div className="flex justify-end gap-4">
@@ -306,7 +306,7 @@ const ProgramBuilder = () => {
             <div className="text-2xl font-bold">
               {programs.filter((p) => p.is_premade).length}
             </div>
-            <div className="text-sm text-muted-foreground">Premade (Tier 1)</div>
+            <div className="text-sm text-muted-foreground">Premade (all subscribers)</div>
           </CardContent>
         </Card>
       </div>
@@ -341,7 +341,7 @@ const ProgramBuilder = () => {
                           <Badge variant="secondary">Template</Badge>
                         )}
                         {program.is_premade && (
-                          <Badge variant="default">Tier 1 Access</Badge>
+                          <Badge variant="default">Full Access</Badge>
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">

@@ -62,7 +62,7 @@ const Landing = () => {
     { value: '14 Days', label: 'Free Trial' },
     { value: '4+', label: 'Programs Included' },
     { value: '100+', label: 'Video Exercises' },
-    { value: '$10', label: '/month after trial' },
+    { value: '$20', label: '/month after trial' },
   ];
 
   // Features
@@ -386,9 +386,9 @@ const Landing = () => {
                   All programs, exercises, videos, and tracking
                 </CardDescription>
                 <div className="text-center mt-4">
-                  <span className="text-5xl font-bold">$10</span>
+                  <span className="text-5xl font-bold">$20</span>
                   <span className="text-muted-foreground">/month</span>
-                  <p className="text-sm text-success mt-1">or $60/year (save 50%)</p>
+                  <p className="text-sm text-success mt-1">or $150/year (save $90)</p>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
