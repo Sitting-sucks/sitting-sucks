@@ -32,7 +32,7 @@ const LogWorkout = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { subscribed, subscriptionTier } = useSubscription();
+  const { subscribed } = useSubscription();
   const { awardWorkoutPoints, awardExerciseLogPoints } = useGamification();
   const [searchParams] = useSearchParams();
 
@@ -43,8 +43,6 @@ const LogWorkout = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [programName, setProgramName] = useState("");
-
-  const isTier2 = subscriptionTier === "coaching";
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -190,18 +188,18 @@ const LogWorkout = () => {
     }
   };
 
-  if (!subscribed || !isTier2) {
+  if (!subscribed) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Card>
           <CardContent className="text-center py-12">
             <Lock className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-            <h2 className="text-2xl font-bold mb-2">Tier 2 Feature</h2>
+            <h2 className="text-2xl font-bold mb-2">Members Only</h2>
             <p className="text-muted-foreground mb-6">
-              Workout logging and progress tracking is available for Tier 2 subscribers.
+              Workout logging and progress tracking is included with a Sitting Sucks membership.
             </p>
             <Link to="/pricing">
-              <Button>Upgrade to Tier 2</Button>
+              <Button>View Plans</Button>
             </Link>
           </CardContent>
         </Card>

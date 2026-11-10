@@ -55,9 +55,21 @@ import { toast } from 'sonner';
 const Settings = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { subscribed, subscriptionTier, loading: subLoading } = useSubscription();
+  const { subscribed, subscriptionTier, loading: subLoading, openCustomerPortal } = useSubscription();
   const { gamification, levelInfo } = useGamification();
   const { theme, setTheme } = useTheme();
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  const handleManageBilling = async () => {
+    setPortalLoading(true);
+    try {
+      await openCustomerPortal();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : 'Could not open the billing portal. Please try again.');
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -179,7 +191,7 @@ const Settings = () => {
                 {subscribed && (
                   <Badge className="gap-1 bg-gradient-to-r from-amber-500 to-orange-500">
                     <Crown className="h-3 w-3" />
-                    {subscriptionTier === 'coaching' ? 'Coaching' : 'Premium'}
+                    {subscriptionTier === 'coaching' ? 'Coaching' : 'Full Access'}
                   </Badge>
                 )}
               </div>
@@ -249,18 +261,19 @@ const Settings = () => {
                     </div>
                     <div>
                       <p className="font-semibold">
-                        {subscriptionTier === 'coaching' ? 'Coaching Plan' : 'Premium Plan'}
+                        {subscriptionTier === 'coaching' ? 'Coaching Plan' : 'Full Access'}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {subscriptionTier === 'coaching' ? '$249/month' : '$29/month'}
+                        {subscriptionTier === 'coaching' ? '$249/month' : '$20/month'}
                       </p>
                     </div>
                   </div>
-                  <Button variant="outline" asChild>
-                    <a href="https://billing.stripe.com/p/login/test" target="_blank" rel="noopener noreferrer">
-                      Manage
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
+                  <Button variant="outline" onClick={handleManageBilling} disabled={portalLoading}>
+                    {portalLoading ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Opening…</>
+                    ) : (
+                      <>Manage<ExternalLink className="ml-2 h-4 w-4" /></>
+                    )}
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">

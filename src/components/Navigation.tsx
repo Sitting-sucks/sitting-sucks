@@ -213,8 +213,8 @@ const Navigation = () => {
                     </p>
                     <div className="flex gap-1 mt-2">
                       {isTrainer && <Badge variant="default">Trainer</Badge>}
-                      {subscriptionTier === "coaching" && <Badge variant="secondary">Tier 2</Badge>}
-                      {subscriptionTier === "basic" && <Badge variant="outline">Tier 1</Badge>}
+                      {subscriptionTier === "coaching" && <Badge variant="secondary">Coaching</Badge>}
+                      {subscriptionTier === "basic" && <Badge variant="outline">Full Access</Badge>}
                     </div>
                   </div>
                 </DropdownMenuLabel>

@@ -310,8 +310,8 @@ const MyPrograms = () => {
                   )}
                 </div>
 
-                {/* Log Workout Button (Tier 2 only) */}
-                {isTier2 && (
+                {/* Log Workout Button (all members) */}
+                {subscribed && (
                   <Card className="bg-primary/5 border-primary/20">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
